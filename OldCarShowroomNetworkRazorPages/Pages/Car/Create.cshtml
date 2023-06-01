@@ -1,0 +1,133 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.Car.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Car</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Car.Manufactory" class="control-label">Hãng chế tạo</label>
+                <select asp-for="Car.Manufactory" class ="form-control" asp-items="ViewBag.Manufactory"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.CarName" class="control-label">Tên xe</label>
+                <select asp-for="Car.CarName" class ="form-control" asp-items="ViewBag.CarName"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Version" class="control-label">Phiên bản</label>
+                <input asp-for="Car.Version" class="form-control" />
+                <span asp-validation-for="Car.Version" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.CarModelYear" class="control-label">Năm sản xuất/đời</label>
+                <select asp-for="Car.CarModelYear" class ="form-control" asp-items="ViewBag.CarModelYear"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Origin" class="control-label">Xuất xứ</label>
+                <input asp-for="Car.Origin" class="form-control" />
+                <span asp-validation-for="Car.Origin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.NumberOfKilometersTraveled" class="control-label">Số Km đã đi</label>
+                <input asp-for="Car.NumberOfKilometersTraveled" class="form-control" />
+                <span asp-validation-for="Car.NumberOfKilometersTraveled" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Vehicles" class="control-label">Dòng xe</label>
+                <select asp-for="Car.Vehicles" class ="form-control" asp-items="ViewBag.Vehicles"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Price" class="control-label">Giá tiền</label>
+                <input asp-for="Car.Price" class="form-control" />
+                <span asp-validation-for="Car.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Color" class="control-label">Ngoại thất</label>
+                <select asp-for="Car.Color" class ="form-control" asp-items="ViewBag.Color"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.ColorInside" class="control-label">Nội thất</label>
+                <select asp-for="Car.ColorInside" class ="form-control" asp-items="ViewBag.ColorInside"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.NumberOfDoors" class="control-label">Số cửa</label>
+                <input asp-for="Car.NumberOfDoors" class="form-control" />
+                <span asp-validation-for="Car.NumberOfDoors" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.NumberOfSeats" class="control-label">Số chỗ ngồi</label>
+                <input asp-for="Car.NumberOfSeats" class="form-control" />
+                <span asp-validation-for="Car.NumberOfSeats" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Gear" class="control-label">Hộp số</label>
+                <input asp-for="Car.Gear" class="form-control" />
+                <span asp-validation-for="Car.Gear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Drive" class="control-label">Dẫn động</label>
+                <select asp-for="Car.Drive" class ="form-control" asp-items="ViewBag.Drive"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Fuel" class="control-label">Nhiên liệu</label>
+                <select asp-for="Car.Fuel" class ="form-control" asp-items="ViewBag.Fuel"></select>
+            </div>
+            <div class="form-group" >
+                <input asp-for="Car.Notification" class="form-control"/>
+                <span asp-validation-for="Car.Notification" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Note" class="control-label"></label>
+                <input asp-for="Car.Note" class="form-control" />
+                <span asp-validation-for="Car.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.FuelIntakeSystem" class="control-label"></label>
+                <input asp-for="Car.FuelIntakeSystem" class="form-control" />
+                <span asp-validation-for="Car.FuelIntakeSystem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.FuelConsumption" class="control-label">Hệ thống nạp nhiên liệu</label>
+                <input asp-for="Car.FuelConsumption" class="form-control" />
+                <span asp-validation-for="Car.FuelConsumption" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Description" class="control-label">Thông tin mô tả</label>
+                <input asp-for="Car.Description" class="form-control" />
+                <span asp-validation-for="Car.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.ImageCar" class="control-label">Ảnh xe</label>
+                <select asp-for="Car.ImageCar" class ="form-control" asp-items="ViewBag.ImageCar"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Username" class="control-label"></label>
+                <select asp-for="Car.Username" class ="form-control" asp-items="ViewBag.Username"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Status" class="control-label"></label>
+                <input asp-for="Car.Status" class="form-control" />
+                <span asp-validation-for="Car.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,70 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.Showroom.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Showroom</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Showroom.ShowroomName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Showroom.ShowroomName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Showroom.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Showroom.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Showroom.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Showroom.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Showroom.Website)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Showroom.Website)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Showroom.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Showroom.City.CityId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Showroom.District)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Showroom.District.DistrictId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Showroom.Image)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Showroom.Image.ImageId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Showroom.WardsNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Showroom.WardsNavigation.WardId)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Showroom.ShowroomId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

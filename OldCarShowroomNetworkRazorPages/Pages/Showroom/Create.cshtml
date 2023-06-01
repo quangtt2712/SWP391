@@ -1,0 +1,65 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.Showroom.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Showroom</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Showroom.ShowroomName" class="control-label"></label>
+                <input asp-for="Showroom.ShowroomName" class="form-control" />
+                <span asp-validation-for="Showroom.ShowroomName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Showroom.Address" class="control-label"></label>
+                <input asp-for="Showroom.Address" class="form-control" />
+                <span asp-validation-for="Showroom.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Showroom.Phone" class="control-label"></label>
+                <input asp-for="Showroom.Phone" class="form-control" />
+                <span asp-validation-for="Showroom.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Showroom.Website" class="control-label"></label>
+                <input asp-for="Showroom.Website" class="form-control" />
+                <span asp-validation-for="Showroom.Website" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Showroom.CityId" class="control-label"></label>
+                <select asp-for="Showroom.CityId" class ="form-control" asp-items="ViewBag.CityId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Showroom.DistrictId" class="control-label"></label>
+                <select asp-for="Showroom.DistrictId" class ="form-control" asp-items="ViewBag.DistrictId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Showroom.Wards" class="control-label"></label>
+                <select asp-for="Showroom.Wards" class ="form-control" asp-items="ViewBag.Wards"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Showroom.ImageId" class="control-label"></label>
+                <select asp-for="Showroom.ImageId" class ="form-control" asp-items="ViewBag.ImageId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

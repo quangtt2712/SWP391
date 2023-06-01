@@ -1,0 +1,78 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.Showroom.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Showroom[0].ShowroomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Showroom[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Showroom[0].Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Showroom[0].Website)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Showroom[0].City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Showroom[0].District)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Showroom[0].Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Showroom[0].WardsNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Showroom) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShowroomName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Website)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.CityId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.District.DistrictId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image.ImageId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WardsNavigation.WardId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ShowroomId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ShowroomId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ShowroomId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
