@@ -4,6 +4,10 @@ using REPOs;
 using BOs.Models;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Claims;
 
 namespace OldCarShowroomNetworkRazorPage.Pages
 {
@@ -27,7 +31,7 @@ namespace OldCarShowroomNetworkRazorPage.Pages
         public void OnGet()
         {
         }
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             var checkUserName = _userRepo.GetAll().FirstOrDefault(p => p.Username.Equals(user.Username));
             var checkEmail = _userRepo.GetAll().FirstOrDefault(p => p.Email.Equals(user.Email));
@@ -81,9 +85,10 @@ namespace OldCarShowroomNetworkRazorPage.Pages
                 Msg6 = "Bạn cần phải nhập Họ và tên";
                 return Page();
             }
-            user.RoleId= 1;
+            user.RoleId= 0;
             _userRepo.Add(user);
-            return RedirectToPage("./Home");
+            HttpContext.Session.SetString("Key", user.Email);
+            return RedirectToPage("./Index");
         }
     }
 }

@@ -1,25 +1,49 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using REPOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BOs.Models;
 
 namespace OldCarShowroomNetworkRazorPages.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        public readonly UserRepository _userRepo;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public string Key { get; set; }
+        public string Role { get; set; }
+
+        public IndexModel(UserRepository userRepo)
         {
-            _logger = logger;
+            _userRepo = userRepo;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-
+            if (HttpContext.Session.GetString("Key") == null)
+            {
+                return Page();
+            }else if(HttpContext.Session.GetString("Key") != null) { 
+                Role = HttpContext.Session.GetString("Role");
+                return Page();
+            }
+            return RedirectToPage("./Login");
         }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            HttpContext.Session.Remove("Key");
+            HttpContext.Session.Remove("Role");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Page();
+        }
+
     }
 }

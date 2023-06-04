@@ -1,5 +1,7 @@
 using BOs.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using REPOs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,25 +32,22 @@ namespace OldCarShowroomNetworkRazorPages
         {
             services.AddDbContext<OldCarShowroomNetworkContext>(
             options => options.UseSqlServer("name=ConnectionStrings:DB"));
-            services.AddRazorPages();
-            services.Configure<CookiePolicyOptions>(options =>
+            services.AddRazorPages(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                //This page defined in Razor Class Library project  
+                options.Conventions.AuthorizeFolder("/User");
+                options.Conventions.AuthorizeFolder("/Car");
+                options.Conventions.AuthorizeFolder("/Showroom"); 
             });
             services.AddScoped<UserRepository>();
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(60);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-            .AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,7 +68,6 @@ namespace OldCarShowroomNetworkRazorPages
             app.UseSession();
             app.UseAuthorization();
             app.UseAuthentication();
-            app.UseCookiePolicy();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
