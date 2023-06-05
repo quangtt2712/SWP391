@@ -32,11 +32,10 @@
                             </div>
                         </div>
                         <!-- Các hành động với sản phẩm-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-
-                            <a asp-page="./Edit" asp-route-id="@car.CarId">Edit</a> |
-                            <a asp-page="./Details" asp-route-id="@car.CarId">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@car.CarId">Delete</a>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex justify-content-center">
+                            <a asp-page="./Edit" asp-route-id="@car.CarId" class="mx-2">Edit</a>
+                            <a asp-page="./Details" asp-route-id="@car.CarId" class="mx-2">Details</a>
+                            <a asp-page="./Delete" asp-route-id="@car.CarId" class="mx-2">Delete</a>
                         </div>
 
                     </div>

@@ -20,10 +20,10 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
         public IActionResult OnGet()
         {
-        ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "CityId");
-        ViewData["DistrictId"] = new SelectList(_context.Districts, "DistrictId", "DistrictId");
+        ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "Name");
+        ViewData["DistrictId"] = new SelectList(_context.Districts, "DistrictId", "Name");
         ViewData["ImageId"] = new SelectList(_context.ImageShowrooms, "ImageId", "ImageId");
-        ViewData["Wards"] = new SelectList(_context.Wards, "WardId", "WardId");
+        ViewData["Wards"] = new SelectList(_context.Wards, "WardId", "Name");
             return Page();
         }
 

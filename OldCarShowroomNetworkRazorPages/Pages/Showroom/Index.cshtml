@@ -56,16 +56,16 @@
                 @Html.DisplayFor(modelItem => item.Website)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.City.CityId)
+                @Html.DisplayFor(modelItem => item.City.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.District.DistrictId)
+                @Html.DisplayFor(modelItem => item.District.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Image.ImageId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.WardsNavigation.WardId)
+                @Html.DisplayFor(modelItem => item.WardsNavigation.Name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ShowroomId">Edit</a> |

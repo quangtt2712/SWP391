@@ -28,7 +28,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
         ViewData["Fuel"] = new SelectList(_context.Fuels, "FuelId", "FuelName");
         ViewData["ImageCar"] = new SelectList(_context.ImageCars, "ImageId", "ImageId");
         ViewData["Manufactory"] = new SelectList(_context.Manufactorys, "ManufactoryId", "ManufactoryName");
-        ViewData["Username"] = new SelectList(_context.Users, "Username", "Username");
+        ViewData["Username"] = new SelectList(_context.Users, "Username", "FullName");
         ViewData["Vehicles"] = new SelectList(_context.Vehicles, "VehiclesId", "VehiclesName");
             return Page();
         }

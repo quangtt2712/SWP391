@@ -45,16 +45,16 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
             {
                 return NotFound();
             }
-           ViewData["CarModelYear"] = new SelectList(_context.CarModelYears, "CarModelYearId", "CarModelYearId");
-           ViewData["CarName"] = new SelectList(_context.CarNames, "CarNameId", "CarNameId");
-           ViewData["ColorInside"] = new SelectList(_context.Colors, "ColorId", "ColorId");
-           ViewData["Color"] = new SelectList(_context.Colors, "ColorId", "ColorId");
-           ViewData["Drive"] = new SelectList(_context.Drives, "DriveId", "DriveId");
-           ViewData["Fuel"] = new SelectList(_context.Fuels, "FuelId", "FuelId");
-           ViewData["ImageCar"] = new SelectList(_context.ImageCars, "ImageId", "ImageId");
-           ViewData["Manufactory"] = new SelectList(_context.Manufactorys, "ManufactoryId", "ManufactoryId");
-           ViewData["Username"] = new SelectList(_context.Users, "Username", "Username");
-           ViewData["Vehicles"] = new SelectList(_context.Vehicles, "VehiclesId", "VehiclesId");
+            ViewData["CarModelYear"] = new SelectList(_context.CarModelYears, "CarModelYearId", "CarModelYear1");
+            ViewData["CarName"] = new SelectList(_context.CarNames, "CarNameId", "CarName1");
+            ViewData["ColorInside"] = new SelectList(_context.Colors, "ColorId", "ColorName");
+            ViewData["Color"] = new SelectList(_context.Colors, "ColorId", "ColorName");
+            ViewData["Drive"] = new SelectList(_context.Drives, "DriveId", "DriveName");
+            ViewData["Fuel"] = new SelectList(_context.Fuels, "FuelId", "FuelName");
+            ViewData["ImageCar"] = new SelectList(_context.ImageCars, "ImageId", "ImageId");
+            ViewData["Manufactory"] = new SelectList(_context.Manufactorys, "ManufactoryId", "ManufactoryName");
+            ViewData["Username"] = new SelectList(_context.Users, "Username", "FullName");
+            ViewData["Vehicles"] = new SelectList(_context.Vehicles, "VehiclesId", "VehiclesName");
             return Page();
         }
 

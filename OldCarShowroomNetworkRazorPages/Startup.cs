@@ -35,9 +35,9 @@ namespace OldCarShowroomNetworkRazorPages
             services.AddRazorPages(options =>
             {
                 //This page defined in Razor Class Library project  
-                options.Conventions.AuthorizeFolder("/User");
+               /* options.Conventions.AuthorizeFolder("/User");
                 options.Conventions.AuthorizeFolder("/Car");
-                options.Conventions.AuthorizeFolder("/Showroom"); 
+                options.Conventions.AuthorizeFolder("/Showroom");*/
             });
             services.AddScoped<UserRepository>();
 
