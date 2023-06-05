@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOs", "BOs\BOs.csproj", "{B71813A0-5233-40E0-BADF-84AF21CB4FFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOs", "BOs\BOs.csproj", "{B71813A0-5233-40E0-BADF-84AF21CB4FFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAOs", "DAOs\DAOs.csproj", "{F64EE71F-23DC-40FD-A19D-2082AE4BC3B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAOs", "DAOs\DAOs.csproj", "{F64EE71F-23DC-40FD-A19D-2082AE4BC3B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REPOs", "REPOs\REPOs.csproj", "{98A99EC4-745E-443F-A76F-DA1944203723}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REPOs", "REPOs\REPOs.csproj", "{98A99EC4-745E-443F-A76F-DA1944203723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OldCarShowroomNetworkRazorPages", "OldCarShowroomNetworkRazorPages\OldCarShowroomNetworkRazorPages.csproj", "{8BB48646-0AF4-4792-9FDE-80AAFE807104}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OldCarShowroomNetworkRazorPages", "OldCarShowroomNetworkRazorPages\OldCarShowroomNetworkRazorPages.csproj", "{8BB48646-0AF4-4792-9FDE-80AAFE807104}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

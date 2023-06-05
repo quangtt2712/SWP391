@@ -14,19 +14,22 @@ namespace OldCarShowroomNetworkRazorPage.Pages
     {
         public readonly UserRepository _userRepo;
         public IEnumerable<User> user { get; set; }
-        public IActionResult OnGet()
-        {
-            if (HttpContext.Session.GetString("Key") == null)
-            {
-                return RedirectToPage("./Login");
-            }
-            return Page();
-        }
-        public async Task<IActionResult> OnPostAsync()
-        {
-            HttpContext.Session.Remove("Key");
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToPage("./Index");
-        }
+        public string Key { get; set; }
+        //public IActionResult OnGet()
+        //{
+        //    if (HttpContext.Session.GetString("Key") != null)
+        //    {
+        //        return Page();
+        //    }
+        //    HttpContext.Session.GetString("Key");
+        //    return RedirectToPage("./Login");
+        //}
+
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    HttpContext.Session.Remove("Key");
+        //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        //    return RedirectToPage("./Index");
+        //}
     }
 }

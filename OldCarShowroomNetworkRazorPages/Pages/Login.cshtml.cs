@@ -9,6 +9,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Authentication.Google;
 
 namespace OldCarShowroomNetworkRazorPage.Pages
 {
@@ -54,17 +55,35 @@ namespace OldCarShowroomNetworkRazorPage.Pages
                 return Page();
             }
             HttpContext.Session.SetString("Key", Key);
-            var scheme = CookieAuthenticationDefaults.AuthenticationScheme;
-
-            var User = new ClaimsPrincipal(
-                new ClaimsIdentity(
-                    new[] { new Claim(ClaimTypes.Name, Key) },
-                    scheme
-                    ));
-
-            return RedirectToPage("./Home");
+            HttpContext.Session.SetString("Role", checkLoginByEmail.RoleId.ToString());
+            return RedirectToPage("./Index");
         }
 
-        
+        //public async Task Login()
+        //{
+        //    await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
+        //    {
+        //        RedirectUri = Url.Action("GoogleResponse")
+        //    });
+        //}
+
+
+        //public async Task<IActionResult> GoogleResponse()
+        //{
+        //    var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        //    if (result != null)
+        //    {
+        //        HttpContext.Session.SetString("Key", Key);
+        //        var scheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+        //        var User = new ClaimsPrincipal(
+        //            new ClaimsIdentity(
+        //                new[] { new Claim(ClaimTypes.Name, Key) },
+        //                scheme
+        //                ));
+        //        return RedirectToPage("./Home");
+        //    }
+        //    return Page();
+        //}
     }
 }
