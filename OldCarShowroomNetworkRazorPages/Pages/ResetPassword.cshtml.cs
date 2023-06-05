@@ -46,7 +46,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.ForgotPassword
             }
             Key = HttpContext.Session.GetString("Key");
             var checkEmail = _userRepo.GetAll().FirstOrDefault(p => p.Email.Equals(Key));
-            checkEmail.Password = ConfirmNewPassword; 
+            checkEmail.Password = ConfirmNewPassword;
+            _userRepo.Update(checkEmail);
             HttpContext.Session.SetString("Key", Key);
             HttpContext.Session.SetString("Role", checkEmail.RoleId.ToString());
             return RedirectToPage("./Login");
