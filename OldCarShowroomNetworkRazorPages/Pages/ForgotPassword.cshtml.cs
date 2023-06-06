@@ -36,8 +36,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages.ForgotPassword
                 Msg1 = "Email không tồn tại";
                 return Page();
             }
-            HttpContext.Session.SetString("Key", Email);
-            HttpContext.Session.SetString("Role", checkEmail.RoleId.ToString());
             return RedirectToPage("./ResetPassword");
         }
     }

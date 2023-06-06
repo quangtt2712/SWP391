@@ -85,10 +85,9 @@ namespace OldCarShowroomNetworkRazorPage.Pages
                 Msg6 = "Bạn cần phải nhập Họ và tên";
                 return Page();
             }
-            user.RoleId= 0;
+            user.RoleId = 1;
             _userRepo.Add(user);
-            HttpContext.Session.SetString("Key", user.Email);
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Login");
         }
     }
 }

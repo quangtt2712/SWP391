@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BOs.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
+
+    [Authorize(Roles = "User")]
     public class IndexModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
