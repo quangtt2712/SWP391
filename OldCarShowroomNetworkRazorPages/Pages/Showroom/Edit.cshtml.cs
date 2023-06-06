@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BOs.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
+    [Authorize(Roles = "Staff")]
     public class EditModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;

@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using REPOs;
 using System;
 using System.Collections.Generic;
@@ -30,17 +32,16 @@ namespace OldCarShowroomNetworkRazorPages
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<OldCarShowroomNetworkContext>(
-            options => options.UseSqlServer("name=ConnectionStrings:DB"));
-            services.AddRazorPages(options =>
+            services.AddRazorPages();
+            services.AddHttpContextAccessor();
+            services.AddDbContext<OldCarShowroomNetworkContext>(options => 
+            options.UseSqlServer("name=ConnectionStrings:DB"
+            ));
+            services.Configure<CookiePolicyOptions>(options =>
             {
-                //This page defined in Razor Class Library project  
-               /* options.Conventions.AuthorizeFolder("/User");
-                options.Conventions.AuthorizeFolder("/Car");
-                options.Conventions.AuthorizeFolder("/Showroom");*/
+                options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddScoped<UserRepository>();
-
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(60);
@@ -66,8 +67,9 @@ namespace OldCarShowroomNetworkRazorPages
 
             app.UseRouting();
             app.UseSession();
-            app.UseAuthorization();
+            app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

@@ -78,8 +78,8 @@
                         <form method ="post" asp-page="LoginPage">
                             <div class="row g-3">
                                 <div class="col-12">
-                                    <input asp-for="@Model.Key" type="text" class="form-control border-0"
-                                           placeholder="Email/Số điện thoại/Tên đăng nhập" maxlength="128"
+                                    <input asp-for="@Model.Email" type="text" class="form-control border-0"
+                                           placeholder="Email" maxlength="128"
                                            style="height: 55px;">
                                     @if (@Model.Msg1 != null)
                                     {

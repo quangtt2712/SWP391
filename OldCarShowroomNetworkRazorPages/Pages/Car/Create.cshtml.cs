@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BOs.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
+    [Authorize(Roles = "User")]
     public class CreateModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
