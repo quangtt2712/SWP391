@@ -81,7 +81,7 @@
                 <select asp-for="Car.Fuel" class ="form-control" asp-items="ViewBag.Fuel"></select>
             </div>
             <div class="form-group" >
-                <input asp-for="Car.Notification" class="form-control"/>
+                <input asp-for="Car.Notification" class="form-control" hidden/>
                 <span asp-validation-for="Car.Notification" class="text-danger"></span>
             </div>
             <div class="form-group">

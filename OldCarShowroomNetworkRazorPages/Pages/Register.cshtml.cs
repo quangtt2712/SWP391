@@ -88,7 +88,7 @@ namespace OldCarShowroomNetworkRazorPage.Pages
             user.RoleId= 0;
             _userRepo.Add(user);
             HttpContext.Session.SetString("Key", user.Email);
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Login");
         }
     }
 }
