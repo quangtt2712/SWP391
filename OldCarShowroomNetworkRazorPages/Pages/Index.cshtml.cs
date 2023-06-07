@@ -30,8 +30,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             if (HttpContext.Session.GetString("Key") == null)
             {
                 return Page();
-            }else if(HttpContext.Session.GetString("Key") != null) { 
-                Role = HttpContext.Session.GetString("Role");
+            }else if(HttpContext.Session.GetString("Key") != null) {
                 return Page();
             }
             return RedirectToPage("./Login");
@@ -40,7 +39,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             HttpContext.Session.Remove("Key");
-            HttpContext.Session.Remove("Role");
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Page();
         }

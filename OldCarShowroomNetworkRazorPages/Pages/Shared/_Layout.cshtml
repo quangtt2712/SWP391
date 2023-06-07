@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -73,9 +76,21 @@
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
-            <a href="Login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                Đăng nhập<i class="fa fa-arrow-right ms-3"></i>
-            </a>
+            @if (Accessor.HttpContext.Session.GetString("Key") != null)
+            {
+                <div>
+                    @Accessor.HttpContext.Session.GetString("Key")
+                </div>
+                    <div class="input-group">
+                        <a href="./Index" class="btn btn-link">Logout</a>
+                    </div>
+            }
+            else
+            {
+                <a href="./login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
+                    Đăng nhập<i class="fa fa-arrow-right ms-3"></i>
+                </a>
+            }
         </div>
     </nav>
     <div class="container">

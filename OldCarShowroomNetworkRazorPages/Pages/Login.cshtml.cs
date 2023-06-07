@@ -24,7 +24,7 @@ namespace OldCarShowroomNetworkRazorPage.Pages
         public string Msg2 { get; set; }
 
         [BindProperty]
-        public string Key { get; set; }
+        public string Email { get; set; }
         [BindProperty]
         public string Password { get; set; }
         public void OnGet()
@@ -33,8 +33,9 @@ namespace OldCarShowroomNetworkRazorPage.Pages
 
         public IActionResult OnPost()
         {
+            ClaimsIdentity identity = null;
 
-            if (Key == null)
+            if (Email == null)
             {
                 Msg1 = "Nhập tài khoản";
                 return Page();
@@ -45,18 +46,60 @@ namespace OldCarShowroomNetworkRazorPage.Pages
                 Msg2 = "Nhập Mật khẩu";
                 return Page();
             }
-            var checkLoginByEmail = _userRepo.GetAll().FirstOrDefault(p => p.Email.Equals(Key) && p.Password.Equals(Password));
-            //var checkLoginByPhone = _userRepo.GetAll().FirstOrDefault(p => p.Phone.Equals(Key) && p.Password.Equals(Password));
-            //var checkLoginByUserName = _userRepo.GetAll().FirstOrDefault(p => p.Username.Equals(Key) && p.Password.Equals(Password));
+
+            var checkLoginByEmail = _userRepo.GetAll().FirstOrDefault(p => p.Email.Equals(Email) && p.Password.Equals(Password));
 
             if (checkLoginByEmail == null)
             {
                 Msg1 = "Tài khoản không tồn tại";
                 return Page();
             }
-            HttpContext.Session.SetString("Key", Key);
-            HttpContext.Session.SetString("Role", checkLoginByEmail.RoleId.ToString());
-            return RedirectToPage("./Index");
+
+            if (checkLoginByEmail.RoleId.Equals(0))
+            {
+                identity = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name,checkLoginByEmail.Email),
+                    new Claim(ClaimTypes.Role,"Admin")
+                }, CookieAuthenticationDefaults.AuthenticationScheme);
+                
+                var principal = new ClaimsPrincipal(identity);
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                HttpContext.Session.SetString("Key", Email);
+                HttpContext.Session.SetString("Role", checkLoginByEmail.RoleId.ToString());
+                return RedirectToPage("./User/Index");
+            }
+
+            if (checkLoginByEmail.RoleId.Equals(1))
+            {
+                identity = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name,checkLoginByEmail.Email),
+                    new Claim(ClaimTypes.Role,"User")
+                }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var principal = new ClaimsPrincipal(identity);
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                HttpContext.Session.SetString("Key", Email);
+                HttpContext.Session.SetString("Role", checkLoginByEmail.RoleId.ToString());
+                return RedirectToPage("./Index");
+            }
+
+            if (checkLoginByEmail.RoleId.Equals(2))
+            {
+                identity = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name,checkLoginByEmail.Email),
+                    new Claim(ClaimTypes.Role,"Staff")
+                }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var principal = new ClaimsPrincipal(identity);
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                HttpContext.Session.SetString("Key", Email);
+                HttpContext.Session.SetString("Role", checkLoginByEmail.RoleId.ToString());
+                return RedirectToPage("/Showroom/Index");
+            }
+            return Page();
         }
 
         //public async Task Login()

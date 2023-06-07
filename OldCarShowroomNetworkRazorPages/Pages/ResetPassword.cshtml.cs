@@ -44,12 +44,9 @@ namespace OldCarShowroomNetworkRazorPages.Pages.ForgotPassword
                 Msg2 = "Nhập lại không đúng mật khẩu mới. Vui lòng nhập lại";
                 return Page();
             }
-            Key = HttpContext.Session.GetString("Key");
             var checkEmail = _userRepo.GetAll().FirstOrDefault(p => p.Email.Equals(Key));
             checkEmail.Password = ConfirmNewPassword;
             _userRepo.Update(checkEmail);
-            HttpContext.Session.SetString("Key", Key);
-            HttpContext.Session.SetString("Role", checkEmail.RoleId.ToString());
             return RedirectToPage("./Login");
         }
     }
