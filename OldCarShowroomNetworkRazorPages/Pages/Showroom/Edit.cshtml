@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Showroom.ShowroomId" />
             <div class="form-group">
@@ -35,25 +35,11 @@
                 <span asp-validation-for="Showroom.Website" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Showroom.CityId" class="control-label"></label>
-                <select asp-for="Showroom.CityId" class="form-control" asp-items="ViewBag.CityId"></select>
-                <span asp-validation-for="Showroom.CityId" class="text-danger"></span>
+                <label asp-for="Showroom.ImageId" class="control-label">Ảnh showroom</label>
+                <img src="@Url.Content(Model.Showroom.Image.Url)" alt="Current Image" class="img-thumbnail" />
+                <input type="file" id="UploadImg" name="UploadImg" accept="image/*" />
             </div>
-            <div class="form-group">
-                <label asp-for="Showroom.DistrictId" class="control-label"></label>
-                <select asp-for="Showroom.DistrictId" class="form-control" asp-items="ViewBag.DistrictId"></select>
-                <span asp-validation-for="Showroom.DistrictId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Showroom.Wards" class="control-label"></label>
-                <select asp-for="Showroom.Wards" class="form-control" asp-items="ViewBag.Wards"></select>
-                <span asp-validation-for="Showroom.Wards" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Showroom.ImageId" class="control-label"></label>
-                <select asp-for="Showroom.ImageId" class="form-control" asp-items="ViewBag.ImageId"></select>
-                <span asp-validation-for="Showroom.ImageId" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

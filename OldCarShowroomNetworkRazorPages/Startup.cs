@@ -34,6 +34,8 @@ namespace OldCarShowroomNetworkRazorPages
         {
             services.AddRazorPages();
             services.AddHttpContextAccessor();
+            services.AddControllers();
+            
             services.AddDbContext<OldCarShowroomNetworkContext>(options => 
             options.UseSqlServer("name=ConnectionStrings:DB"
             ));
@@ -64,7 +66,7 @@ namespace OldCarShowroomNetworkRazorPages
             }
 
             app.UseStaticFiles();
-
+            
             app.UseRouting();
             app.UseSession();
             app.UseCookiePolicy();
@@ -72,6 +74,7 @@ namespace OldCarShowroomNetworkRazorPages
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
         }

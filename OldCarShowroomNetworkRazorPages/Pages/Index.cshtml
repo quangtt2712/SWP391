@@ -1,5 +1,6 @@
 ﻿@page
-@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -64,27 +65,24 @@
                 <input class="form-control me-2" type="search" placeholder="Nhập tên xe bạn muốn mua" aria-label="Tìm kiếm" style="width: 250px;">
                 <button class="btn btn-outline-primary" type="submit">Tìm kiếm</button>
             </form>
-
-
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="./Index" class="nav-item nav-link active">Trang chủ</a>
                 <a href="/Car/Index" class="nav-item nav-link">Bạn muốn bán xe?</a>
-                <a href="service.html" class="nav-item nav-link">Showroom</a>
+                <a href="/Showroom/Index" class="nav-item nav-link">Showroom</a>
 
-                    <a href="./Index" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                        Log out<i class="fa fa-arrow-right ms-3"></i>
-                    </a>
-                }
-                else if (Accessor.HttpContext.Session.GetString("Role").Equals("1"))
-                {
-                    <a href="service.html" class="nav-item nav-link">@Accessor.HttpContext.Session.GetString("Key")</a>
-
-                    <a href="./Index" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                        Log out<i class="fa fa-arrow-right ms-3"></i>
-                    </a>
-                }
-                else
-    {
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="booking.html" class="dropdown-item">Booking</a>
+                        <a href="team.html" class="dropdown-item">Technicians</a>
+                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="404.html" class="dropdown-item">404 Page</a>
+                    </div>
+                </div>
+            </div>
+            <a href="contact.html" class="nav-item nav-link">Contact</a>
+            @if (HttpContext.Session.GetString("Key") != null)
+            {
                 <div>
                     @HttpContext.Session.GetString("Key")
                 </div>
@@ -93,11 +91,15 @@
                         <button type="submit" class="btn btn-link">Logout</button>
                     </div>
                 </form>
-    }else{
-            <a href="./login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                Đăng nhập<i class="fa fa-arrow-right ms-3"></i>
-            </a>
-    }
+            }
+            else
+            {
+                <a href="./login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
+                    Đăng nhập<i class="fa fa-arrow-right ms-3"></i>
+                </a>
+            }
+              
+            
         </div>
 
     </nav>

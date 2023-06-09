@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
@@ -26,6 +27,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
         public async Task OnGetAsync()
         {
+            string userLogin = HttpContext.Session.GetString("Key");
+            var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
             Car = await _context.Cars
                 .Include(c => c.CarModelYearNavigation)
                 .Include(c => c.CarNameNavigation)
@@ -45,6 +48,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                         Car = car,
                         ImageUrl = image.Url
                     })
+                  .Where(x => x.Car.Username == user.Username)
                 .Select(x => new BOs.Models.Car
                 {
                     CarId = x.Car.CarId,

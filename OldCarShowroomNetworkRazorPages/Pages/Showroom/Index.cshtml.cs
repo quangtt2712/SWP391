@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Microsoft.AspNetCore.Hosting;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
@@ -15,11 +16,14 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
     public class IndexModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public IndexModel()
+        public IndexModel(IWebHostEnvironment webHostEnvironment)
         {
             _context = new OldCarShowroomNetworkContext();
+            _webHostEnvironment = webHostEnvironment;
         }
+       
 
         public IList<BOs.Models.Showroom> Showroom { get;set; }
 
@@ -30,6 +34,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(s => s.District)
                 .Include(s => s.Image)
                 .Include(s => s.WardsNavigation).ToListAsync();
+            
         }
+     
     }
 }

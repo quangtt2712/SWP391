@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
@@ -16,7 +19,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
     public class EditModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CarId { get; set; }
         public EditModel()
         {
             _context = new OldCarShowroomNetworkContext();
@@ -24,7 +28,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
         [BindProperty]
         public BOs.Models.Car Car { get; set; }
-
+        [BindProperty]
+        public IFormFile UploadImg { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -63,13 +68,39 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile UploadImg)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+            if (UploadImg != null && UploadImg.Length > 0)
+            {
+                // Xóa hình ảnh hiện tại của showroom
 
+
+                // Lưu trữ hình ảnh mới vào thư mục hoặc dịch vụ lưu trữ của bạn
+                string imagePath = "wwwroot/images/car" + Guid.NewGuid().ToString() + "_" + UploadImg.FileName;
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await UploadImg.CopyToAsync(stream);
+                }
+
+                // Tạo đối tượng ImageShowroom và lưu thông tin ảnh vào cơ sở dữ liệu
+                ImageCar newImage = new ImageCar
+                {
+                    Url = imagePath.Replace("wwwroot", "")
+                };
+                _context.ImageCars.Add(newImage);
+                await _context.SaveChangesAsync();
+
+                // Cập nhật ImageId của Showroom với ImageId mới
+                Car.ImageCar = newImage.ImageId;
+            }
+            string userLogin = HttpContext.Session.GetString("Key");
+            var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
+
+            Car.Username = user.Username;
             _context.Attach(Car).State = EntityState.Modified;
 
             try

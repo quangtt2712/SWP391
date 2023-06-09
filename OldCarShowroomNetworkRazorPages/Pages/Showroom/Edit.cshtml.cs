@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
@@ -24,6 +26,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
         [BindProperty]
         public BOs.Models.Showroom Showroom { get; set; }
+        [BindProperty]
+        public IFormFile UploadImg { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -46,16 +50,41 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
            ViewData["DistrictId"] = new SelectList(_context.Districts, "DistrictId", "Name");
            ViewData["ImageId"] = new SelectList(_context.ImageShowrooms, "ImageId", "ImageId");
            ViewData["Wards"] = new SelectList(_context.Wards, "WardId", "Name");
+          
+
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile UploadImg)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+            if (UploadImg != null && UploadImg.Length > 0)
+            {
+                // Xóa hình ảnh hiện tại của showroom
+               
+
+                // Lưu trữ hình ảnh mới vào thư mục hoặc dịch vụ lưu trữ của bạn
+                string imagePath = "wwwroot/images/showroom" + Guid.NewGuid().ToString() + "_" + UploadImg.FileName;
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await UploadImg.CopyToAsync(stream);
+                }
+
+                // Tạo đối tượng ImageShowroom và lưu thông tin ảnh vào cơ sở dữ liệu
+                ImageShowroom newImage = new ImageShowroom
+                {
+                    Url = imagePath.Replace("wwwroot", "")
+                };
+                _context.ImageShowrooms.Add(newImage);
+                await _context.SaveChangesAsync();
+
+                // Cập nhật ImageId của Showroom với ImageId mới
+                Showroom.ImageId = newImage.ImageId;
             }
 
             _context.Attach(Showroom).State = EntityState.Modified;
