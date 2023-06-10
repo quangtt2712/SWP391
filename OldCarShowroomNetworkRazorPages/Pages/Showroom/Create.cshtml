@@ -33,7 +33,22 @@
                 <input asp-for="Showroom.Website" class="form-control" />
                 <span asp-validation-for="Showroom.Website" class="text-danger"></span>
             </div>
-            
+            <div class="form-group">
+    <label asp-for="Showroom.CityId" class="control-label">Thành phố</label>
+                <select asp-for="Showroom.CityId" class="form-control" asp-items="ViewBag.CityId" id="listCity" onchange="getDistrictName(this)"></select>
+    <span asp-validation-for="Showroom.CityId" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Showroom.DistrictId" class="control-label">Quận/Huyện</label>
+                <select asp-for="Showroom.DistrictId" class="form-control" asp-items="ViewBag.DistrictId" id="listDistrictName" onchange="getWardName(this)"></select>
+    <span asp-validation-for="Showroom.DistrictId" class="text-danger"></span>
+</div>
+<div class="form-group">
+                <label asp-for="Showroom.Wards" class="control-label">Phường/Xã</label>
+                <select asp-for="Showroom.Wards" class="form-control" asp-items="ViewBag.Wards" id="listWardName"></select>
+    <span asp-validation-for="Showroom.Wards" class="text-danger"></span>
+</div>
+
             <div class="form-group">
                 <label asp-for="Showroom.ImageId" class="control-label">Ảnh showroom</label>
                 <input type="file" id="uploadimg" name="uploadimg" accept="image/*"/>
@@ -49,6 +64,7 @@
 <div>
     <a asp-page="Index">Trờ lại</a>
 </div>
+<script src="~/js/Adress.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

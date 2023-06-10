@@ -1,0 +1,108 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.Car.ShowroomModel
+
+@{
+    ViewData["Title"] = "Showroom";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+<header class="bg-danger py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center ">
+            <h1 class="display-4 fw-bolder text-white">Chọn showroom để kí gửi</h1>
+        </div>
+    </div>
+</header>
+
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-3 justify-content-center">
+            <!-- Ô select 1 -->
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h5 class="fw-bolder">Thành phố</h5>
+                            <select class="form-select" asp-items="ViewBag.city" id="listCity" onchange="getDistrictName(this)">
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ô select 2 -->
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h5 class="fw-bolder">Quận/ huyện</h5>
+                            <select class="form-select" asp-items="ViewBag.district" id="listDistrictName" onchange="getWardName(this)">
+                                
+                                <!-- Thêm các tùy chọn khác -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ô select 3 -->
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h5 class="fw-bolder">Phường</h5>
+                            <select class="form-select" asp-items="ViewBag.ward" id="listWardName">
+                              
+                                <!-- Thêm các tùy chọn khác -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thanh tìm kiếm -->
+            <div class="col-12 mb-5">
+                <div class="card h-100">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h5 class="fw-bolder">Search</h5>
+                            <input type="text" class="form-control" placeholder="Nhập tên showroom">
+                            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var showroom in Model.Showroom)
+            {
+                <div class="col mb-5">
+                    <a asp-page="./Create" class="card h-100" asp-route-id="@showroom.ShowroomId">
+                        <!-- Hình ảnh sản phẩm-->
+                        <img class="card-img-top" src="@showroom.Image.Url" alt="Ảnh showroom" />
+                        <!-- Chi tiết sản phẩm-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Tên sản phẩm-->
+                                <h5 class="fw-bolder">@showroom.ShowroomName</h5>
+                                <!-- Giá sản phẩm-->
+                            @showroom.Address
+                            </div>
+                        </div>
+                        
+
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<script src="~/js/Adress.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
