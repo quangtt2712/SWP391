@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Chỉnh sửa</h1>
 
 <h4>Showroom</h4>
 <hr />
@@ -36,8 +36,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="Showroom.ImageId" class="control-label">Ảnh showroom</label>
-                <img src="@Url.Content(Model.Showroom.Image.Url)" alt="Current Image" class="img-thumbnail" />
+                @if(Model.Showroom.Image != null)
+                {
+                    <div id="currentImage">
+                        <img src="@Url.Content(Model.Showroom.Image.Url)" alt="Current Image" class="img-thumbnail" />
+            </div>
+                }
+                
                 <input type="file" id="UploadImg" name="UploadImg" accept="image/*" />
+                <input type="hidden" id="ImageId" asp-for="Showroom.ImageId" />
+
             </div>
 
             <div class="form-group">
@@ -50,6 +58,22 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var uploadImgInput = document.getElementById("UploadImg");
+        var imageIdInput = document.getElementById("ImageId");
+
+        uploadImgInput.addEventListener("change", function () {
+            if (uploadImgInput.files.length === 0) {
+                // Không có tệp mới được chọn, giữ lại ID ảnh hiện tại
+                imageIdInput.disabled = false;
+            } else {
+                imageIdInput.disabled = true;
+            }
+        });
+    });
+</script>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

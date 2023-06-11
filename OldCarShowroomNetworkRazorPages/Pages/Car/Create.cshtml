@@ -32,7 +32,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Car.Origin" class="control-label">Xuất xứ</label>
-                <input asp-for="Car.Origin" class="form-control" />
+                <select asp-for="Car.Origin" class="form-control">
+                    <option value="false">Nhập khẩu</option>
+                    <option value="true">Lắp ráp trong nước</option>
+                </select>
                 <span asp-validation-for="Car.Origin" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -69,7 +72,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Car.Gear" class="control-label">Hộp số</label>
-                <input asp-for="Car.Gear" class="form-control" />
+                <select asp-for="Car.Gear" class="form-control">
+                    <option value="false">Số tay</option>
+                    <option value="true">Số tự động</option>
+                </select>
                 <span asp-validation-for="Car.Gear" class="text-danger"></span>
             </div>
             <div class="form-group">

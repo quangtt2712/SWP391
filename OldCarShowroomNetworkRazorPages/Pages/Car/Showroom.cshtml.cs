@@ -13,6 +13,14 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
     public class ShowroomModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
+        [BindProperty(SupportsGet = true)]
+        public string CityId { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string DistrictId { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string WardId { get; set; }
 
         public ShowroomModel()
         {
@@ -27,10 +35,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
             ViewData["district"] = new SelectList(_context.Districts, "DistrictId", "Name");
             ViewData["ward"] = new SelectList(_context.Wards, "WardId", "Name");
             Showroom = await _context.Showrooms
-                .Include(s => s.City)
+                 .Include(s => s.City)
                 .Include(s => s.District)
                 .Include(s => s.Image)
                 .Include(s => s.WardsNavigation).ToListAsync();
+
         }
     }
 }

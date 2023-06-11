@@ -18,13 +18,14 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-3 justify-content-center">
+            <form method="get">
             <!-- Ô select 1 -->
             <div class="col mb-5">
                 <div class="card h-100">
                     <div class="card-body p-4">
                         <div class="text-center">
                             <h5 class="fw-bolder">Thành phố</h5>
-                            <select class="form-select" asp-items="ViewBag.city" id="listCity" onchange="getDistrictName(this)">
+                                <select class="form-select" asp-for="CityId" asp-items="ViewBag.city" id="listCity" onchange="getDistrictName(this)">
                                 
                             </select>
                         </div>
@@ -38,7 +39,7 @@
                     <div class="card-body p-4">
                         <div class="text-center">
                             <h5 class="fw-bolder">Quận/ huyện</h5>
-                            <select class="form-select" asp-items="ViewBag.district" id="listDistrictName" onchange="getWardName(this)">
+                                <select class="form-select" asp-for="DistrictId" asp-items="ViewBag.district" id="listDistrictName" onchange="getWardName(this)">
                                 
                                 <!-- Thêm các tùy chọn khác -->
                             </select>
@@ -53,7 +54,7 @@
                     <div class="card-body p-4">
                         <div class="text-center">
                             <h5 class="fw-bolder">Phường</h5>
-                            <select class="form-select" asp-items="ViewBag.ward" id="listWardName">
+                            <select class="form-select" asp-for = "WardId" asp-items="ViewBag.ward" id="listWardName">
                               
                                 <!-- Thêm các tùy chọn khác -->
                             </select>
@@ -61,19 +62,12 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Thanh tìm kiếm -->
-            <div class="col-12 mb-5">
-                <div class="card h-100">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Search</h5>
-                            <input type="text" class="form-control" placeholder="Nhập tên showroom">
-                            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
-                        </div>
-                    </div>
+                <div class="col mb-5">
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                 </div>
-            </div>
+            </form>
+          
+            
         </div>
     </div>
 </section>

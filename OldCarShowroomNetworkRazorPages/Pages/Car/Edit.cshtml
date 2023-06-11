@@ -98,9 +98,15 @@
                 <span asp-validation-for="Car.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Car.ImageCar" class="control-label">Ảnh showroom</label>
-                <img src="@Url.Content(Model.Car.ImageCarNavigation.Url)" alt="Current Image" class="img-thumbnail" />
+                <label asp-for="Car.ImageCar" class="control-label">Ảnh xe</label>
+                @if (Model.Car.ImageCarNavigation.Url != null)
+                {
+                    <img src="@Url.Content(Model.Car.ImageCarNavigation.Url)" alt="Current Image" class="img-thumbnail" />
+                }
+                
                 <input type="file" id="UploadImg" name="UploadImg" accept="image/*" />
+                <input type="hidden" id="ImageId" asp-for="Car.ImageCar" />
+
             </div>
 
 
@@ -129,7 +135,19 @@
     }
 
     window.onload = getCarName(document.querySelector("#listCarManufactory"));
+    document.addEventListener("DOMContentLoaded", function() {
+        var uploadImgInput = document.getElementById("UploadImg");
+        var imageIdInput = document.getElementById("ImageId");
 
+        uploadImgInput.addEventListener("change", function() {
+            if (uploadImgInput.files.length === 0) {
+                // Không có tệp mới được chọn, giữ lại ID ảnh hiện tại
+                imageIdInput.disabled = false;
+            } else {
+                imageIdInput.disabled = true;
+            }
+        });
+    });
 </script>
 
 @section Scripts {

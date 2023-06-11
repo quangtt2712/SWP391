@@ -42,6 +42,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             {
                 return Page();
             }
+            
             // Kiểm tra xem có file ảnh được tải lên hay không
             if (uploadimg != null && uploadimg.Length > 0)
             {

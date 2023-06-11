@@ -86,6 +86,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 // Cập nhật ImageId của Showroom với ImageId mới
                 Showroom.ImageId = newImage.ImageId;
             }
+            
 
             _context.Attach(Showroom).State = EntityState.Modified;
 

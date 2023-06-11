@@ -39,7 +39,6 @@ namespace BOs.Models
         public virtual DbSet<Manufactory> Manufactorys { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Showroom> Showrooms { get; set; }
-        public virtual DbSet<ShowroomCar> ShowroomCars { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
         public virtual DbSet<Ward> Wards { get; set; }
@@ -104,6 +103,8 @@ namespace BOs.Models
 
                 entity.Property(e => e.Note).HasMaxLength(2000);
 
+                entity.Property(e => e.ShowroomId).HasColumnName("ShowroomID");
+
                 entity.Property(e => e.Username)
                     .HasMaxLength(128)
                     .IsUnicode(false);
@@ -149,6 +150,11 @@ namespace BOs.Models
                     .WithMany(p => p.Cars)
                     .HasForeignKey(d => d.Manufactory)
                     .HasConstraintName("FK__Cars__Manufactor__6E01572D");
+
+                entity.HasOne(d => d.Showroom)
+                    .WithMany(p => p.Cars)
+                    .HasForeignKey(d => d.ShowroomId)
+                    .HasConstraintName("FK_Cars_Showrooms");
 
                 entity.HasOne(d => d.UsernameNavigation)
                     .WithMany(p => p.Cars)
@@ -375,28 +381,6 @@ namespace BOs.Models
                     .WithMany(p => p.Showrooms)
                     .HasForeignKey(d => d.Wards)
                     .HasConstraintName("FK__Showrooms__Wards__6A30C649");
-            });
-
-            modelBuilder.Entity<ShowroomCar>(entity =>
-            {
-                entity.HasKey(e => new { e.CarId, e.ShowroomId })
-                    .HasName("PK__Showroom__C2D712C745CC136B");
-
-                entity.Property(e => e.CarId).HasColumnName("CarID");
-
-                entity.Property(e => e.ShowroomId).HasColumnName("ShowroomID");
-
-                entity.HasOne(d => d.Car)
-                    .WithMany(p => p.ShowroomCars)
-                    .HasForeignKey(d => d.CarId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ShowroomC__CarID__797309D9");
-
-                entity.HasOne(d => d.Showroom)
-                    .WithMany(p => p.ShowroomCars)
-                    .HasForeignKey(d => d.ShowroomId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ShowroomC__Showr__7A672E12");
             });
 
             modelBuilder.Entity<User>(entity =>

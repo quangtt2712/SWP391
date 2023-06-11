@@ -42,12 +42,22 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
         public BOs.Models.Car Car { get; set; }
 
         [BindProperty]
-        public BOs.Models.User User { get; set; }
+        public BOs.Models.Showroom Showroom { get; set; }
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync(IFormFile uploadimg)
+        public async Task<IActionResult> OnPostAsync(IFormFile uploadimg, int? id)
         {
             if (!ModelState.IsValid)
             {
+                return Page();
+            }
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var Showroomid = _context.Showrooms.FirstOrDefault(e => e.ShowroomId == id);
+            if (uploadimg == null || uploadimg.Length == 0)
+            {
+                ModelState.AddModelError(string.Empty, "Vui lòng chọn một ảnh.");
                 return Page();
             }
             // Kiểm tra xem có file ảnh được tải lên hay không
@@ -68,18 +78,26 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                 };
                 _context.ImageCars.Add(image);
                 await _context.SaveChangesAsync();
-
+                
                 // Gán ImageId của Showroom bằng ImageId mới được tạo ra
                 Car.ImageCar = image.ImageId;
             }
             string userLogin = HttpContext.Session.GetString("Key");
             var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
-
+            
             Car.Username = user.Username;
+            Car.Showroom = Showroomid;
+            Car.Notification = false;
+            Car.Status = false;
+            Car.Note = string.Empty;
             _context.Cars.Add(Car);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+        private bool ShowroomExists(int id)
+        {
+            return _context.Showrooms.Any(e => e.ShowroomId == id);
         }
     }
 }
