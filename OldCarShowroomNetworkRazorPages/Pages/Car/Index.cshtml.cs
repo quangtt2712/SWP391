@@ -25,50 +25,25 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
         public IList<BOs.Models.Car> Car { get; set; }
 
+        public IList<BOs.Models.ImageCar> ImageCar { get; set; }
+
         public async Task OnGetAsync()
         {
             string userLogin = HttpContext.Session.GetString("Key");
             var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
+
             Car = await _context.Cars
-                .Include(c => c.CarModelYearNavigation)
-                .Include(c => c.CarNameNavigation)
-                .Include(c => c.ColorInsideNavigation)
-                .Include(c => c.ColorNavigation)
-                .Include(c => c.DriveNavigation)
-                .Include(c => c.FuelNavigation)
-                .Include(c => c.ImageCarNavigation)
-                .Include(c => c.ManufactoryNavigation)
-                .Include(c => c.UsernameNavigation)
-                .Include(c => c.VehiclesNavigation)
-                .Join(_context.ImageCars,
-                    car => car.ImageCar,
-                    image => image.ImageId,
-                    (car, image) => new
-                    {
-                        Car = car,
-                        ImageUrl = image.Url
-                    })
-                  .Where(x => x.Car.Username == user.Username)
-                .Select(x => new BOs.Models.Car
-                {
-                    CarId = x.Car.CarId,
-                    Price = x.Car.Price,
-                    CarModelYearNavigation = x.Car.CarModelYearNavigation,
-                    CarNameNavigation = x.Car.CarNameNavigation,
-                    ColorInsideNavigation = x.Car.ColorInsideNavigation,
-                    ColorNavigation = x.Car.ColorNavigation,
-                    DriveNavigation = x.Car.DriveNavigation,
-                    FuelNavigation = x.Car.FuelNavigation,
-                    ImageCarNavigation = new BOs.Models.ImageCar
-                    {
-                        ImageId = x.Car.ImageCarNavigation.ImageId,
-                        Url = x.ImageUrl
-                    },
-                    ManufactoryNavigation = x.Car.ManufactoryNavigation,
-                    UsernameNavigation = x.Car.UsernameNavigation,
-                    VehiclesNavigation = x.Car.VehiclesNavigation
-                })
-                .ToListAsync();
+                 .Include(c => c.CarModelYearNavigation)
+                 .Include(c => c.CarNameNavigation)
+                 .Include(c => c.ColorInsideNavigation)
+                 .Include(c => c.ColorNavigation)
+                 .Include(c => c.DriveNavigation)
+                 .Include(c => c.FuelNavigation)
+                 .Include(c => c.ManufactoryNavigation)
+                 .Include(c => c.Showroom)
+                 .Include(c => c.UsernameNavigation)
+                 .Include(c => c.VehiclesNavigation).ToListAsync();
+            ImageCar = await _context.ImageCars.ToListAsync();
         }
     }
 }

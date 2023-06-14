@@ -30,18 +30,18 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
             {
                 return NotFound();
             }
-
+            
             Car = await _context.Cars
-                .Include(c => c.CarModelYearNavigation)
-                .Include(c => c.CarNameNavigation)
-                .Include(c => c.ColorInsideNavigation)
-                .Include(c => c.ColorNavigation)
-                .Include(c => c.DriveNavigation)
-                .Include(c => c.FuelNavigation)
-                .Include(c => c.ImageCarNavigation)
-                .Include(c => c.ManufactoryNavigation)
-                .Include(c => c.UsernameNavigation)
-                .Include(c => c.VehiclesNavigation).FirstOrDefaultAsync(m => m.CarId == id);
+               .Include(c => c.CarModelYearNavigation)
+               .Include(c => c.CarNameNavigation)
+               .Include(c => c.ColorInsideNavigation)
+               .Include(c => c.ColorNavigation)
+               .Include(c => c.DriveNavigation)
+               .Include(c => c.FuelNavigation)
+               .Include(c => c.ManufactoryNavigation)
+               .Include(c => c.Showroom)
+               .Include(c => c.UsernameNavigation)
+               .Include(c => c.VehiclesNavigation).FirstOrDefaultAsync(m => m.CarId == id);
 
             if (Car == null)
             {
@@ -61,6 +61,13 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
             if (Car != null)
             {
+                var associatedImages = await _context.ImageCars
+            .Where(img => img.CarId == Car.CarId)
+            .ToListAsync();
+
+
+                _context.ImageCars.RemoveRange(associatedImages);
+                await _context.SaveChangesAsync();
                 _context.Cars.Remove(Car);
                 await _context.SaveChangesAsync();
             }

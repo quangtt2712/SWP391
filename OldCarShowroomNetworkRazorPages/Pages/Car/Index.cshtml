@@ -21,7 +21,15 @@
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Hình ảnh sản phẩm-->
-                        <img class="card-img-top" src="@car.ImageCarNavigation.Url" alt="Ảnh xe" />
+                        @if (car.ImageCars != null && car.ImageCars.Count > 0)
+                    {
+                        var mainImage = car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
+                        if (mainImage != null)
+                        {
+                            <img src="@Url.Content(mainImage.Url)" alt="Ảnh chính">
+                        }
+                    }
+                        @*<img class="card-img-top" src="@car.ImageCarNavigation.Url" alt="Ảnh xe" />*@
                         <!-- Chi tiết sản phẩm-->
                         <div class="card-body p-4">
                             <div class="text-center">
@@ -34,7 +42,7 @@
                         <!-- Các hành động với sản phẩm-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex justify-content-center">
                             <a asp-page="./Edit" asp-route-id="@car.CarId" class="mx-2">Edit</a>
-                            <a asp-page="./Details" asp-route-id="@car.CarId" class="mx-2">Details</a>
+                           @* <a asp-page="./Details" asp-route-id="@car.CarId" class="mx-2">Details</a>*@
                             <a asp-page="./Delete" asp-route-id="@car.CarId" class="mx-2">Delete</a>
                         </div>
 

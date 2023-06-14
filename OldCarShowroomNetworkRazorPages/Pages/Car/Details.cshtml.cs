@@ -37,7 +37,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                 .Include(c => c.ColorNavigation)
                 .Include(c => c.DriveNavigation)
                 .Include(c => c.FuelNavigation)
-                .Include(c => c.ImageCarNavigation)
+                /*.Include(c => c.ImageCarNavigation)*/
                 .Include(c => c.ManufactoryNavigation)
                 .Include(c => c.UsernameNavigation)
                 .Include(c => c.VehiclesNavigation).FirstOrDefaultAsync(m => m.CarId == id);

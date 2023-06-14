@@ -33,5 +33,16 @@ namespace OldCarShowroomNetworkRazorPages.Api
             return _context.Wards.Where(w => w.DistrictId.Equals(districtid)).ToList();
 
         }
+        [HttpGet]
+        [Route("city/{cityid}/district/{districtid}/ward/{wardid}")]
+        public ActionResult<List<Showroom>> listShowrooms(string cityid, string districtid, string wardid)
+        {
+
+            return _context.Showrooms
+                .Where(s => s.CityId.Equals(cityid) && s.DistrictId.Equals(districtid) && s.Wards.Equals(wardid))
+                .ToList();
+
+
+        }
     }
 }

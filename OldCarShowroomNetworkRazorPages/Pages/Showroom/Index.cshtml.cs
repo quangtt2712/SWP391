@@ -26,15 +26,17 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
        
 
         public IList<BOs.Models.Showroom> Showroom { get;set; }
-
+        public IList<BOs.Models.ImageShowroom> ImageShowroom { get; set; }
         public async Task OnGetAsync()
         {
             Showroom = await _context.Showrooms
                 .Include(s => s.City)
                 .Include(s => s.District)
-                .Include(s => s.Image)
+                
                 .Include(s => s.WardsNavigation).ToListAsync();
-            
+
+            ImageShowroom = await _context.ImageShowrooms.ToListAsync();
+
         }
      
     }

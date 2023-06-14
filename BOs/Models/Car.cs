@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -11,21 +10,17 @@ namespace BOs.Models
         public Car()
         {
             Bookings = new HashSet<Booking>();
+            ImageCars = new HashSet<ImageCar>();
         }
 
         public int CarId { get; set; }
-        [Required(ErrorMessage = "Vui lòng nhập Hãng chế tạo.")]
         public int? Manufactory { get; set; }
-        [Required(ErrorMessage = "Vui lòng nhập Tên xe.")]
         public int? CarName { get; set; }
-        [Required(ErrorMessage = "Vui lòng nhập Phiên bản.")]
         public string Version { get; set; }
-        [Required(ErrorMessage = "Vui lòng nhập Năm sản xuất/đời.")]
         public int? CarModelYear { get; set; }
         public bool? Origin { get; set; }
         public int? NumberOfKilometersTraveled { get; set; }
         public int? Vehicles { get; set; }
-        [Required(ErrorMessage = "Vui lòng nhập giá.")]
         public long? Price { get; set; }
         public int? Color { get; set; }
         public int? ColorInside { get; set; }
@@ -39,7 +34,6 @@ namespace BOs.Models
         public string FuelIntakeSystem { get; set; }
         public int? FuelConsumption { get; set; }
         public string Description { get; set; }
-        public int? ImageCar { get; set; }
         public string Username { get; set; }
         public bool? Status { get; set; }
         public int? ShowroomId { get; set; }
@@ -50,11 +44,11 @@ namespace BOs.Models
         public virtual Color ColorNavigation { get; set; }
         public virtual Drife DriveNavigation { get; set; }
         public virtual Fuel FuelNavigation { get; set; }
-        public virtual ImageCar ImageCarNavigation { get; set; }
         public virtual Manufactory ManufactoryNavigation { get; set; }
         public virtual Showroom Showroom { get; set; }
         public virtual User UsernameNavigation { get; set; }
         public virtual Vehicle VehiclesNavigation { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<ImageCar> ImageCars { get; set; }
     }
 }

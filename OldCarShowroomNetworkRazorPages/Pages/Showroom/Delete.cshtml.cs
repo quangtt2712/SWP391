@@ -34,7 +34,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             Showroom = await _context.Showrooms
                 .Include(s => s.City)
                 .Include(s => s.District)
-                .Include(s => s.Image)
+              /*  .Include(s => s.Image)*/
                 .Include(s => s.WardsNavigation).FirstOrDefaultAsync(m => m.ShowroomId == id);
 
             if (Showroom == null)
@@ -55,6 +55,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
             if (Showroom != null)
             {
+                var associatedImages = await _context.ImageShowrooms
+            .Where(img => img.ShowroomId == Showroom.ShowroomId)
+            .ToListAsync();
+
+                _context.ImageShowrooms.RemoveRange(associatedImages);
+                await _context.SaveChangesAsync();
                 _context.Showrooms.Remove(Showroom);
                 await _context.SaveChangesAsync();
             }

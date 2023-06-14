@@ -28,7 +28,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
         }
 
         public IList<BOs.Models.Showroom> Showroom { get;set; }
-
+        public IList<BOs.Models.ImageShowroom> ImageShowroom { get; set; }
         public async Task OnGetAsync()
         {
             ViewData["city"] = new SelectList(_context.Cities, "CityId", "Name");
@@ -37,9 +37,9 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
             Showroom = await _context.Showrooms
                  .Include(s => s.City)
                 .Include(s => s.District)
-                .Include(s => s.Image)
+               /* .Include(s => s.Image)*/
                 .Include(s => s.WardsNavigation).ToListAsync();
-
+            ImageShowroom = await _context.ImageShowrooms.ToListAsync();
         }
     }
 }
