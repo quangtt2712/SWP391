@@ -1,6 +1,6 @@
 ﻿@page
 @model OldCarShowroomNetworkRazorPages.Pages.Showroom.DetailsModel
-
+@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Chi tiết showroom";
 }
@@ -70,7 +70,68 @@
         <img src="@Url.Content(image.Url)" alt="Ảnh phụ" width="200">
     }
 }
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Showroom.ShowroomId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+@if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals("2"))
+{
+    <div>
+        @*<a asp-page="./Edit" asp-route-id="@Model.Showroom.ShowroomId">Edit</a>*@
+        <a asp-page="./Index">Back to List</a>
+    </div>
+}
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @if (Model.Car != null)
+            {
+                @foreach (var car in Model.Car)
+                {
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Hình ảnh sản phẩm-->
+                            <img class="card-img-top" src="@car.ImageCars" alt="Ảnh xe" />
+                            <!-- Chi tiết sản phẩm-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <p hidden>@car.CarId</p>
+                                    <!-- Tên sản phẩm-->
+                                    <h5 class="fw-bolder">Xe @car.ManufactoryNavigation.ManufactoryName @car.CarNameNavigation.CarName1 @car.CarModelYearNavigation.CarModelYear1</h5>
+                                    <h6 class="fw-bolder">Version: @car.Version </h6>
+                                    <h6 class="fw-bolder">Origin: @car.Origin </h6>
+                                    <h6 class="fw-bolder">Dòng: @car.VehiclesNavigation.VehiclesName </h6>
+                                    <h6 class="fw-bolder">Số Km đã đi: @car.NumberOfKilometersTraveled km</h6>
+                                    <h6 class="fw-bolder">Nội thất: @car.ColorInsideNavigation.ColorName</h6>
+                                    <h6 class="fw-bolder">Ngoại thất: @car.ColorNavigation.ColorName</h6>
+                                    <h6 class="fw-bolder">Số cửa: @car.NumberOfDoors</h6>
+                                    <h6 class="fw-bolder">Số chỗ ngồi: @car.NumberOfSeats</h6>
+                                    <h6 class="fw-bolder">Động cơ: @car.Gear</h6>
+                                    <h6 class="fw-bolder">Nguyên liệu: @car.FuelNavigation.FuelName</h6>
+                                    <h6 class="fw-bolder">Hệ thống nạp nhiên liệu: @car.FuelIntakeSystem</h6>
+                                    <h6 class="fw-bolder">Tiêu thụ nhiên liệu: @car.FuelConsumption</h6>
+                                    <!-- Giá sản phẩm-->
+                                    <h6 class="fw-bolder">Giá: @car.Price Triệu</h6>
+                                    @car.Description
+                                </div>
+                            </div>
+                        @if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals("2"))
+                        {
+                                @if (car.Notification == false)
+                                {
+                                    <form method="post">
+                                        <div class="form-group">
+                                        <input type="hidden" id="ShowroomId" name="ShowroomId" asp-for="@car.ShowroomId" />
+                                        <input type="hidden" id="CarId" name="CarId" asp-for="@car.CarId" />
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </form>
+@*                            <a asp-page="./CarDetail" asp-route-id="@car.CarId" class="btn btn-link">Xem chi tiết</a>*@
+                        }
+                        }else{
+                                    <h6 class="fw-bolder">Tình trạng: Đang bán</h6>
+                        }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
