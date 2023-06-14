@@ -101,7 +101,13 @@ namespace OldCarShowroomNetworkRazorPage.Pages
             }
             return Page();
         }
-
+        public async Task<IActionResult> OnPostLogout()
+        {
+            HttpContext.Session.Remove("Key");
+            HttpContext.Session.Remove("Role");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("./Index");
+        }
         //public async Task Login()
         //{
         //    await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
