@@ -27,6 +27,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         [BindProperty]
         public BOs.Models.Showroom Showroom { get; set; }
         [BindProperty]
+        public BOs.Models.ImageShowroom ImageShowroom { get; set; }
+
+        public IList<BOs.Models.ImageShowroom> ImageShowrooms { get; set; }
+
+        [BindProperty]
         public IFormFile UploadImg { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -39,8 +44,14 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             Showroom = await _context.Showrooms
                 .Include(s => s.City)
                 .Include(s => s.District)
-                .Include(s => s.Image)
+                /*   .Include(s => s.Image)*/
                 .Include(s => s.WardsNavigation).FirstOrDefaultAsync(m => m.ShowroomId == id);
+            ImageShowroom = await _context.ImageShowrooms
+               .FirstOrDefaultAsync(img => img.ShowroomId == id && img.ImageMain == true);
+
+            ImageShowrooms = await _context.ImageShowrooms
+                .Where(img => img.ShowroomId == id && img.ImageMain == false)
+                .ToListAsync();
 
             if (Showroom == null)
             {
@@ -57,38 +68,64 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(IFormFile UploadImg)
+        public async Task<IActionResult> OnPostAsync(IFormFile uploadimg, IFormFile uploadimgmain)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            if (UploadImg != null && UploadImg.Length > 0)
-            {
-                // Xóa hình ảnh hiện tại của showroom
-               
 
-                // Lưu trữ hình ảnh mới vào thư mục hoặc dịch vụ lưu trữ của bạn
-                string imagePath = "wwwroot/images/showroom" + Guid.NewGuid().ToString() + "_" + UploadImg.FileName;
+            _context.Attach(Showroom).State = EntityState.Modified;
+
+            // Kiểm tra xem có file ảnh được tải lên hay không
+            if (uploadimg != null && uploadimg.Length > 0)
+            {
+                // Lưu trữ file ảnh vào thư mục hoặc dịch vụ lưu trữ của bạn
+                // Ví dụ: sử dụng thư viện FileHelper để lưu trữ ảnh trong thư mục "wwwroot/images/showroom"
+                string imagePath = "wwwroot/images/showroom" + Guid.NewGuid().ToString() + "_" + uploadimg.FileName;
                 using (var stream = new FileStream(imagePath, FileMode.Create))
                 {
-                    await UploadImg.CopyToAsync(stream);
+                    await uploadimg.CopyToAsync(stream);
                 }
 
                 // Tạo đối tượng ImageShowroom và lưu thông tin ảnh vào cơ sở dữ liệu
-                ImageShowroom newImage = new ImageShowroom
+                ImageShowroom image = new ImageShowroom
                 {
-                    Url = imagePath.Replace("wwwroot", "")
+                    Url = imagePath.Replace("wwwroot", ""),
+                    ImageMain = false,
+                    ShowroomId = Showroom.ShowroomId
                 };
-                _context.ImageShowrooms.Add(newImage);
-                await _context.SaveChangesAsync();
-
-                // Cập nhật ImageId của Showroom với ImageId mới
-                Showroom.ImageId = newImage.ImageId;
+                _context.ImageShowrooms.Add(image);
+               
             }
-            
+            if (uploadimgmain != null && uploadimgmain.Length > 0)
+            {
+                var oldMainImage = await _context.ImageShowrooms.FirstOrDefaultAsync(img => img.ShowroomId == Showroom.ShowroomId && img.ImageMain == true);
+                if (oldMainImage != null)
+                {
+                    _context.ImageShowrooms.Remove(oldMainImage);
+                }
+                // Lưu trữ file ảnh vào thư mục hoặc dịch vụ lưu trữ của bạn
+                // Ví dụ: sử dụng thư viện FileHelper để lưu trữ ảnh trong thư mục "wwwroot/images/showroom"
+                string imagePath = "wwwroot/images/showroom" + Guid.NewGuid().ToString() + "_" + uploadimgmain.FileName;
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await uploadimgmain.CopyToAsync(stream);
+                }
 
-            _context.Attach(Showroom).State = EntityState.Modified;
+                // Tạo đối tượng ImageShowroom và lưu thông tin ảnh vào cơ sở dữ liệu
+                ImageShowroom image = new ImageShowroom
+                {
+                    Url = imagePath.Replace("wwwroot", ""),
+                    ImageMain = true,
+                    ShowroomId = Showroom.ShowroomId
+                };
+                _context.ImageShowrooms.Add(image);
+           
+            }
+
+
+ 
 
             try
             {

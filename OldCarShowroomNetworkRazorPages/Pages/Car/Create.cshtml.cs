@@ -43,23 +43,30 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
         [BindProperty]
         public BOs.Models.Showroom Showroom { get; set; }
+
+        [BindProperty]
+        public BOs.Models.ImageCar ImageCar { get; set; }
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync(IFormFile uploadimg, int? id)
+        public async Task<IActionResult> OnPostAsync(IFormFile uploadimg, IFormFile uploadimgmain, int? id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+          
             if (id == null)
             {
                 return NotFound();
             }
             var Showroomid = _context.Showrooms.FirstOrDefault(e => e.ShowroomId == id);
-            if (uploadimg == null || uploadimg.Length == 0)
-            {
-                ModelState.AddModelError(string.Empty, "Vui lòng chọn một ảnh.");
-                return Page();
-            }
+            string userLogin = HttpContext.Session.GetString("Key");
+            var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
+
+            Car.Username = user.Username;
+            Car.Showroom = Showroomid;
+            Car.Notification = false;
+            Car.Status = false;
+            Car.Note = string.Empty;
+            _context.Cars.Add(Car);
+            await _context.SaveChangesAsync();
+            
+            
             // Kiểm tra xem có file ảnh được tải lên hay không
             if (uploadimg != null && uploadimg.Length > 0)
             {
@@ -74,24 +81,34 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                 // Tạo đối tượng ImageShowroom và lưu thông tin ảnh vào cơ sở dữ liệu
                 ImageCar image = new ImageCar
                 {
-                    Url = imagePath.Replace("wwwroot", "")
+                    Url = imagePath.Replace("wwwroot", ""),
+                    ImageMain = false,
+                    CarId = Car.CarId
                 };
                 _context.ImageCars.Add(image);
                 await _context.SaveChangesAsync();
-                
-                // Gán ImageId của Showroom bằng ImageId mới được tạo ra
-                Car.ImageCar = image.ImageId;
             }
-            string userLogin = HttpContext.Session.GetString("Key");
-            var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
+            if (uploadimgmain != null && uploadimgmain.Length > 0)
+            {
+                // Lưu trữ file ảnh vào thư mục hoặc dịch vụ lưu trữ của bạn
+                // Ví dụ: sử dụng thư viện FileHelper để lưu trữ ảnh trong thư mục "wwwroot/images/showroom"
+                string imagePath = "wwwroot/images/car" + Guid.NewGuid().ToString() + "_" + uploadimgmain.FileName;
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await uploadimgmain.CopyToAsync(stream);
+                }
+
+                // Tạo đối tượng ImageShowroom và lưu thông tin ảnh vào cơ sở dữ liệu
+                ImageCar image = new ImageCar
+                {
+                    Url = imagePath.Replace("wwwroot", ""),
+                    ImageMain = true,
+                    CarId = Car.CarId
+                };
+                _context.ImageCars.Add(image);
+                await _context.SaveChangesAsync();
+            }
             
-            Car.Username = user.Username;
-            Car.Showroom = Showroomid;
-            Car.Notification = false;
-            Car.Status = false;
-            Car.Note = string.Empty;
-            _context.Cars.Add(Car);
-            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

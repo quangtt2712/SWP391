@@ -18,9 +18,4 @@
     <ProjectReference Include="..\REPOs\REPOs.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\car\" />
-    <Folder Include="wwwroot\images\showroom\" />
-  </ItemGroup>
-
 </Project>

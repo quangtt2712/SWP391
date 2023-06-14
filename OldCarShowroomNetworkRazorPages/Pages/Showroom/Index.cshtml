@@ -31,9 +31,9 @@
                 Website
             </th>
             <th>
-                Ảnh
+                Ảnh chính
             </th>
-
+            
         </tr>
     </thead>
     <tbody>
@@ -53,9 +53,13 @@
                     @Html.DisplayFor(modelItem => item.Website)
                 </td>
                 <td>
-                    @if (item.Image != null)
+                    @if (item.ImageShowrooms != null && item.ImageShowrooms.Count > 0)
                     {
-                        <img src="@item.Image.Url" alt="Ảnh showroom" width="100">
+                        var mainImage = item.ImageShowrooms.FirstOrDefault(img => img.ImageMain == true);
+                        if (mainImage != null)
+                        {
+                            <img src="@Url.Content(mainImage.Url)" alt="Ảnh chính" width="100">
+                        }
                     }
                 </td>
                 

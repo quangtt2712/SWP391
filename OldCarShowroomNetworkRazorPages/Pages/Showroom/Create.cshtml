@@ -50,8 +50,13 @@
 </div>
 
             <div class="form-group">
-                <label asp-for="Showroom.ImageId" class="control-label">Ảnh showroom</label>
-                <input type="file" id="uploadimg" name="uploadimg" accept="image/*"/>
+                <label asp-for="ImageShowroom.Url" class="control-label">Ảnh showroom chính</label>
+                <input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*"/>
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageShowroom.Url" class="control-label">Ảnh showroom phụ</label>
+                <input type="file" id="uploadimg" name="uploadimg" accept="image/*" />
                 
             </div>
             <div class="form-group">

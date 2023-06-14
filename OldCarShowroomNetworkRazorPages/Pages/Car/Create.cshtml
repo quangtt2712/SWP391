@@ -102,12 +102,21 @@
                 <textarea asp-for="Car.Description" class="form-control" /></textarea>
                 <span asp-validation-for="Car.Description" class="text-danger"></span>
             </div>
-             <div class="form-group">
+             @*<div class="form-group">
                 <label asp-for="Car.ImageCar" class="control-label">Ảnh xe</label>
                 <input type="file" id="uploadimg" name="uploadimg" accept="image/*"/>
                 
+            </div>*@
+            <div class="form-group">
+                <label asp-for="ImageCar.Url" class="control-label">Ảnh showroom chính</label>
+                <input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*" />
+
             </div>
-            
+            <div class="form-group">
+                <label asp-for="ImageCar.Url" class="control-label">Ảnh showroom phụ</label>
+                <input type="file" id="uploadimg" name="uploadimg" accept="image/*" />
+
+            </div>
             
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -2,65 +2,74 @@
 @model OldCarShowroomNetworkRazorPages.Pages.Showroom.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết showroom";
 }
 
-<h1>Details</h1>
+<h1>Chi tiết</h1>
 
 <div>
     <h4>Showroom</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.ShowroomName)
+            Tên
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.ShowroomName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.Address)
+            Địa chỉ
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.Address)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.Phone)
+            Phone
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.Phone)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.Website)
+            Web
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.Website)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.City)
+            Thành phố
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.City.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.District)
+            Quận
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.District.Name)
         </dd>
+       
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.Image)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Showroom.Image.ImageId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.WardsNavigation)
+            Phường
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.WardsNavigation.Name)
         </dd>
     </dl>
 </div>
+<h4>Ảnh chính</h4>
+@if (Model.ImageShowroom != null)
+{
+    <img src="@Url.Content(Model.ImageShowroom.Url)" alt="Ảnh chính" width="200">
+}
+
+<h4>Ảnh phụ</h4>
+@if (Model.ImageShowrooms != null && Model.ImageShowrooms.Count > 0)
+{
+    foreach (var image in Model.ImageShowrooms)
+    {
+        <img src="@Url.Content(image.Url)" alt="Ảnh phụ" width="200">
+    }
+}
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Showroom.ShowroomId">Edit</a> |
     <a asp-page="./Index">Back to List</a>

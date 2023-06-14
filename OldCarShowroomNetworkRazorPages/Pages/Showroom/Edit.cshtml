@@ -35,18 +35,33 @@
                 <span asp-validation-for="Showroom.Website" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Showroom.ImageId" class="control-label">Ảnh showroom</label>
-                @if(Model.Showroom.Image != null)
+                <label asp-for="ImageShowroom.Url" class="control-label">Ảnh showroom chính</label>
+                @if (Model.ImageShowroom != null)
                 {
                     <div id="currentImage">
-                        <img src="@Url.Content(Model.Showroom.Image.Url)" alt="Current Image" class="img-thumbnail" />
+                        <img src="@Url.Content(Model.ImageShowroom.Url)" alt="Current Image" class="img-thumbnail" />
             </div>
                 }
+                <input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*"/>
                 
-                <input type="file" id="UploadImg" name="UploadImg" accept="image/*" />
-                <input type="hidden" id="ImageId" asp-for="Showroom.ImageId" />
-
             </div>
+            <div class="form-group">
+                <label asp-for="ImageShowroom.Url" class="control-label">Ảnh showroom phụ</label>
+                @if (Model.ImageShowrooms != null && Model.ImageShowrooms.Count > 0)
+                {
+                    foreach (var image in Model.ImageShowrooms)
+                    {
+                        <div id="currentImage">
+
+                            <img src="@Url.Content(image.Url)" alt="Current Image" class="img-thumbnail" />
+
+                        </div>
+                    }
+                }
+                <input type="file" id="uploadimg" name="uploadimg" accept="image/*" />
+                
+            </div>
+          
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -58,21 +73,7 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var uploadImgInput = document.getElementById("UploadImg");
-        var imageIdInput = document.getElementById("ImageId");
 
-        uploadImgInput.addEventListener("change", function () {
-            if (uploadImgInput.files.length === 0) {
-                // Không có tệp mới được chọn, giữ lại ID ảnh hiện tại
-                imageIdInput.disabled = false;
-            } else {
-                imageIdInput.disabled = true;
-            }
-        });
-    });
-</script>
 
 
 @section Scripts {

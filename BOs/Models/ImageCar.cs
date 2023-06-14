@@ -7,14 +7,11 @@ namespace BOs.Models
 {
     public partial class ImageCar
     {
-        public ImageCar()
-        {
-            Cars = new HashSet<Car>();
-        }
-
         public int ImageId { get; set; }
+        public bool? ImageMain { get; set; }
+        public int? CarId { get; set; }
         public string Url { get; set; }
 
-        public virtual ICollection<Car> Cars { get; set; }
+        public virtual Car Car { get; set; }
     }
 }

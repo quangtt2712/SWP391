@@ -44,7 +44,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                 .Include(c => c.ColorNavigation)
                 .Include(c => c.DriveNavigation)
                 .Include(c => c.FuelNavigation)
-                .Include(c => c.ImageCarNavigation)
+                /*.Include(c => c.ImageCarNavigation)*/
                 .Include(c => c.ManufactoryNavigation)
                 .Include(c => c.UsernameNavigation)
                 .Include(c => c.VehiclesNavigation).FirstOrDefaultAsync(m => m.CarId == id);
@@ -95,8 +95,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                 await _context.SaveChangesAsync();
 
                 // Cập nhật ImageId của Showroom với ImageId mới
-                Car.ImageCar = newImage.ImageId;
-            }
+/*                Car.ImageCar = newImage.ImageId;
+*/            }
             string userLogin = HttpContext.Session.GetString("Key");
             var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
 
