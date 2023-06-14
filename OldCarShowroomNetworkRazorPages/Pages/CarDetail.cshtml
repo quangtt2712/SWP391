@@ -1,0 +1,140 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.CarDetailModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>Xe @Model.car.ManufactoryNavigation.ManufactoryName @Model.car.CarNameNavigation.CarName1 @Model.car.CarModelYearNavigation.CarModelYear1</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.ImageCars)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.ImageCars)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.Version)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.Version)
+        </dd>
+@*        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.Origin)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.Origin)
+        </dd>*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.NumberOfKilometersTraveled)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.NumberOfKilometersTraveled)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.NumberOfDoors)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.NumberOfDoors)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.NumberOfSeats)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.NumberOfSeats)
+        </dd>
+@*        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.Gear)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.Gear)
+        </dd>*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.FuelIntakeSystem)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.FuelIntakeSystem)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.FuelConsumption)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.FuelConsumption)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.ColorInsideNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.ColorInsideNavigation.ColorName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.ColorNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.ColorNavigation.ColorName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.DriveNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.DriveNavigation.DriveName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.FuelNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.FuelNavigation.FuelName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.VehiclesNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.VehiclesNavigation.VehiclesName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.Showroom.ShowroomName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.Showroom.ShowroomName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.Showroom.Wards)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.Showroom.WardsNavigation.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.Showroom.District)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.Showroom.District.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.Showroom.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.Showroom.City.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.car.Showroom.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.car.Showroom.Phone)
+        </dd>
+    </dl>
+</div>
+<a> Đặt lịch xem xe</a>
+<a asp-page="/Index"> Quay lại trang chủ</a>

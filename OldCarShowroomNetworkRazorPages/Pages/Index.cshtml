@@ -53,7 +53,7 @@
     <!-- Topbar End -->
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="./Indexl" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h2 class="m-0 text-primary"><i class="fa fa-car me-3"></i>CarServ</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -63,7 +63,6 @@
             <form method="post" class="d-flex ms-auto p-4 p-lg-0">
                 <input class="form-control me-2" asp-for="searchKey" type="text" placeholder="Nhập tên xe bạn muốn mua" aria-label="Tìm kiếm" style="width: 250px;">
                 <button class="btn btn-outline-primary" type="submit">Tìm kiếm</button>
-
             </form>
 
             <div class="navbar-nav ms-auto p-4 p-lg-0">
@@ -72,10 +71,7 @@
                 {
                     <a href="/Car/Index" class="nav-item nav-link">Bạn muốn bán xe?</a>
                 }
-                @if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals("2"))
-                {
-                    <a href="/Showroom/Index" class="nav-item nav-link">Showroom</a>
-                }
+                <a href="/Showroom/Index" class="nav-item nav-link">Showroom</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu fade-up m-0">
@@ -168,31 +164,37 @@
         </div>
     </div>
     <section class="py-5">
+        @if (@Model.Msg1 != null)
+        {
+            <h4 style="color: red">@Model.Msg1</h4>
+        }
         <div class="container px-4 px-lg-5 mt-5">
 
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                @if (@Model.Msg1 != null)
-                {
-                    <h4 style="color: red">@Model.Msg1</h4>
-                }
+            @if(Model.car != null){
                 @foreach (var car in Model.car)
                 {
                     <div class="col mb-5">
-                            <div class="card h-100">
+                        <div class="card h-100">
                             <!-- Hình ảnh sản phẩm-->
                             <img class="card-img-top" src="@car.ImageCars" alt="Ảnh xe" />
                             <!-- Chi tiết sản phẩm-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                 <!-- Tên sản phẩm-->
-                                <h5 class="fw-bolder">Xe @car.ManufactoryNavigation.ManufactoryName &nbsp; @car.CarNameNavigation.CarName1</h5>
+                                <h5 class="fw-bolder">Xe @car.ManufactoryNavigation.ManufactoryName @car.CarNameNavigation.CarName1</h5>
                                 <!-- Giá sản phẩm-->
-                                @car.Price Triệu
+                                <h6 class="fw-bolder">@car.Price Triệu</h6>
+                                @car.Description 
+                                <h6 class="fw-bolder">Showroom @car.Showroom.ShowroomName</h6>
+                                <h6 class="fw-bolder">@car.Showroom.City.FullName</h6>
                                 </div>
                             </div>
+                            <a asp-page="./CarDetail" asp-route-id="@car.CarId" class="btn btn-link">Xem chi tiết</a>
                         </div>
                     </div>
                 }
+            }
             </div>
         </div>
     </section>
