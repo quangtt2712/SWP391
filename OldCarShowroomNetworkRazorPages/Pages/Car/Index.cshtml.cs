@@ -40,7 +40,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                  .Include(c => c.DriveNavigation)
                  .Include(c => c.FuelNavigation)
                  .Include(c => c.ManufactoryNavigation)
-                 .Include(c => c.Showroom)
+                 .Include(c => c.Showroom).ThenInclude(s => s.City)
                  .Include(c => c.UsernameNavigation)
                  .Include(c => c.VehiclesNavigation).ToListAsync();
             ImageCar = await _context.ImageCars.ToListAsync();

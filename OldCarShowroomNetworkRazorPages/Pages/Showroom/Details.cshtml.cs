@@ -25,8 +25,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         public BOs.Models.ImageShowroom ImageShowroom { get; set; }
         public IList<BOs.Models.ImageShowroom> ImageShowrooms { get; set; }
 
+        /*public BOs.Models.City City { get; set; }
 
+        public BOs.Models.District District { get; set; }
 
+        public BOs.Models.Ward Ward { get; set; }*/
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -37,7 +40,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             Showroom = await _context.Showrooms
                 .Include(s => s.City)
                 .Include(s => s.District)
-             /*   .Include(s => s.Image)*/
+            
                 .Include(s => s.WardsNavigation).FirstOrDefaultAsync(m => m.ShowroomId == id);
             ImageShowroom = await _context.ImageShowrooms
                .FirstOrDefaultAsync(img => img.ShowroomId == id && img.ImageMain == true);
