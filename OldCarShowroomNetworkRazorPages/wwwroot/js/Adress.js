@@ -39,42 +39,63 @@ const listcities = document.getElementById("listCity");
 const listDistrictNames = document.getElementById("listDistrictName");
 const listWardNames = document.getElementById("listWardName");
 const search = document.getElementById("save");
+/*const listshowroom = []*/
 search.addEventListener("click", (e) => {
     e.preventDefault()
     if (listcities.value != "" && listDistrictNames.value != "" && listWardNames.value != "") {
         fetch(`/api/Adress/city/${listcities.value}/district/${listDistrictNames.value}/ward/${listWardNames.value}`)
             .then(data => data.json())
             .then(listShowrooms => {
-                console.log(listShowrooms)
-                let htmls = listShowrooms.map(showroom => `
-                   <div class="col mb-5">
-                    <a asp-page="./Create" class="card h-100" asp-route-id="${showroom.showroomId}">
-                        <!-- Hình ảnh sản phẩm-->
-                            @if(${showroom.image} != null)
-                        {
-                            <img class="card-img-top" src="${showroom.image.url}" alt="Ảnh showroom" />
-                        }
-                        
-                             <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Tên sản phẩm-->
-                                <h5 class="fw-bolder">${showroom.showroomName}</h5>
-                                <!-- Giá sản phẩm-->
-                            ${showroom.address}
-                            </div>
-                        </div>
-                        
-                        <!-- Chi tiết sản phẩm-->
-                       
-                        
-
-                    </a>
-                </div>
-`)
-                document.getElementById("listshowroom").innerHTML = htmls.join('')
+                /*console.log(listShowrooms)*/
+                const a = listShowrooms.reduce((a, b) => {
+                    a.push({
+                        id: b.showroomId,
+                        showroomName: b.showroomName,
+                        address: b.address,
+                        imgshowroom: ""
+                    })
+                    return a;
+                }, [])
+                return new Promise(res => res(a))
             })
-    }
-    else {
-        alert("abc")
+            .then(list => {
+                console.log(list)
+                let htmls = list.map(item => `
+                    <div class="col mb-5">
+					<a href="/Car/Create?id=${item.id}" class="card h-100">
+
+
+								<img src="" alt="Ảnh chính" data-id ="${item.id}" class = "showroomimg">
+						
+						<div class="card-body p-4">
+							<div class="text-center">
+								<!-- Tên sản phẩm-->
+								<h5 class="fw-bolder">${item.showroomName}</h5>
+                           
+								<!-- Giá sản phẩm-->
+							${item.address}
+							</div>
+						</div>
+						<!-- Chi tiết sản phẩm-->
+					</a>
+				</div>
+`)
+                document.getElementById("listshowroom").innerHTML = htmls.join("")
+            })
+            .then(() => {
+                let att = document.querySelectorAll(".showroomimg")
+                att.forEach(attr => {
+                    console.log(attr.getAttribute("data-id"))
+                    fetch(`/api/Adress/imageShowroom/${attr.getAttribute("data-id")}`)
+                        .then(data => data.json())
+                        .then(img => {
+                            console.log(img)
+                            attr.src = img.url;
+                        })
+                })
+            })
+    } else {
+        alert("Vui lòng chọn đủ phường");
     }
 })
+

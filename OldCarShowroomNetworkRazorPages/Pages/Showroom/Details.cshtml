@@ -39,20 +39,29 @@
             Thành phố
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Showroom.City.Name)
+            @if (Model.Showroom.City != null)
+            {
+                @Html.DisplayFor(model => model.Showroom.City.Name)
+            }
         </dd>
         <dt class="col-sm-2">
             Quận
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Showroom.District.Name)
+            @if (Model.Showroom.District != null)
+            {
+                @Html.DisplayFor(model => model.Showroom.District.Name)
+            }
         </dd>
-       
+
         <dt class="col-sm-2">
             Phường
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Showroom.WardsNavigation.Name)
+            @if (Model.Showroom.WardsNavigation != null)
+            {
+                @Html.DisplayFor(model => model.Showroom.WardsNavigation.Name)
+            }
         </dd>
     </dl>
 </div>

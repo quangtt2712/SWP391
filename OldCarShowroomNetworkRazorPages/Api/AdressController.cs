@@ -1,8 +1,12 @@
 ﻿using BOs.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace OldCarShowroomNetworkRazorPages.Api
 {
@@ -33,16 +37,22 @@ namespace OldCarShowroomNetworkRazorPages.Api
             return _context.Wards.Where(w => w.DistrictId.Equals(districtid)).ToList();
 
         }
-        [HttpGet]
-        [Route("city/{cityid}/district/{districtid}/ward/{wardid}")]
-        public ActionResult<List<Showroom>> listShowrooms(string cityid, string districtid, string wardid)
-        {
+		[HttpGet]
+		[Route("city/{cityid}/district/{districtid}/ward/{wardid}")]
+		public ActionResult<List<Showroom>> ListShowrooms(string cityid, string districtid, string wardid)
+		{
 
-            return _context.Showrooms
-                .Where(s => s.CityId.Equals(cityid) && s.DistrictId.Equals(districtid) && s.Wards.Equals(wardid))
-                .ToList();
-
-
-        }
-    }
+            return _context.Showrooms.Where(s => s.CityId.Equals(cityid) && s.DistrictId.Equals(districtid) && s.Wards.Equals(wardid))
+		.ToList(); ;
+           
+		}
+		[HttpGet]
+		[Route("imageShowroom/{id}")]
+		public ActionResult<ImageShowroom> ListShowroomsImage(int id)
+		{
+			ImageShowroom imageShowroom = _context.ImageShowrooms
+				.FirstOrDefault(s => s.ShowroomId == id && s.ImageMain == true);
+			return imageShowroom;
+		}
+	}
 }
