@@ -14,6 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
            <input type="hidden" asp-for="Car.CarId" />
+            <input type="hidden" asp-for="Car.ShowroomId" />
             <div class="form-group">
                 
                 <select hidden asp-for="Car.Manufactory" class="form-control" asp-items="ViewBag.Manufactory" id="listCarManufactory" onchange="getCarName(this)"></select>
@@ -98,14 +99,30 @@
                 <span asp-validation-for="Car.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @*<label asp-for="Car.ImageCar" class="control-label">Ảnh xe</label>
-                @if (Model.Car.ImageCarNavigation.Url != null)
+                <label asp-for="ImageCar.Url" class="control-label">Ảnh xe chính</label>
+                @if (Model.ImageCar != null)
                 {
-                    <img src="@Url.Content(Model.Car.ImageCarNavigation.Url)" alt="Current Image" class="img-thumbnail" />
+                    <div id="currentImage">
+                        <img src="@Url.Content(Model.ImageCar.Url)" alt="Current Image" class="img-thumbnail" />
+                    </div>
                 }
-                
-                <input type="file" id="UploadImg" name="UploadImg" accept="image/*" />
-                <input type="hidden" id="ImageId" asp-for="Car.ImageCar" />*@
+                <input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageCar.Url" class="control-label">Ảnh xe phụ</label>
+                @if (Model.ImageCars != null && Model.ImageCars.Count > 0)
+                {
+                    foreach (var image in Model.ImageCars)
+                    {
+                        <div id="currentImage">
+
+                            <img src="@Url.Content(image.Url)" alt="Current Image" class="img-thumbnail" />
+
+                        </div>
+                    }
+                }
+                <input type="file" id="uploadimg" name="uploadimg" accept="image/*" />
 
             </div>
 

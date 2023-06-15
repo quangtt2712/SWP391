@@ -69,7 +69,7 @@
                 <a href="./Index" class="nav-item nav-link active">Trang chủ</a>
                 @if (HttpContext.Session.GetString("Key") == null || (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals("1")))
                 {
-                    <a href="/Car/Index" class="nav-item nav-link">Bạn muốn bán xe?</a>
+                    <a href="/Car/Showroom" class="nav-item nav-link">Bạn muốn bán xe?</a>
                 }
                 <a href="/Showroom/Index" class="nav-item nav-link">Showroom</a>
                 <div class="nav-item dropdown">
@@ -177,7 +177,14 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Hình ảnh sản phẩm-->
-                            <img class="card-img-top" src="@car.ImageCars" alt="Ảnh xe" />
+                             @if (car.ImageCars != null && car.ImageCars.Count > 0)
+                    {
+                        var mainImage = car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
+                        if (mainImage != null)
+                        {
+                            <img src="@Url.Content(mainImage.Url)" alt="Ảnh chính">
+                        }
+                    }
                             <!-- Chi tiết sản phẩm-->
                             <div class="card-body p-4">
                                 <div class="text-center">

@@ -97,7 +97,14 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Hình ảnh sản phẩm-->
-                            <img class="card-img-top" src="@car.ImageCars" alt="Ảnh xe" />
+                             @if (car.ImageCars != null && car.ImageCars.Count > 0)
+                    {
+                        var mainImage = car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
+                        if (mainImage != null)
+                        {
+                            <img src="@Url.Content(mainImage.Url)" alt="Ảnh chính">
+                        }
+                    }
                             <!-- Chi tiết sản phẩm-->
                             <div class="card-body p-4">
                                 <div class="text-center">
@@ -129,13 +136,15 @@
                                         <div class="form-group">
                                         <input type="hidden" id="ShowroomId" name="ShowroomId" asp-for="@car.ShowroomId" />
                                         <input type="hidden" id="CarId" name="CarId" asp-for="@car.CarId" />
-                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                        <input type="submit" value="Chấp nhận" class="btn btn-primary" />
                                 </div>
                             </form>
 @*                            <a asp-page="./CarDetail" asp-route-id="@car.CarId" class="btn btn-link">Xem chi tiết</a>*@
-                        }
-                        }else{
-                                    <h6 class="fw-bolder">Tình trạng: Đang bán</h6>
+                                }
+                                else
+                                {
+                                                <h6 class="fw-bolder">Tình trạng: Đang bán</h6>
+                                }
                         }
                         </div>
                     </div>

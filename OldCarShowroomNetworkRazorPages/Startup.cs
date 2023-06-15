@@ -49,8 +49,9 @@ namespace OldCarShowroomNetworkRazorPages
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+			services.AddControllers();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.LoginPath = "/accessdenied";
                 options.AccessDeniedPath = "/accessdenied";
@@ -80,7 +81,8 @@ namespace OldCarShowroomNetworkRazorPages
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-            });
+				endpoints.MapControllers();
+			});
         }
     }
 }

@@ -50,7 +50,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                     .Include(c => c.Showroom.City)
                     .Include(c => c.VehiclesNavigation)
                     .Include(c => c.Showroom.City)
-                    .Include(c => c.Showroom.District)
+					.Include(c => c.ImageCars)
+					.Include(c => c.Showroom.District)
                     .Include(c => c.Showroom.WardsNavigation)
                     .Where(c =>c.Notification == true).ToListAsync();
                 
@@ -81,6 +82,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                  .Include(c => c.VehiclesNavigation)
                  .Include(c => c.Showroom.City)
                  .Include(c => c.Showroom.District)
+                 .Include(c => c.ImageCars)
                  .Include(c => c.Showroom.WardsNavigation)
                  .Where(p => p.Notification == true && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()));
             if (checkCar == null)

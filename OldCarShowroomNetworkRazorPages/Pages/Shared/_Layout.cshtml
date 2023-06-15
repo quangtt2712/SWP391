@@ -64,19 +64,12 @@
                 <a href="./Index" class="nav-item nav-link active">Trang chủ</a>
                 @if (Accessor.HttpContext.Session.GetString("Key") == null || Accessor.HttpContext.Session.GetString("Key") != null && Accessor.HttpContext.Session.GetString("Role").Equals("1"))
                 {
-                    <a href="/Car/Create" class="nav-item nav-link">Bạn muốn bán xe?</a>
+                    <a href="/Car/Showroom" class="nav-item nav-link">Bạn muốn bán xe?</a>
+                    <a href="/Car/Index" class="nav-item nav-link">Lịch sử kí gửi</a>
                 }
                 <a href="/Showroom/Index" class="nav-item nav-link">Showroom</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu fade-up m-0">
-                        <a href="booking.html" class="dropdown-item">Booking</a>
-                        <a href="team.html" class="dropdown-item">Technicians</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="404.html" class="dropdown-item">404 Page</a>
-                    </div>
-                </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                
+                
             </div>
             @if (Accessor.HttpContext.Session.GetString("Key") != null)
             {

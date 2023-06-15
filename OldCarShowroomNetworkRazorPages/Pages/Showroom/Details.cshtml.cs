@@ -93,6 +93,17 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(c => c.VehiclesNavigation)
                 .Where(c => c.ShowroomId == ShowroomId)
                 .ToListAsync();
+            Showroom = await _context.Showrooms
+                .Include(s => s.City)
+                .Include(s => s.District)
+
+                .Include(s => s.WardsNavigation).FirstOrDefaultAsync(m => m.ShowroomId == ShowroomId);
+            ImageShowroom = await _context.ImageShowrooms
+               .FirstOrDefaultAsync(img => img.ShowroomId == ShowroomId && img.ImageMain == true);
+
+            ImageShowrooms = await _context.ImageShowrooms
+                .Where(img => img.ShowroomId == ShowroomId && img.ImageMain == false)
+            .ToListAsync();
             return Page();
         }
     }
