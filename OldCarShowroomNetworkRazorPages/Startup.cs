@@ -34,9 +34,7 @@ namespace OldCarShowroomNetworkRazorPages
         {
             services.AddRazorPages();
             services.AddHttpContextAccessor();
-            services.AddControllers();
-            
-            services.AddDbContext<OldCarShowroomNetworkContext>(options => 
+            services.AddDbContext<OldCarShowroomNetworkContext>(options =>
             options.UseSqlServer("name=ConnectionStrings:DB"
             ));
             services.Configure<CookiePolicyOptions>(options =>
@@ -44,15 +42,21 @@ namespace OldCarShowroomNetworkRazorPages
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddScoped<UserRepository>();
+            services.AddScoped<CarRepository>();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(60);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-			
-		}
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/accessdenied";
+                options.AccessDeniedPath = "/accessdenied";
+            }); ;
+        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -67,7 +71,7 @@ namespace OldCarShowroomNetworkRazorPages
             }
 
             app.UseStaticFiles();
-            
+
             app.UseRouting();
             app.UseSession();
             app.UseCookiePolicy();
@@ -75,7 +79,6 @@ namespace OldCarShowroomNetworkRazorPages
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
         }

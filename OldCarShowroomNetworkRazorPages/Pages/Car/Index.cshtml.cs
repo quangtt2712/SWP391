@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Http;
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
 
-    [Authorize(Roles = "User")]
     public class IndexModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
@@ -27,9 +26,13 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
         public IList<BOs.Models.ImageCar> ImageCar { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             string userLogin = HttpContext.Session.GetString("Key");
+            if (string.IsNullOrEmpty(userLogin))
+            {
+                return Redirect("/Login");
+            }
             var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
 
             Car = await _context.Cars
@@ -44,6 +47,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                  .Include(c => c.UsernameNavigation)
                  .Include(c => c.VehiclesNavigation).ToListAsync();
             ImageCar = await _context.ImageCars.ToListAsync();
+            return Page();
         }
     }
 }

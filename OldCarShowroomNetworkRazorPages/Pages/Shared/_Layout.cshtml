@@ -36,12 +36,12 @@
     <link href="~/css/style.css" rel="stylesheet">
 </head>
 <body>
-   @* <div id="spinner"
+    <div id="spinner"
          class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
             <span class="sr-only">Loading...</span>
         </div>
-    </div>*@
+    </div>
     <!-- Spinner End -->
     <!-- Topbar Start -->
     <!-- Topbar End -->
@@ -54,41 +54,49 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <form class="d-flex ms-auto">
+            <form class="d-flex ms-auto p-4 p-lg-0">
                 <input class="form-control me-2" type="search" placeholder="Nhập tên xe bạn muốn mua" aria-label="Tìm kiếm" style="width: 250px;">
                 <button class="btn btn-outline-primary" type="submit">Tìm kiếm</button>
             </form>
 
-            <div class="navbar-nav ms-auto">
-                <a href="index.html" class="nav-item nav-link active">Trang chủ</a>
-                <a href="~/Car/Showroom" class="nav-item nav-link">Bạn muốn bán xe?</a>
-                <a href="service.html" class="nav-item nav-link">Showroom</a>
-                @if (Accessor.HttpContext.Session.GetString("Role").Equals("2"))
-                {
-                    <a href="service.html" class="nav-item nav-link">@Accessor.HttpContext.Session.GetString("Key")</a>
-                    
-                    <a href="./Login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                        Log out<i class="fa fa-arrow-right ms-3"></i>
-                    </a>
-                }
-                else if (Accessor.HttpContext.Session.GetString("Role").Equals("1"))
-                {
-                    <a href="service.html" class="nav-item nav-link">@Accessor.HttpContext.Session.GetString("Key")</a>
 
-                    <a href="./Login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                        Log out<i class="fa fa-arrow-right ms-3"></i>
-                    </a>
-                }
-                else
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="./Index" class="nav-item nav-link active">Trang chủ</a>
+                @if (Accessor.HttpContext.Session.GetString("Key") == null || Accessor.HttpContext.Session.GetString("Key") != null && Accessor.HttpContext.Session.GetString("Role").Equals("1"))
                 {
-                    <a href="./login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-                        Đăng nhập<i class="fa fa-arrow-right ms-3"></i>
-                    </a>
+                    <a href="/Car/Create" class="nav-item nav-link">Bạn muốn bán xe?</a>
                 }
+                <a href="/Showroom/Index" class="nav-item nav-link">Showroom</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="booking.html" class="dropdown-item">Booking</a>
+                        <a href="team.html" class="dropdown-item">Technicians</a>
+                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="404.html" class="dropdown-item">404 Page</a>
+                    </div>
+                </div>
+                <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
+            @if (Accessor.HttpContext.Session.GetString("Key") != null)
+            {
+                <div>
+                    @Accessor.HttpContext.Session.GetString("Key")
+                </div>
+                <form asp-page="/Login" asp-page-handler="logout" method="post">
+                    <div class="input-group">
+                        <button type="submit" class="btn btn-link">Logout</button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <a href="./Login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
+                    Đăng nhập<i class="fa fa-arrow-right ms-3"></i>
+                </a>
+            }
         </div>
     </nav>
-
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
