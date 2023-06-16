@@ -8,132 +8,230 @@
     <h4>Xe @Model.car.ManufactoryNavigation.ManufactoryName @Model.car.CarNameNavigation.CarName1 @Model.car.CarModelYearNavigation.CarModelYear1</h4>
     <hr />
     <dl class="row">
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Hình xe
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.ImageCars)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Version
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Version)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Xuất xứ
+            </dt>
+        </div>
+        <div class="form-group">
+        @if (Model.car.Origin == true)
+        {
+            <dd class="col-sm-10">
+                CKD
+            </dd>
+            }else{
+            <dd class="col-sm-10">
+                CBU
+            </dd>
+            }
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Dòng
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.VehiclesNavigation.VehiclesName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Số Km đã đi
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.NumberOfKilometersTraveled) Km
+            </dd>
+        </div>
+        <div class="form-group">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.ImageCars)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.ImageCars)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.Version)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.Version)
-        </dd>
-@*        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.Origin)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.Origin)
-        </dd>*@
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.NumberOfKilometersTraveled)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.NumberOfKilometersTraveled)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.Price)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.NumberOfDoors)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.NumberOfDoors)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.NumberOfSeats)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.NumberOfSeats)
-        </dd>
-@*        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.Gear)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.Gear)
-        </dd>*@
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.FuelIntakeSystem)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.FuelIntakeSystem)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.FuelConsumption)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.FuelConsumption)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.ColorInsideNavigation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.ColorInsideNavigation.ColorName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.ColorNavigation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.ColorNavigation.ColorName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.DriveNavigation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.DriveNavigation.DriveName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.FuelNavigation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.FuelNavigation.FuelName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.VehiclesNavigation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.VehiclesNavigation.VehiclesName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.Showroom.ShowroomName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.Showroom.ShowroomName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.Showroom.Wards)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.Showroom.WardsNavigation.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.Showroom.District)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.Showroom.District.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.Showroom.City)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.Showroom.City.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.car.Showroom.Phone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.car.Showroom.Phone)
-        </dd>
+                Màu nội thất
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.ColorInsideNavigation.ColorName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Màu ngoại thấ
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.ColorNavigation.ColorName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Số cửa
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.NumberOfDoors)
+            </dd>
+        </div>
+            <dt class="col-sm-2">
+                Số chỗ ngồi
+            </dt>
+        <div class="form-group">
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.NumberOfSeats)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Hộp số
+            </dt>
+        @if (Model.car.Gear == true)
+        {
+            <dd class="col-sm-10">
+                Số Tự động
+            </dd>
+        }else{
+            <dd class="col-sm-10">
+                Số tay
+            </dd>
+
+        }
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Dẫn động
+            </dt>
+        @if (Model.car.Drive == 1)
+        {
+            <dd class="col-sm-10">
+                FWD - Dẫn động cầu trước
+            </dd>
+        }
+        else if (Model.car.Drive == 2)
+        {
+            <dd class="col-sm-10">
+                RWD - Dẫn động cầu sau
+            </dd>
+        }
+        else if (Model.car.Drive == 3)
+        {
+            <dd class="col-sm-10">
+                4WD - Dẫn động 4 bánh
+            </dd>
+
+        }
+        else if (Model.car.Drive == 4)
+        {
+            <dd class="col-sm-10">
+                AWD - 4 bánh toàn thời gian
+            </dd>
+
+        }
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Nguyên liệu
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.FuelNavigation.FuelName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Hệ thống nạp nhiên liệu:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.FuelIntakeSystem)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Mức tiêu thụ nhiên liệu
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.FuelConsumption) L/100Km
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Giá
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Price) Triệu
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Thông
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Description)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Showroom
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.ShowroomName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Địa chỉ
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.Address)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Phường
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.WardsNavigation.Name)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Quận
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.District.Name)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Thành phố
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.City.Name)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                SĐT
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.Phone)
+            </dd>
+        </div>
+            <dt class="col-sm-2">
+                Website
+            </dt>
+        <div class="form-group">
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.Website)
+            </dd>
+        </div>
     </dl>
 </div>
 <a> Đặt lịch xem xe</a>

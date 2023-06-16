@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
-
+    [Authorize(Roles = "User")]
     public class IndexModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;

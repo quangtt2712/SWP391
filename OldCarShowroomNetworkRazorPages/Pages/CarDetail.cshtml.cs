@@ -34,7 +34,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                         .Include(c => c.ManufactoryNavigation)
                         .Include(c => c.Showroom)
                         .Include(c => c.UsernameNavigation)
-                        .Include(c => c.Showroom.City)
                         .Include(c => c.VehiclesNavigation)
                         .Include(c => c.Showroom.City)
                         .Include(c => c.Showroom.District)

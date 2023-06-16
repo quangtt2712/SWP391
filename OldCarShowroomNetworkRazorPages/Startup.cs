@@ -53,8 +53,10 @@ namespace OldCarShowroomNetworkRazorPages
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
-                options.LoginPath = "/accessdenied";
-                options.AccessDeniedPath = "/accessdenied";
+                options.LoginPath = "/Login";
+                options.AccessDeniedPath = "/AccessDenied";
+                options.LogoutPath = "/Logout";
+                options.SlidingExpiration = true;
             }); ;
         }
 

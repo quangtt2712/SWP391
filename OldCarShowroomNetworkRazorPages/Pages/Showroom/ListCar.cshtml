@@ -1,0 +1,94 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.Showroom.ListCarcshtmlModel
+@using Microsoft.AspNetCore.Http;
+@{
+}
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @if (Model.Car != null)
+            {
+                @foreach (var car in Model.Car)
+                {
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Hình ảnh sản phẩm-->
+                            @if (car.ImageCars != null && car.ImageCars.Count > 0)
+                            {
+                                var mainImage = car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
+                                if (mainImage != null)
+                                {
+                                    <img src="@Url.Content(mainImage.Url)" alt="Ảnh chính">
+                                }
+                            }
+                            <!-- Chi tiết sản phẩm-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <p hidden>@car.CarId</p>
+                                    <!-- Tên sản phẩm-->
+                                    <h5 class="fw-bolder">Xe @car.ManufactoryNavigation.ManufactoryName @car.CarNameNavigation.CarName1 @car.CarModelYearNavigation.CarModelYear1</h5>
+                                    <h6 class="fw-bolder">Version: @car.Version </h6>
+                                @if(car.Origin == true)
+                                {
+                                    <h6 class="fw-bolder">Xuất xứ: CKD </h6>
+                                }else{
+                                    <h6 class="fw-bolder">Xuất xứ: CBU </h6>
+                                        
+                                }
+                                    <h6 class="fw-bolder">Dòng: @car.VehiclesNavigation.VehiclesName </h6>
+                                    <h6 class="fw-bolder">Số Km đã đi: @car.NumberOfKilometersTraveled Km</h6>
+                                    <h6 class="fw-bolder">Màu nội thất: @car.ColorInsideNavigation.ColorName</h6>
+                                    <h6 class="fw-bolder">Màu ngoại thất: @car.ColorNavigation.ColorName</h6>
+                                    <h6 class="fw-bolder">Số cửa: @car.NumberOfDoors</h6>
+                                    <h6 class="fw-bolder">Số chỗ ngồi: @car.NumberOfSeats</h6>
+                                @if (car.Gear == true)
+                                {
+                                    <h6 class="fw-bolder">Hộp số: Số tự động</h6>
+                                }else{
+                                    <h6 class="fw-bolder">Hộp số: Số tay</h6>
+
+                                }
+                                @if (car.Drive == 1)
+                                {
+                                    <h6 class="fw-bolder">Dẫn động: FWD - Dẫn động cầu trước</h6>
+                                }else if(car.Drive == 2){
+                                    <h6 class="fw-bolder">Dẫn động: RWD - Dẫn động cầu sau</h6>
+
+                                }else if (car.Drive == 3){
+                                        <h6 class="fw-bolder">Dẫn động: 4WD - Dẫn động 4 bánh</h6>
+
+                                }else if (car.Drive == 4) {
+                                        <h6 class="fw-bolder">Dẫn động: AWD - 4 bánh toàn thời gian</h6>
+
+                                }
+                                    <h6 class="fw-bolder">Nguyên liệu: @car.FuelNavigation.FuelName</h6>
+                                    <h6 class="fw-bolder">Hệ thống nạp nhiên liệu: @car.FuelIntakeSystem</h6>
+                                    <h6 class="fw-bolder">Mức tiêu thụ nhiên liệu: @car.FuelConsumption L/100Km</h6>
+                                    <!-- Giá sản phẩm-->
+                                    <h6 class="fw-bolder">Giá: @car.Price Triệu</h6>
+                                    @car.Description
+                                    <h6 class="fw-bolder">Showroom: @car.Showroom.ShowroomName </h6>
+                                    <h6 class="fw-bolder">Địa chỉ: @car.Showroom.Address, @car.Showroom.WardsNavigation.FullName, @car.Showroom.District.FullName, @car.Showroom.City.FullName</h6>
+                                    <h6 class="fw-bolder">SĐT: @car.Showroom.Phone </h6>
+                                </div>
+                            </div>
+                            @if (car.Notification == false)
+                            {
+                                <form method="post">
+                                    <div class="form-group">
+                                        <input type="hidden" id="CarId" name="CarId" asp-for="@car.CarId" />
+                                        <input type="submit" value="Chấp nhận kí gửi" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                                <a asp-page="./RefuseCar" asp-route-id="@car.CarId" class="btn btn-link">Từ chối</a>
+                            } else {
+                                <h6 class="fw-bolder">Tình trạng: Đang bán</h6>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>

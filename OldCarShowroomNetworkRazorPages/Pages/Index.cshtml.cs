@@ -62,35 +62,33 @@ namespace OldCarShowroomNetworkRazorPages.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-
-
             if (string.IsNullOrWhiteSpace(searchKey))
             {
                 Msg1 = "Vui lòng nhập tên xe để tìm kiếm";
                 return Page();
             }
-            var checkCar = _carRepo.GetAll()
-                 .Include(c => c.CarModelYearNavigation)
-                 .Include(c => c.CarNameNavigation)
-                 .Include(c => c.ColorInsideNavigation)
-                 .Include(c => c.ColorNavigation)
-                 .Include(c => c.DriveNavigation)
-                 .Include(c => c.FuelNavigation)
-                 .Include(c => c.ManufactoryNavigation)
-                 .Include(c => c.Showroom)
-                 .Include(c => c.UsernameNavigation)
-                 .Include(c => c.VehiclesNavigation)
-                 .Include(c => c.Showroom.City)
-                 .Include(c => c.Showroom.District)
-                 .Include(c => c.ImageCars)
-                 .Include(c => c.Showroom.WardsNavigation)
-                 .Where(p => p.Notification == true && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()));
-            if (checkCar == null)
+            var checkCar = _carRepo.GetAll().Where(p => p.Notification == true && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()));
+            if (checkCar.Count() == 0)
             {
                 Msg1 = "Không tìm thấy xe";
                 return Page();
             }
-            car = await checkCar.ToListAsync();
+            car = await checkCar
+                .Include(c => c.CarModelYearNavigation)
+                .Include(c => c.CarNameNavigation)
+                .Include(c => c.ColorInsideNavigation)
+                .Include(c => c.ColorNavigation)
+                .Include(c => c.DriveNavigation)
+                .Include(c => c.FuelNavigation)
+                .Include(c => c.ManufactoryNavigation)
+                .Include(c => c.Showroom)
+                .Include(c => c.UsernameNavigation)
+                .Include(c => c.VehiclesNavigation)
+                .Include(c => c.Showroom.City)
+                .Include(c => c.Showroom.District)
+                .Include(c => c.ImageCars)
+                .Include(c => c.Showroom.WardsNavigation)
+                .Where(c => c.Notification == true).ToListAsync();
             return Page();
         }
 

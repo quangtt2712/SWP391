@@ -58,18 +58,14 @@
                 <input class="form-control me-2" type="search" placeholder="Nhập tên xe bạn muốn mua" aria-label="Tìm kiếm" style="width: 250px;">
                 <button class="btn btn-outline-primary" type="submit">Tìm kiếm</button>
             </form>
-
-
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="./Index" class="nav-item nav-link active">Trang chủ</a>
+                <a asp-page="/Index" class="nav-item nav-link active">Trang chủ</a>
                 @if (Accessor.HttpContext.Session.GetString("Key") == null || Accessor.HttpContext.Session.GetString("Key") != null && Accessor.HttpContext.Session.GetString("Role").Equals("1"))
                 {
                     <a href="/Car/Showroom" class="nav-item nav-link">Bạn muốn bán xe?</a>
                     <a href="/Car/Index" class="nav-item nav-link">Lịch sử kí gửi</a>
                 }
                 <a href="/Showroom/Index" class="nav-item nav-link">Showroom</a>
-                
-                
             </div>
             @if (Accessor.HttpContext.Session.GetString("Key") != null)
             {

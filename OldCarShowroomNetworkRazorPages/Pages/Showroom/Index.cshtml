@@ -1,9 +1,7 @@
 ﻿@page
 @using Microsoft.AspNetCore.Http;
 @inject IHttpContextAccessor Accessor
-
 @model OldCarShowroomNetworkRazorPages.Pages.Showroom.IndexModel
-
 
 @{
     ViewData["Title"] = "Index";
@@ -14,6 +12,9 @@
 {
 <p>
     <a asp-page="Create">Thêm showroom</a>
+</p>
+<p>
+    <a asp-page="./ListCar">Danh sách xe chờ kí gửi</a>
 </p>
 }          
 
