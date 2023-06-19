@@ -57,7 +57,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 
                 return Page();
             }
-            return RedirectToPage("./Login");
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -67,7 +67,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 Msg1 = "Vui lòng nhập tên xe để tìm kiếm";
                 return Page();
             }
-            var checkCar = _carRepo.GetAll().Where(p => p.Notification == true && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()));
+            var checkCar = _carRepo.GetAll().Where(p => p.Notification == true && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()) 
+            || p.Notification == true && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
             if (checkCar.Count() == 0)
             {
                 Msg1 = "Không tìm thấy xe";

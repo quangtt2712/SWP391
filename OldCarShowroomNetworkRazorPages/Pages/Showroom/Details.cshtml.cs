@@ -13,7 +13,7 @@ using System.Runtime.ConstrainedExecution;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
-    [Authorize(Roles = "Staff")]
+
     public class DetailsModel : PageModel
     {
         public readonly CarRepository _carRepo;
@@ -30,8 +30,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         public IList<BOs.Models.ImageShowroom> ImageShowrooms { get; set; }
 
         public IList<BOs.Models.Car> Car { get; set; }
-        bool check = true;
-
 
         
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -74,6 +72,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
             return Page();
         }
+
         public async Task<IActionResult> OnPostAsync(int? CarId, int? ShowroomId)
         {
             var checkNotifi = _carRepo.GetAll().FirstOrDefault(c => c.CarId == CarId);

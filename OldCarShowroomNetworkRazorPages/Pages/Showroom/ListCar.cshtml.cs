@@ -1,14 +1,17 @@
 using BOs.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using REPOs;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
+    [Authorize(Roles = "Staff")]
     public class ListCarcshtmlModel : PageModel
     {
         public readonly CarRepository _carRepo;
