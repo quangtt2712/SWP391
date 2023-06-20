@@ -22,6 +22,8 @@ namespace BOs.Models
         public int? NumberOfKilometersTraveled { get; set; }
         public int? Vehicles { get; set; }
         public long? Price { get; set; }
+        public long? MinPrice { get; set; }
+        public long? MaxPrice { get; set; }
         public int? Color { get; set; }
         public int? ColorInside { get; set; }
         public byte? NumberOfDoors { get; set; }
@@ -29,12 +31,14 @@ namespace BOs.Models
         public bool? Gear { get; set; }
         public int? Drive { get; set; }
         public int? Fuel { get; set; }
-        public bool? Notification { get; set; }
+        public int? Notification { get; set; }
         public string Note { get; set; }
+        public long? Expense { get; set; }
         public string FuelIntakeSystem { get; set; }
         public int? FuelConsumption { get; set; }
         public string Description { get; set; }
         public string Username { get; set; }
+        public DateTime? CreatedAt { get; set; }
         public bool? Status { get; set; }
         public int? ShowroomId { get; set; }
 

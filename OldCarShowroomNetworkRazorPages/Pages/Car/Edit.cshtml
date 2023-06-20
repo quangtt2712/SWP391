@@ -9,8 +9,13 @@
 <h4>Car</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
+    <div>
+        <form style="
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 30px;
+    padding: 20px;
+" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
            <input type="hidden" asp-for="Car.CarId" />
@@ -21,7 +26,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Car.CarName" class="control-label">Tên xe</label>
-                <select asp-for="Car.CarName" class="form-control" asp-items="ViewBag.CarName" id="listCarName"></select>
+                <select style="background-color: #f5f3ff;" asp-for="Car.CarName" class="form-control" asp-items="ViewBag.CarName" id="listCarName"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Car.Version" class="control-label">Phiên bản</label>
@@ -30,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Car.CarModelYear" class="control-label">Năm sản xuất/đời</label>
-                <select asp-for="Car.CarModelYear" class="form-control" asp-items="ViewBag.CarModelYear"></select>
+                <select style="background-color: #f5f3ff;" asp-for="Car.CarModelYear" class="form-control" asp-items="ViewBag.CarModelYear"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Car.Origin" class="control-label">Xuất xứ</label>
@@ -44,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Car.Vehicles" class="control-label">Dòng xe</label>
-                <select asp-for="Car.Vehicles" class="form-control" asp-items="ViewBag.Vehicles"></select>
+                <select style="background-color: #f5f3ff;" asp-for="Car.Vehicles" class="form-control" asp-items="ViewBag.Vehicles"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Car.Price" class="control-label">Giá tiền</label>
@@ -53,11 +58,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Car.Color" class="control-label">Ngoại thất</label>
-                <select asp-for="Car.Color" class="form-control" asp-items="ViewBag.Color"></select>
+                <select style="background-color: #f5f3ff;" asp-for="Car.Color" class="form-control" asp-items="ViewBag.Color"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Car.ColorInside" class="control-label">Nội thất</label>
-                <select asp-for="Car.ColorInside" class="form-control" asp-items="ViewBag.ColorInside"></select>
+                <select style="background-color: #f5f3ff;" asp-for="Car.ColorInside" class="form-control" asp-items="ViewBag.ColorInside"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Car.NumberOfDoors" class="control-label">Số cửa</label>
@@ -76,11 +81,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Car.Drive" class="control-label">Dẫn động</label>
-                <select asp-for="Car.Drive" class="form-control" asp-items="ViewBag.Drive"></select>
+                <select style="background-color: #f5f3ff;" asp-for="Car.Drive" class="form-control" asp-items="ViewBag.Drive"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Car.Fuel" class="control-label">Nhiên liệu</label>
-                <select asp-for="Car.Fuel" class="form-control" asp-items="ViewBag.Fuel"></select>
+                <select style="background-color: #f5f3ff;" asp-for="Car.Fuel" class="form-control" asp-items="ViewBag.Fuel"></select>
             </div>
 
             <div class="form-group">

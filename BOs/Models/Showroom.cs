@@ -9,7 +9,6 @@ namespace BOs.Models
     {
         public Showroom()
         {
-            Bookings = new HashSet<Booking>();
             Cars = new HashSet<Car>();
             ImageShowrooms = new HashSet<ImageShowroom>();
         }
@@ -26,7 +25,6 @@ namespace BOs.Models
         public virtual City City { get; set; }
         public virtual District District { get; set; }
         public virtual Ward WardsNavigation { get; set; }
-        public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<Car> Cars { get; set; }
         public virtual ICollection<ImageShowroom> ImageShowrooms { get; set; }
     }

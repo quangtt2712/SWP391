@@ -29,6 +29,53 @@ function getWardName(eel) {
             console.error('Error:', error);
         });
 }
+const checkvalidphone = document.getElementById("checkvalidphone")
+
+const checkValid_Phone = () => {
+   /* const wanrning_phone_div = document.querySelector('.warning_phone')*/
+    let regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+    document.getElementById("warningphone").innerHTML = ""
+    if (!regex.test(checkvalidphone.value)) {
+        document.getElementById("warningphone").innerHTML = 'Số điện thoại không đúng định dạng.'
+        return false
+    }
+    return true
+
+}
+checkvalidphone.addEventListener("input", checkValid_Phone)
+const checkvalidimg = document.getElementById("uploadimgmain");
+const checkvalid = document.getElementById("checkvalid");
+
+checkvalid.addEventListener("click", (e) => {
+    console.log(checkvalidimg.value)
+    if (checkvalidimg.value == "") {
+        e.preventDefault()
+        document.getElementById("warningmain").innerHTML = "Them img"
+    }
+    if (!checkValid_Phone()) {
+        e.preventDefault()
+        document.getElementById("warningsave").innerHTML = "Vui lòng nhập đầy đủ thông tin"
+    }
+})
+checkvalidimg.addEventListener('change', function () {
+    let file = this.files[0]
+    console.log(file.name)
+    document.getElementById("warningmain").innerHTML = "";
+    let file_name = file.name
+    let idsx_dot = file_name.lastIndexOf('.') + 1
+    let extFile = file_name.substr(idsx_dot, file_name.length).toLowerCase()
+    console.log(extFile)
+    if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+    courseImage.src = URL.createObjectURL(file)
+} else {
+        checkvalidimg.value = ''
+        document.getElementById("warningmain").innerHTML = "Vui lòng chọn ảnh định dạng .jpg/.jpeg/.png";
+} 
+    // let idxDot = fileName.lastIndexOf(".") + 1;
+    // let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+
+
+})
 
 window.addEventListener('DOMContentLoaded', function () {
     getDistrictName(document.querySelector("#listCity"));
@@ -52,7 +99,7 @@ search.addEventListener("click", (e) => {
                         id: b.showroomId,
                         showroomName: b.showroomName,
                         address: b.address,
-                        imgshowroom: ""
+                        imgshowroom: b.imageShowrooms[0].url
                     })
                     return a;
                 }, [])
@@ -65,7 +112,7 @@ search.addEventListener("click", (e) => {
 					<a href="/Car/Create?id=${item.id}" class="card h-100">
 
 
-								<img src="" alt="Ảnh chính" data-id ="${item.id}" class = "showroomimg">
+								<img src="${item.imgshowroom == null ? "" : item.imgshowroom}" alt="Ảnh chính" data-id ="${item.id}" class = "showroomimg">
 						
 						<div class="card-body p-4">
 							<div class="text-center">
@@ -82,18 +129,7 @@ search.addEventListener("click", (e) => {
 `)
                 document.getElementById("listshowroom").innerHTML = htmls.join("")
             })
-            .then(() => {
-                let att = document.querySelectorAll(".showroomimg")
-                att.forEach(attr => {
-                    console.log(attr.getAttribute("data-id"))
-                    fetch(`/api/Adress/imageShowroom/${attr.getAttribute("data-id")}`)
-                        .then(data => data.json())
-                        .then(img => {
-                            console.log(img)
-                            attr.src = img.url;
-                        })
-                })
-            })
+            
     } else {
         alert("Vui lòng chọn đủ phường");
     }

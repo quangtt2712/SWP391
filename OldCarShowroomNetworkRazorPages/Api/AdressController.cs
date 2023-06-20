@@ -37,22 +37,31 @@ namespace OldCarShowroomNetworkRazorPages.Api
             return _context.Wards.Where(w => w.DistrictId.Equals(districtid)).ToList();
 
         }
-		[HttpGet]
-		[Route("city/{cityid}/district/{districtid}/ward/{wardid}")]
-		public ActionResult<List<Showroom>> ListShowrooms(string cityid, string districtid, string wardid)
-		{
-
-            return _context.Showrooms.Where(s => s.CityId.Equals(cityid) && s.DistrictId.Equals(districtid) && s.Wards.Equals(wardid))
-		.ToList(); ;
-           
-		}
-		[HttpGet]
-		[Route("imageShowroom/{id}")]
-		public ActionResult<ImageShowroom> ListShowroomsImage(int id)
-		{
-			ImageShowroom imageShowroom = _context.ImageShowrooms
-				.FirstOrDefault(s => s.ShowroomId == id && s.ImageMain == true);
-			return imageShowroom;
-		}
-	}
+        [HttpGet]
+        [Route("city/{cityid}/district/{districtid}/ward/{wardid}")]
+        public ActionResult<List<Showroom>> ListShowrooms(string cityid, string districtid, string wardid)
+        {
+            List<Showroom> list = _context.Showrooms.Where(s => s.CityId.Equals(cityid) && s.DistrictId.Equals(districtid) && s.Wards.Equals(wardid))
+        .ToList();
+            foreach (var i in list)
+            {
+                ImageShowroom imageShowroom = _context.ImageShowrooms
+                .FirstOrDefault(s => s.ShowroomId == i.ShowroomId && s.ImageMain == true);
+                imageShowroom.Showroom = null;
+                if (imageShowroom != null)
+                {
+                    i.ImageShowrooms.Add(imageShowroom);
+                }
+            }
+            return list;
+        }
+        [HttpGet]
+        [Route("imageShowroom/{id}")]
+        public ActionResult<ImageShowroom> ListShowroomsImage(int id)
+        {
+            ImageShowroom imageShowroom = _context.ImageShowrooms
+                .FirstOrDefault(s => s.ShowroomId == id && s.ImageMain == true);
+            return imageShowroom;
+        }
+    }
 }

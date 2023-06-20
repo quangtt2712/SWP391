@@ -31,6 +31,7 @@ namespace BOs.Models
         public virtual DbSet<Manufactory> Manufactorys { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Showroom> Showrooms { get; set; }
+        public virtual DbSet<Slot> Slots { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
         public virtual DbSet<Ward> Wards { get; set; }
@@ -50,8 +51,8 @@ namespace BOs.Models
 
             modelBuilder.Entity<Booking>(entity =>
             {
-                entity.HasKey(e => new { e.Username, e.CarId, e.PickupHour })
-                    .HasName("PK__Bookings__16102DD7AB17A02E");
+                entity.HasKey(e => new { e.Username, e.CarId, e.Slot })
+                    .HasName("PK__Bookings__E25AFD0C05369E20");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(128)
@@ -59,24 +60,19 @@ namespace BOs.Models
 
                 entity.Property(e => e.CarId).HasColumnName("CarID");
 
-                entity.Property(e => e.PickupHour).HasColumnType("datetime");
-
-                entity.Property(e => e.CreationDateTime)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.ShowroomId).HasColumnName("ShowroomID");
+                entity.Property(e => e.Note).HasMaxLength(2000);
 
                 entity.HasOne(d => d.Car)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.CarId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Bookings__CarID__571DF1D5");
+                    .HasConstraintName("FK__Bookings__CarID__5812160E");
 
-                entity.HasOne(d => d.Showroom)
+                entity.HasOne(d => d.SlotNavigation)
                     .WithMany(p => p.Bookings)
-                    .HasForeignKey(d => d.ShowroomId)
-                    .HasConstraintName("FK__Bookings__Showro__5812160E");
+                    .HasForeignKey(d => d.Slot)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Bookings__Slot__59FA5E80");
 
                 entity.HasOne(d => d.UsernameNavigation)
                     .WithMany(p => p.Bookings)
@@ -88,6 +84,8 @@ namespace BOs.Models
             modelBuilder.Entity<Car>(entity =>
             {
                 entity.Property(e => e.CarId).HasColumnName("CarID");
+
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
                 entity.Property(e => e.Description).HasMaxLength(1000);
 
@@ -106,32 +104,32 @@ namespace BOs.Models
                 entity.HasOne(d => d.CarModelYearNavigation)
                     .WithMany(p => p.Cars)
                     .HasForeignKey(d => d.CarModelYear)
-                    .HasConstraintName("FK__Cars__CarModelYe__5AEE82B9");
+                    .HasConstraintName("FK__Cars__CarModelYe__5BE2A6F2");
 
                 entity.HasOne(d => d.CarNameNavigation)
                     .WithMany(p => p.Cars)
                     .HasForeignKey(d => d.CarName)
-                    .HasConstraintName("FK__Cars__CarName__5BE2A6F2");
+                    .HasConstraintName("FK__Cars__CarName__5CD6CB2B");
 
                 entity.HasOne(d => d.ColorNavigation)
                     .WithMany(p => p.CarColorNavigations)
                     .HasForeignKey(d => d.Color)
-                    .HasConstraintName("FK__Cars__Color__5CD6CB2B");
+                    .HasConstraintName("FK__Cars__Color__5DCAEF64");
 
                 entity.HasOne(d => d.ColorInsideNavigation)
                     .WithMany(p => p.CarColorInsideNavigations)
                     .HasForeignKey(d => d.ColorInside)
-                    .HasConstraintName("FK__Cars__ColorInsid__5DCAEF64");
+                    .HasConstraintName("FK__Cars__ColorInsid__5EBF139D");
 
                 entity.HasOne(d => d.DriveNavigation)
                     .WithMany(p => p.Cars)
                     .HasForeignKey(d => d.Drive)
-                    .HasConstraintName("FK__Cars__Drive__5EBF139D");
+                    .HasConstraintName("FK__Cars__Drive__5FB337D6");
 
                 entity.HasOne(d => d.FuelNavigation)
                     .WithMany(p => p.Cars)
                     .HasForeignKey(d => d.Fuel)
-                    .HasConstraintName("FK__Cars__Fuel__5FB337D6");
+                    .HasConstraintName("FK__Cars__Fuel__60A75C0F");
 
                 entity.HasOne(d => d.ManufactoryNavigation)
                     .WithMany(p => p.Cars)
@@ -174,7 +172,7 @@ namespace BOs.Models
                 entity.HasOne(d => d.Manufactory)
                     .WithMany(p => p.CarNames)
                     .HasForeignKey(d => d.ManufactoryId)
-                    .HasConstraintName("FK__CarNames__Manufa__59FA5E80");
+                    .HasConstraintName("FK__CarNames__Manufa__5AEE82B9");
             });
 
             modelBuilder.Entity<City>(entity =>
@@ -266,7 +264,7 @@ namespace BOs.Models
             modelBuilder.Entity<Drife>(entity =>
             {
                 entity.HasKey(e => e.DriveId)
-                    .HasName("PK__Drives__9610CA3888428F56");
+                    .HasName("PK__Drives__9610CA38366B7688");
 
                 entity.Property(e => e.DriveId).HasColumnName("DriveID");
 
@@ -283,7 +281,7 @@ namespace BOs.Models
             modelBuilder.Entity<ImageCar>(entity =>
             {
                 entity.HasKey(e => e.ImageId)
-                    .HasName("PK__ImageCar__7516F4EC7547A9E8");
+                    .HasName("PK__ImageCar__7516F4ECA275B4B6");
 
                 entity.Property(e => e.ImageId).HasColumnName("ImageID");
 
@@ -296,13 +294,13 @@ namespace BOs.Models
                 entity.HasOne(d => d.Car)
                     .WithMany(p => p.ImageCars)
                     .HasForeignKey(d => d.CarId)
-                    .HasConstraintName("FK__ImageCars__CarID__60A75C0F");
+                    .HasConstraintName("FK__ImageCars__CarID__66603565");
             });
 
             modelBuilder.Entity<ImageShowroom>(entity =>
             {
                 entity.HasKey(e => e.ImageId)
-                    .HasName("PK__ImageSho__7516F4ECDC8E6E62");
+                    .HasName("PK__ImageSho__7516F4EC134E5F7F");
 
                 entity.Property(e => e.ImageId).HasColumnName("ImageID");
 
@@ -315,7 +313,7 @@ namespace BOs.Models
                 entity.HasOne(d => d.Showroom)
                     .WithMany(p => p.ImageShowrooms)
                     .HasForeignKey(d => d.ShowroomId)
-                    .HasConstraintName("FK__ImageShow__Showr__68487DD7");
+                    .HasConstraintName("FK__ImageShow__Showr__6754599E");
             });
 
             modelBuilder.Entity<Manufactory>(entity =>
@@ -364,23 +362,34 @@ namespace BOs.Models
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.Showrooms)
                     .HasForeignKey(d => d.CityId)
-                    .HasConstraintName("FK__Showrooms__CityI__66603565");
+                    .HasConstraintName("FK__Showrooms__CityI__68487DD7");
 
                 entity.HasOne(d => d.District)
                     .WithMany(p => p.Showrooms)
                     .HasForeignKey(d => d.DistrictId)
-                    .HasConstraintName("FK__Showrooms__Distr__6754599E");
+                    .HasConstraintName("FK__Showrooms__Distr__693CA210");
 
                 entity.HasOne(d => d.WardsNavigation)
                     .WithMany(p => p.Showrooms)
                     .HasForeignKey(d => d.Wards)
-                    .HasConstraintName("FK__Showrooms__Wards__693CA210");
+                    .HasConstraintName("FK__Showrooms__Wards__6A30C649");
+            });
+
+            modelBuilder.Entity<Slot>(entity =>
+            {
+                entity.Property(e => e.SlotId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("SlotID");
+
+                entity.Property(e => e.PickupDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ReturnDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.Username)
-                    .HasName("PK__Users__536C85E55D69F6B2");
+                    .HasName("PK__Users__536C85E51804B7AD");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(128)
@@ -414,13 +423,13 @@ namespace BOs.Models
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK__Users__RoleID__6A30C649");
+                    .HasConstraintName("FK__Users__RoleID__6B24EA82");
             });
 
             modelBuilder.Entity<Vehicle>(entity =>
             {
                 entity.HasKey(e => e.VehiclesId)
-                    .HasName("PK__Vehicles__C683EFD2EC9FC281");
+                    .HasName("PK__Vehicles__C683EFD2B256AE2A");
 
                 entity.Property(e => e.VehiclesId).HasColumnName("VehiclesID");
 

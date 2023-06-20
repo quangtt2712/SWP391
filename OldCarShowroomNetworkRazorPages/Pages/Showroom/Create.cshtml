@@ -25,7 +25,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Showroom.Phone" class="control-label"></label>
-                <input asp-for="Showroom.Phone" class="form-control" />
+                <input asp-for="Showroom.Phone" class="form-control" id="checkvalidphone" />
+                <p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningphone"></p>
                 <span asp-validation-for="Showroom.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -52,15 +53,19 @@
             <div class="form-group">
                 <label asp-for="ImageShowroom.Url" class="control-label">Ảnh showroom chính</label>
                 <input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*"/>
-                
+                <p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningmain"></p>
+               
             </div>
             <div class="form-group">
                 <label asp-for="ImageShowroom.Url" class="control-label">Ảnh showroom phụ</label>
                 <input type="file" id="uploadimg" name="uploadimg" accept="image/*" />
+                <p id="warningsub"></p>
                 
             </div>
             <div class="form-group">
-                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <input type="submit" value="Lưu" class="btn btn-primary" id="checkvalid" />
+                <p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningsave"></p>
+
             </div>
         </form>
     </div>

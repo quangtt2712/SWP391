@@ -82,7 +82,7 @@
 @if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals("2"))
 {
     <div>
-        @*<a asp-page="./Edit" asp-route-id="@Model.Showroom.ShowroomId">Edit</a>*@
+        <a asp-page="./Edit" asp-route-id="@Model.Showroom.ShowroomId">Edit</a>
         <a asp-page="./Index">Back to List</a>
     </div>
 }
