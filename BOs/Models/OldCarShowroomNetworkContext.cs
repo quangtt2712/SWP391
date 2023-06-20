@@ -390,10 +390,6 @@ namespace BOs.Models
                 entity.Property(e => e.SlotId)
                     .ValueGeneratedNever()
                     .HasColumnName("SlotID");
-
-                entity.Property(e => e.PickupDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ReturnDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<User>(entity =>
