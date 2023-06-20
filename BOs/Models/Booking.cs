@@ -12,6 +12,7 @@ namespace BOs.Models
         public int Slot { get; set; }
         public int? Notification { get; set; }
         public string Note { get; set; }
+        public DateTime? DayBooking { get; set; }
 
         public virtual Car Car { get; set; }
         public virtual Slot SlotNavigation { get; set; }
