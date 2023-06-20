@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -8,6 +10,12 @@ namespace BOs.Models
 {
     public partial class OldCarShowroomNetworkContext : DbContext
     {
+        public string GetConnectionString()
+        {
+            IConfiguration config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", true, true).Build();
+            var strConn = config["ConnectionStrings:DB"];
+            return strConn;
+        }
         public OldCarShowroomNetworkContext()
         {
         }
@@ -41,24 +49,26 @@ namespace BOs.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=(local);Uid=sa;Pwd=1234567890;Database=OldCarShowroomNetwork");
+                optionsBuilder.UseSqlServer(GetConnectionString());
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Vietnamese_CI_AS");
 
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.HasKey(e => new { e.Username, e.CarId, e.Slot })
-                    .HasName("PK__Bookings__E25AFD0C05369E20");
+                    .HasName("PK__Bookings__E25AFD0C9FA82D61");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(128)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CarId).HasColumnName("CarID");
+
+                entity.Property(e => e.DayBooking).HasColumnType("date");
 
                 entity.Property(e => e.Note).HasMaxLength(2000);
 
@@ -264,7 +274,7 @@ namespace BOs.Models
             modelBuilder.Entity<Drife>(entity =>
             {
                 entity.HasKey(e => e.DriveId)
-                    .HasName("PK__Drives__9610CA38366B7688");
+                    .HasName("PK__Drives__9610CA385E934F74");
 
                 entity.Property(e => e.DriveId).HasColumnName("DriveID");
 
@@ -281,7 +291,7 @@ namespace BOs.Models
             modelBuilder.Entity<ImageCar>(entity =>
             {
                 entity.HasKey(e => e.ImageId)
-                    .HasName("PK__ImageCar__7516F4ECA275B4B6");
+                    .HasName("PK__ImageCar__7516F4ECFE7DE2BF");
 
                 entity.Property(e => e.ImageId).HasColumnName("ImageID");
 
@@ -300,7 +310,7 @@ namespace BOs.Models
             modelBuilder.Entity<ImageShowroom>(entity =>
             {
                 entity.HasKey(e => e.ImageId)
-                    .HasName("PK__ImageSho__7516F4EC134E5F7F");
+                    .HasName("PK__ImageSho__7516F4ECF31B0B0F");
 
                 entity.Property(e => e.ImageId).HasColumnName("ImageID");
 
@@ -389,7 +399,7 @@ namespace BOs.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.Username)
-                    .HasName("PK__Users__536C85E51804B7AD");
+                    .HasName("PK__Users__536C85E501388125");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(128)
@@ -429,7 +439,7 @@ namespace BOs.Models
             modelBuilder.Entity<Vehicle>(entity =>
             {
                 entity.HasKey(e => e.VehiclesId)
-                    .HasName("PK__Vehicles__C683EFD2B256AE2A");
+                    .HasName("PK__Vehicles__C683EFD273E7DDBD");
 
                 entity.Property(e => e.VehiclesId).HasColumnName("VehiclesID");
 
