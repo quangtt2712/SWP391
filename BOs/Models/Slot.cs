@@ -13,8 +13,8 @@ namespace BOs.Models
         }
 
         public int SlotId { get; set; }
-        public DateTime PickupDate { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public TimeSpan? PickupDate { get; set; }
+        public TimeSpan? ReturnDate { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }
     }
