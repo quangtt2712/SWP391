@@ -33,22 +33,16 @@ namespace OldCarShowroomNetworkRazorPages
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddHttpContextAccessor();
             services.AddDbContext<OldCarShowroomNetworkContext>(options =>
             options.UseSqlServer("name=ConnectionStrings:DB"
             ));
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            services.AddHttpContextAccessor();
+
             services.AddScoped<UserRepository>();
             services.AddScoped<CarRepository>();
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(60);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
+            services.AddScoped<BookingRepository>();
+            services.AddScoped<SlotRepository>();
+
 			services.AddControllers();
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
@@ -56,7 +50,18 @@ namespace OldCarShowroomNetworkRazorPages
                 options.LoginPath = "/login";
                 options.AccessDeniedPath = "/accessdenied";
                 options.SlidingExpiration = true;
-            }); ;
+            });
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.IsEssential = true;
+            });
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
         }
 
 
@@ -75,10 +80,15 @@ namespace OldCarShowroomNetworkRazorPages
             app.UseStaticFiles();
 
             app.UseRouting();
+
             app.UseSession();
+
             app.UseCookiePolicy();
+
             app.UseAuthentication();
+
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
