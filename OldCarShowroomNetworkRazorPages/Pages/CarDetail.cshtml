@@ -13,7 +13,14 @@
                 Hình xe
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.car.ImageCars)
+                @if (@Model.car.ImageCars != null && @Model.car.ImageCars.Count > 0)
+                {
+                    var mainImage = @Model.car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
+                    if (mainImage != null)
+                    {
+                        <img src="@Url.Content(mainImage.Url)" alt="Ảnh chính">
+                    }
+                }
             </dd>
         </div>
         <div class="form-group">
@@ -165,7 +172,7 @@
                 Giá
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.car.Price) Triệu
+                @Html.DisplayFor(model => model.car.MaxPrice) Triệu
             </dd>
         </div>
         <div class="form-group">
@@ -234,5 +241,5 @@
         </div>
     </dl>
 </div>
-<a> Đặt lịch xem xe</a>
+<a asp-page="/Booking" class="btn btn-primary" asp-route-id="@Model.car.CarId"> Đặt lịch xem xe</a>
 <a asp-page="/Index"> Quay lại trang chủ</a>

@@ -390,6 +390,8 @@ namespace BOs.Models
                 entity.Property(e => e.SlotId)
                     .ValueGeneratedNever()
                     .HasColumnName("SlotID");
+
+                entity.Property(e => e.IsBooked).HasColumnName("isBooked");
             });
 
             modelBuilder.Entity<User>(entity =>
