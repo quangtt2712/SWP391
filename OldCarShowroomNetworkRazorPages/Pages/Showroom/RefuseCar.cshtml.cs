@@ -18,17 +18,18 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         {
             _carRepo = carRepo;
         }
-
         [BindProperty]
-        public IList<BOs.Models.Car> Car { get; set; }
-        bool check = false;
+        public string Note { get; set; }
+        [BindProperty]
+        public BOs.Models.Car car { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            Car = await _carRepo.GetAll()
+            car = await _carRepo.GetAll()
+                .Include(c => c.ImageCars)
                 .Include(c => c.CarModelYearNavigation)
                 .Include(c => c.CarNameNavigation)
                 .Include(c => c.ColorInsideNavigation)
@@ -42,17 +43,19 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(c => c.Showroom.WardsNavigation)
                 .Include(c => c.UsernameNavigation)
                 .Include(c => c.VehiclesNavigation)
-                .Where(c => c.CarId == id)
-                .ToListAsync();
+                .FirstOrDefaultAsync(c => c.CarId == id);
             return Page();
         }
         public async Task<IActionResult> OnPostAsync(int? CarId)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
             var checkNotifi = _carRepo.GetAll().FirstOrDefault(c => c.CarId == CarId);
-            checkNotifi.Notification = check;
-            checkNotifi.ShowroomId = null;
+            checkNotifi.Notification = 2;
+            checkNotifi.Note = Note;
             _carRepo.Update(checkNotifi);
-
             return RedirectToPage("./ListCar");
         }
     }

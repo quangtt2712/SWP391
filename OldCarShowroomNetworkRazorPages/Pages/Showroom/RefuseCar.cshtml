@@ -4,96 +4,260 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Xóa</h1>
+<h1>Xác nhận từ chối kí gửi</h1>
 
 <h3>Bạn muốn từ chối cho ký gửi xe</h3>
-<div class="container px-4 px-lg-5 mt-5">
-
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        @if (Model.Car != null)
-        {
-            @foreach (var car in Model.Car)
+<div>
+    <form method="post">
+    <input type="hidden" id="CarId" name="CarId" asp-for="@Model.car.CarId" />
+    <h4>@Model.car.ManufactoryNavigation.ManufactoryName @Model.car.CarNameNavigation.CarName1 @Model.car.CarModelYearNavigation.CarModelYear1</h4>
+    <hr />
+    <dl class="row">
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Hình xe
+            </dt>
+            <dd class ="col-sm-10">
+                @if (Model.car.ImageCars != null && Model.car.ImageCars.Count > 0)
+                {
+                    var mainImage = @Model.car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
+                    if (mainImage != null)
+                    {
+                        <img src="@Url.Content(mainImage.Url)" alt="Ảnh chính">
+                    }
+                }
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Version
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Version)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Xuất xứ
+            </dt>
+        </div>
+        <div class="form-group">
+            @if (Model.car.Origin == true)
             {
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Hình ảnh sản phẩm-->
-                        @if (car.ImageCars != null && car.ImageCars.Count > 0)
-                        {
-                            var mainImage = car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
-                            if (mainImage != null)
-                            {
-                                <img src="@Url.Content(mainImage.Url)" alt="Ảnh chính">
-                            }
-                        }
-                        <!-- Chi tiết sản phẩm-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <p hidden>@car.CarId</p>
-                                <!-- Tên sản phẩm-->
-                                <h5 class="fw-bolder">Xe @car.ManufactoryNavigation.ManufactoryName @car.CarNameNavigation.CarName1 @car.CarModelYearNavigation.CarModelYear1</h5>
-                                <h6 class="fw-bolder">Version: @car.Version </h6>
-                                @if (car.Origin == true)
-                                {
-                                    <h6 class="fw-bolder">Xuất xứ: CKD </h6>
-                                }
-                                else
-                                {
-                                    <h6 class="fw-bolder">Xuất xứ: CBU </h6>
-
-                                }
-                                <h6 class="fw-bolder">Dòng: @car.VehiclesNavigation.VehiclesName </h6>
-                                <h6 class="fw-bolder">Số Km đã đi: @car.NumberOfKilometersTraveled Km</h6>
-                                <h6 class="fw-bolder">Màu nội thất: @car.ColorInsideNavigation.ColorName</h6>
-                                <h6 class="fw-bolder">Màu ngoại thất: @car.ColorNavigation.ColorName</h6>
-                                <h6 class="fw-bolder">Số cửa: @car.NumberOfDoors</h6>
-                                <h6 class="fw-bolder">Số chỗ ngồi: @car.NumberOfSeats</h6>
-                                @if (car.Gear == true)
-                                {
-                                    <h6 class="fw-bolder">Hộp số: Số tự động</h6>
-                                }
-                                else
-                                {
-                                    <h6 class="fw-bolder">Hộp số: Số tay</h6>
-
-                                }
-                                @if (car.Drive == 1)
-                                {
-                                    <h6 class="fw-bolder">Dẫn động: FWD - Dẫn động cầu trước</h6>
-                                }
-                                else if (car.Drive == 2)
-                                {
-                                    <h6 class="fw-bolder">Dẫn động: RWD - Dẫn động cầu sau</h6>
-
-                                }
-                                else if (car.Drive == 3)
-                                {
-                                    <h6 class="fw-bolder">Dẫn động: 4WD - Dẫn động 4 bánh</h6>
-
-                                }
-                                else if (car.Drive == 4)
-                                {
-                                    <h6 class="fw-bolder">Dẫn động: AWD - 4 bánh toàn thời gian</h6>
-
-                                }
-                                <h6 class="fw-bolder">Nguyên liệu: @car.FuelNavigation.FuelName</h6>
-                                <h6 class="fw-bolder">Hệ thống nạp nhiên liệu: @car.FuelIntakeSystem</h6>
-                                <h6 class="fw-bolder">Mức tiêu thụ nhiên liệu: @car.FuelConsumption L/100Km</h6>
-                                <!-- Giá sản phẩm-->
-                                <h6 class="fw-bolder">Giá: @car.Price Triệu</h6>
-                                @car.Description
-                                <h6 class="fw-bolder">Showroom: @car.Showroom.ShowroomName </h6>
-                                <h6 class="fw-bolder">Địa chỉ: @car.Showroom.Address, @car.Showroom.WardsNavigation.FullName, @car.Showroom.District.FullName, @car.Showroom.City.FullName</h6>
-                                <h6 class="fw-bolder">SĐT: @car.Showroom.Phone </h6>
-                            </div>
-                        </div>
-                        <form method="post">
-                            <input type="hidden" id="CarId" name="CarId" asp-for="@car.CarId" />
-                            <input type="submit" value="Từ chối kí gửi" class="btn btn-danger" />
-                            <a asp-page="./ListCar">Quay lại</a>
-                        </form>
-                    </div>
-                </div>
+                <dd class="col-sm-10">
+                    CKD
+                </dd>
             }
-        }
-    </div>
+            else
+            {
+                <dd class="col-sm-10">
+                    CBU
+                </dd>
+            }
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Dòng
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.VehiclesNavigation.VehiclesName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Số Km đã đi
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.NumberOfKilometersTraveled) Km
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Màu nội thất
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.ColorInsideNavigation.ColorName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Màu ngoại thấ
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.ColorNavigation.ColorName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Số cửa
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.NumberOfDoors)
+            </dd>
+        </div>
+        <dt class="col-sm-2">
+            Số chỗ ngồi
+        </dt>
+        <div class="form-group">
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.NumberOfSeats)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Hộp số
+            </dt>
+            @if (Model.car.Gear == true)
+            {
+                <dd class="col-sm-10">
+                    Số Tự động
+                </dd>
+            }
+            else
+            {
+                <dd class="col-sm-10">
+                    Số tay
+                </dd>
+
+            }
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Dẫn động
+            </dt>
+            @if (Model.car.Drive == 1)
+            {
+                <dd class="col-sm-10">
+                    FWD - Dẫn động cầu trước
+                </dd>
+            }
+            else if (Model.car.Drive == 2)
+            {
+                <dd class="col-sm-10">
+                    RWD - Dẫn động cầu sau
+                </dd>
+            }
+            else if (Model.car.Drive == 3)
+            {
+                <dd class="col-sm-10">
+                    4WD - Dẫn động 4 bánh
+                </dd>
+
+            }
+            else if (Model.car.Drive == 4)
+            {
+                <dd class="col-sm-10">
+                    AWD - 4 bánh toàn thời gian
+                </dd>
+
+            }
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Nguyên liệu
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.FuelNavigation.FuelName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Hệ thống nạp nhiên liệu:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.FuelIntakeSystem)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Mức tiêu thụ nhiên liệu
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.FuelConsumption) L/100Km
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Giá
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.MaxPrice) Triệu
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Thông
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Description)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Showroom
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.ShowroomName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Địa chỉ
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.Address)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Phường
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.WardsNavigation.Name)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Quận
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.District.Name)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Thành phố
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.City.Name)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                SĐT
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.Phone)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Website
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.car.Showroom.Website)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Lý do
+            </dt>
+            <dd class="col-sm-10">
+                    <input asp-for="Note" type="text" placeholder="Nhập lý do" />
+            </dd>
+        </div>
+    </dl>
+        <input type="submit" value="Từ chối kí gửi" class="btn btn-danger" />
+    </form>
 </div>
+<div><a asp-page="./ListCar">Quay lại</a></div>

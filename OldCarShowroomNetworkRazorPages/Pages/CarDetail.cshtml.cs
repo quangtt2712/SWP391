@@ -12,7 +12,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages
     {
         public readonly CarRepository _carRepo;
         public BOs.Models.Car car { get; set; }
-
         public CarDetailModel(CarRepository carRepo)
         {
             _carRepo = carRepo;
@@ -21,10 +20,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (HttpContext.Session.GetString("Key") == null || HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
-            {
+            {   
+
                 if (_carRepo.GetAll() != null)
                 {
                     car = await _carRepo.GetAll()
+                        .Include(c => c.ImageCars)
                         .Include(c => c.CarModelYearNavigation)
                         .Include(c => c.CarNameNavigation)
                         .Include(c => c.ColorInsideNavigation)

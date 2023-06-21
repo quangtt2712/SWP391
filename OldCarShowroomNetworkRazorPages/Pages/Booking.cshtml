@@ -4,6 +4,8 @@
 }
 <div>
     <form method ="post">
+    <input id="carId" name="carId" type="hidden" asp-for="Car.CarId" />
+    <input id="userName" name="userName" type="hidden" asp-for="user.Username" />
     <h4>Xe @Model.Car.ManufactoryNavigation.ManufactoryName @Model.Car.CarNameNavigation.CarName1 @Model.Car.CarModelYearNavigation.CarModelYear1</h4>
     <hr />
     <dl class="row">
@@ -12,7 +14,7 @@
                 Họ và tên 
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.User.FullName)
+                @Html.DisplayFor(model => model.user.FullName)
             </dd>
         </div>
         <div class="form-group">
@@ -20,7 +22,7 @@
                 Email
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.User.Email)
+                @Html.DisplayFor(model => model.user.Email)
             </dd>
         </div>
         <div class="form-group">
@@ -28,7 +30,7 @@
                 SĐT
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.User.Phone)
+                @Html.DisplayFor(model => model.user.Phone)
             </dd>
         </div>
         <div class="form-group">
@@ -89,52 +91,34 @@
                 Ngày
             </dt>
             <dd class="col-sm-10">
-                <input type="date" asp-for="@Model.dateTime" placeholder="Chọn ngày tháng">
+                <input id="dateTime" name="dateTime" type="date" asp-for="@Model.dateTime" placeholder="Chọn ngày tháng">
             </dd>
-        </div>
-        <div class="form-group">
-            <dt class="col-sm-2">
-                Thời gian xem xe
-            </dt>
-            @foreach (var item in Model.Slot)
-                {
-                if (item.IsBooked == true)
-                {
-                    <tr>
-                        <td>
-                            <input name="@item.SlotId" disabled="">
-                                @Html.HiddenFor(modelItem => item.SlotId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PickupDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ReturnDate)
-                        </td>
-                    </tr>
-                }
-                else
-                {
-                    <tr>
-                        <td>
-                                <input id="SlotId" name="SlotId" asp-for="@item.SlotId" type="checkbox">
-                                @Html.HiddenFor(modelItem => item.SlotId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PickupDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ReturnDate)
-                        </td>
-                    </tr>
-                }
+            @if (@Model.Msg != null)
+            {
+                <p style="color: red">@Model.Msg</p>
             }
         </div>
+        <div class="form-group">
+            <label asp-for="isBooked.Slot" class="control-label">Tên xe</label>
+            <select style="background-color: #f5f3ff;" asp-for="isBooked.Slot" class="form-control" asp-items="ViewBag.Slot" id="listCarName"></select>
+        </div>
+        @if (@Model.Msg1 != null)
+        {
+            <p style="color: red">@Model.Msg1</p>
+        }
     </dl>
+    @if (@Model.Msg2 != null)
+    {
+        <p style="color: red">@Model.Msg2</p>
+    }
+    @if (@Model.Msg3 != null)
+    {
+        <p style="color: red">@Model.Msg3</p>
+    }
         <div class="form-group">
             <input type="submit" value="Đặt lịch xem xe" class="btn btn-primary" />
             <a asp-page="/Index"> Quay lại trang chủ</a>
-        </div>>
+        </div>
     </form>
 </div>
 

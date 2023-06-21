@@ -8,35 +8,29 @@ using Microsoft.EntityFrameworkCore;
 using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Microsoft.AspNetCore.Http;
+using REPOs;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.User
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "User,Staff")]
     public class DetailsModel : PageModel
     {
-        private readonly BOs.Models.OldCarShowroomNetworkContext _context;
+        public readonly UserRepository _userRepo;
 
-        public DetailsModel(BOs.Models.OldCarShowroomNetworkContext context)
+        public DetailsModel(UserRepository userRepo)
         {
-            _context = context;
+            _userRepo = userRepo;
         }
 
-        public BOs.Models.User User { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(string id)
+        [BindProperty]
+        public BOs.Models.User user { get; set; }
+        [BindProperty]
+        public string Email { get; set; }
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            User = await _context.Users
-                .Include(u => u.Role).FirstOrDefaultAsync(m => m.Username == id);
-
-            if (User == null)
-            {
-                return NotFound();
-            }
+            Email = HttpContext.Session.GetString("Key");
+            user = await _userRepo.GetAll().FirstOrDefaultAsync(u => u.Email.Equals(Email));
             return Page();
         }
     }
