@@ -86,9 +86,9 @@
             <a href="contact.html" class="nav-item nav-link">Contact</a>
             @if (HttpContext.Session.GetString("Key") != null)
             {
-                <div>
+                <a asp-page="/User/Details">
                     @HttpContext.Session.GetString("Key")
-                </div>
+                </a>
                 <form asp-page="/Login" asp-page-handler="logout" method="post">
                     <div class="input-group">
                         <button type="submit" class="btn btn-link">Logout</button>
@@ -192,7 +192,7 @@
                                 <!-- Tên sản phẩm-->
                                 <h5 class="fw-bolder">Xe @car.ManufactoryNavigation.ManufactoryName @car.CarNameNavigation.CarName1</h5>
                                 <!-- Giá sản phẩm-->
-                                <h6 class="fw-bolder">@car.Price Triệu</h6>
+                                <h6 class="fw-bolder">@car.MaxPrice VNĐ</h6>
                                 @car.Description 
                                 <h6 class="fw-bolder">Showroom @car.Showroom.ShowroomName</h6>
                                 <h6 class="fw-bolder">@car.Showroom.City.FullName</h6>

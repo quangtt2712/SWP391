@@ -9,8 +9,5 @@ namespace REPOs
 {
     public class CarRepository : RepositoryBase<Car>
     {
-        public CarRepository(OldCarShowroomNetworkContext context) : base(context)
-        {
-        }
     }
 }

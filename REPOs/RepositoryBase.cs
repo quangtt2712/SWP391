@@ -8,9 +8,9 @@ namespace REPOs
     {
         private readonly OldCarShowroomNetworkContext _context;
         private readonly DbSet<T> _dbSet;
-        public RepositoryBase(OldCarShowroomNetworkContext context)
+        public RepositoryBase()
         {
-            _context = context;
+            _context = new OldCarShowroomNetworkContext();
             _dbSet = _context.Set<T>();
         }
         public IQueryable<T> GetAll()
@@ -30,7 +30,8 @@ namespace REPOs
         }
         public void Update(T item)
         {
-            _dbSet.Update(item);
+            var tracker = _context.Attach(item);
+            tracker.State = EntityState.Modified;
             _context.SaveChanges();
         }
     }

@@ -9,37 +9,29 @@ using Microsoft.EntityFrameworkCore;
 using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using REPOs;
+using Microsoft.AspNetCore.Http;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.User
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "User,Staff")]
     public class EditModel : PageModel
     {
-        private readonly BOs.Models.OldCarShowroomNetworkContext _context;
+        public readonly UserRepository _userRepo;
 
-        public EditModel(BOs.Models.OldCarShowroomNetworkContext context)
+        public EditModel(UserRepository userRepo)
         {
-            _context = context;
+            _userRepo = userRepo;
         }
 
         [BindProperty]
-        public BOs.Models.User User { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(string id)
+        public BOs.Models.User user { get; set; }
+        public string Email { get; set; }
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            Email = HttpContext.Session.GetString("Key");
+            user = await _userRepo.GetAll().FirstOrDefaultAsync(u => u.Email.Equals(Email));
 
-            User = await _context.Users
-                .Include(u => u.Role).FirstOrDefaultAsync(m => m.Username == id);
-
-            if (User == null)
-            {
-                return NotFound();
-            }
-           ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
             return Page();
         }
 
@@ -52,30 +44,9 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
                 return Page();
             }
 
-            _context.Attach(User).State = EntityState.Modified;
+            _userRepo.Update(user);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(User.Username))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool UserExists(string id)
-        {
-            return _context.Users.Any(e => e.Username == id);
+            return RedirectToPage("./Details");
         }
     }
 }

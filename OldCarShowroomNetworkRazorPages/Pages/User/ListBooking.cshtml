@@ -1,0 +1,60 @@
+﻿@page
+@model ListBookingModel
+@{
+}
+
+<h1>Danh sách lịch đặt xem xe</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên Xe
+            </th>
+            <th>
+                Ngày xem xe
+            </th>
+            <th>
+                Thời gian xem xe
+            </th>
+            <th>
+                Showroom
+            </th>
+            <th>
+                Đia chỉ
+            </th>
+            <th>
+                SĐT Showroom
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.booking)
+        {
+            <tr>
+                <td>
+                    @item.Car.ManufactoryNavigation.ManufactoryName @item.Car.CarNameNavigation.CarName1 @item.Car.CarModelYearNavigation.CarModelYear1 
+                </td>
+                <td>
+                    @item.DayBooking.Value.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @item.SlotNavigation.PickupDate - @item.SlotNavigation.ReturnDate
+                </td>
+                <td>
+                    @item.Car.Showroom.ShowroomName
+                </td>
+                <td>
+                    @item.Car.Showroom.Address, @item.Car.Showroom.WardsNavigation.FullName, @item.Car.Showroom.District.FullName, @item.Car.Showroom.City.FullName
+                </td>
+                <td>
+                    @item.Car.Showroom.Phone
+                </td>
+                <td class="form-group">
+                    <input type="hidden" id="datetime" name="datetime" asp-for="@item.DayBooking"></input>
+                    <a asp-page="./DeleteBooking" asp-route-id="@item.Username">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

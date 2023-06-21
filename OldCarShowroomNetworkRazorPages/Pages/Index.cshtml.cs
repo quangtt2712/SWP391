@@ -34,10 +34,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages
         }
 
         public async Task<IActionResult> OnGetAsync()
-        {
+        {   
+
             if (HttpContext.Session.GetString("Key") == null || HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
             {   
                 car = await _carRepo.GetAll()
+                    .Include(c => c.ImageCars)
                     .Include(c => c.CarModelYearNavigation)
                     .Include(c => c.CarNameNavigation)
                     .Include(c => c.ColorInsideNavigation)
@@ -53,7 +55,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
 					.Include(c => c.ImageCars)
 					.Include(c => c.Showroom.District)
                     .Include(c => c.Showroom.WardsNavigation)
-                    .Where(c =>c.Notification == true).ToListAsync();
+                    .Where(c =>c.Notification.Equals(1)).ToListAsync();
                 
                 return Page();
             }
@@ -67,14 +69,15 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 Msg1 = "Vui lòng nhập tên xe để tìm kiếm";
                 return Page();
             }
-            var checkCar = _carRepo.GetAll().Where(p => p.Notification == true && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()) 
-            || p.Notification == true && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
+            var checkCar = _carRepo.GetAll().Where(p => p.Notification.Equals(1) && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()) 
+            || p.Equals(1) && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
             if (checkCar.Count() == 0)
             {
                 Msg1 = "Không tìm thấy xe";
                 return Page();
             }
             car = await checkCar
+                .Include(c => c.ImageCars)
                 .Include(c => c.CarModelYearNavigation)
                 .Include(c => c.CarNameNavigation)
                 .Include(c => c.ColorInsideNavigation)
@@ -89,7 +92,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 .Include(c => c.Showroom.District)
                 .Include(c => c.ImageCars)
                 .Include(c => c.Showroom.WardsNavigation)
-                .Where(c => c.Notification == true).ToListAsync();
+                .Where(c => c.Notification.Equals(1)).ToListAsync();
             return Page();
         }
 
