@@ -99,7 +99,7 @@
             }
         </div>
         <div class="form-group">
-            <label asp-for="isBooked.Slot" class="control-label">Thời gian xem xe</label>
+            <label asp-for="isBooked.Slot" class="control-label">Thời gian xem xe (Giờ kết thúc là 2 tiếng kể từ giờ bắt đầu xem xe)</label>
             <select style="background-color: #f5f3ff;" asp-for="isBooked.Slot" class="form-control" asp-items="ViewBag.Slot" id="listCarName"></select>
         </div>
         @if (@Model.Msg1 != null)
