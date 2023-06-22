@@ -1,0 +1,66 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.User.DeleteBookingModel
+@{
+}
+<h1>Xác nhận xóa lịch đặt</h1>
+
+<h3>Bạn muốn xóa lịch đặt</h3>
+<div>
+    <form method="post">
+        <input type="hidden" id="Username" name="Username" asp-for="@Model.booking.Username" />
+        <input type="hidden" id="datetime" name="datetime" asp-for="@Model.booking.DayBooking" />
+        <hr />
+        <dl class="row">
+            <div class="form-group">
+                <dt class="col-sm-2">
+                    Tên xe
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.booking.Car.ManufactoryNavigation.ManufactoryName @Model.booking.Car.CarNameNavigation.CarName1 @Model.booking.Car.CarModelYearNavigation.CarModelYear1
+                </dd>
+            </div>
+            <div class="form-group">
+                <dt class="col-sm-2">
+                    Ngày xem xe
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.booking.DayBooking.Value.ToString("dd/MM/yyyy")
+                </dd>
+            </div>
+            <div class="form-group">
+                <dt class="col-sm-2">
+                    Thời gian xem xe
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.booking.SlotNavigation.PickupDate - @Model.booking.SlotNavigation.ReturnDate
+                </dd>
+            </div>
+            <div class="form-group">
+                <dt class="col-sm-2">
+                    Showroom
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.booking.Car.Showroom.ShowroomName
+                </dd>
+            </div>
+            <div class="form-group">
+                <dt class="col-sm-2">
+                    Đia chỉ
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.booking.Car.Showroom.Address, @Model.booking.Car.Showroom.WardsNavigation.FullName, @Model.booking.Car.Showroom.District.FullName, @Model.booking.Car.Showroom.City.FullName
+                </dd>
+            </div>
+            <div class="form-group">
+                <dt class="col-sm-2">
+                    SĐT Showroom
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.booking.Car.Showroom.Phone
+                </dd>
+            </div>
+        </dl>
+        <input type="submit" value="Xóa lịch đặt" class="btn btn-danger" />
+    </form>
+</div>
+<div><a asp-page="./ListBooking">Quay lại</a></div>

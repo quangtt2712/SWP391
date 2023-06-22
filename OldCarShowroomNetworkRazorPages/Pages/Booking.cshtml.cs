@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using REPOs;
@@ -51,7 +52,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages
         public string Msg3 { get; set; }
         public DateTime dateTime { get; set; }
         public DateTime DateTimeNow { get; set; }
-        public TimeSpan checkTimeNow { get; set; }
+        public DateTime checkTimeNow { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             ViewData["Slot"] = new SelectList(_context.Slots, "SlotId", "PickupDate");
@@ -88,6 +90,9 @@ namespace OldCarShowroomNetworkRazorPages.Pages
         }
         public async Task<IActionResult> OnPostAsync(int carId, string userName, DateTime dateTime)
         {
+            Email = HttpContext.Session.GetString("Key");
+            user = await _userRepo.GetAll().FirstOrDefaultAsync(u => u.Email.Equals(Email));
+            ViewData["Slot"] = new SelectList(_context.Slots, "SlotId", "PickupDate");
             Car = await _context.Cars
                 .Include(c => c.ImageCars)
                 .Include(c => c.CarModelYearNavigation)
@@ -106,9 +111,9 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 .FirstOrDefaultAsync(c => c.CarId == carId);
 
             DateTimeNow = DateTime.Now.Date;
-            checkTimeNow = DateTime.Now.TimeOfDay;
+            checkTimeNow = DateTime.Now;
             if (DateTimeNow > dateTime) {
-                Msg = "Chỉ được đặt lịch từ hôm nay trở đi";
+                Msg = "Chỉ được đặt lịch từ ngày " + DateTimeNow.ToString("dd/mm/yyyy") + "trở đi";
                 return Page();
             }
 
@@ -117,20 +122,15 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             isBooked.Notification = 1;
             isBooked.DayBooking = dateTime.Date;
 
-            var checkBookAlready = await _bookingRepo.GetAll().Include(b => b.SlotNavigation).FirstOrDefaultAsync(b => b.Username == isBooked.Username && b.CarId == isBooked.CarId && b.Slot == isBooked.Slot && b.Notification.Equals(1));
+
+            var checkBookAlready = await _bookingRepo.GetAll().Include(b => b.SlotNavigation).FirstOrDefaultAsync(b => b.Username == isBooked.Username && b.CarId == isBooked.CarId && b.Notification.Equals(1));
             if(checkBookAlready != null){
-                Msg3 = "Xe này đã đặt lịch rồi. Mời đặt lịch xem xe khác";
-                return Page();
-            }
-            var checkUserBooking = await _bookingRepo.GetAll().FirstOrDefaultAsync(b => b.Username == isBooked.Username && b.DayBooking == isBooked.DayBooking && b.Notification.Equals(1));
-            if(checkUserBooking != null) 
-            {
-                Msg2 = "Chỉ được đặt lịch xem xe trong showroom này 1 lần trong ngày";
+                Msg3 = "Xe này đã đặt lịch ngày "+ checkBookAlready.DayBooking.Value.ToString("dd/MM/yyyy") +" .Mời đặt lịch xem xe khác";
                 return Page();
             }
 
             var checkBooking = await _bookingRepo.GetAll().FirstOrDefaultAsync(b => b.DayBooking == isBooked.DayBooking && b.Slot == isBooked.Slot && b.Notification.Equals(1));
-            if (checkUserBooking != null)
+            if (checkBooking != null)
             {
                 Msg3 = "Lịch đã có người đặt. Mời đặt lại";
                 return Page();
@@ -139,12 +139,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             _bookingRepo.Add(isBooked);
 
             var checkTime = await _bookingRepo.GetAll().Include(b => b.SlotNavigation).FirstOrDefaultAsync(b => b.DayBooking == isBooked.DayBooking && b.Slot == isBooked.Slot && b.Notification.Equals(1));
-            if (DateTimeNow == checkTime.DayBooking && checkTimeNow > checkTime.SlotNavigation.PickupDate) {
-                Msg1 = "Chỉ được đặt lịch từ giờ hiện tại trở đi";
+            if (DateTimeNow == isBooked.DayBooking && checkTimeNow.TimeOfDay > isBooked.SlotNavigation.PickupDate)
+            {
+                Msg1 = "Chỉ được đặt lịch từ " + checkTimeNow.ToString("HH:mm") + " trở đi";
                 _bookingRepo.Delete(isBooked);
                 return Page();
             }
-
             return RedirectToPage("/Index");
         }
     }
