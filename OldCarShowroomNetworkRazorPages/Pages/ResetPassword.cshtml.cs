@@ -5,6 +5,7 @@ using REPOs;
 using System.Linq;
 using BOs.Models;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.ForgotPassword
 {
@@ -24,10 +25,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.ForgotPassword
             _userRepo = userRepo;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            Key = TempData["Email"] as string;
+            return Page();
         }
-        public IActionResult OnPost()
+        public IActionResult OnPost(string Key)
         {
 
             if (NewPassword == null)
