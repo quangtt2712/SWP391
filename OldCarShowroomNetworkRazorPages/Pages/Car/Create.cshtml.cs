@@ -60,7 +60,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
             Car.Username = user.Username;
             Car.Showroom = Showroomid;
-            Car.Notification = false;
+            Car.Notification = 0;
             Car.Status = false;
             Car.Note = string.Empty;
             _context.Cars.Add(Car);

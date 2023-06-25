@@ -23,6 +23,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         public async Task<IActionResult> OnGetAsync()
         {
             Car = await _carRepo.GetAll()
+                .Include(c => c.ImageCars)
                 .Include(c => c.CarModelYearNavigation)
                 .Include(c => c.CarNameNavigation)
                 .Include(c => c.ColorInsideNavigation)
@@ -36,7 +37,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(c => c.Showroom.WardsNavigation)
                 .Include(c => c.UsernameNavigation)
                 .Include(c => c.VehiclesNavigation)
-                .Where(c => c.Notification == false && c.ShowroomId != null)
+                .Where(c => c.Notification.Equals(0) && c.ShowroomId != null)
                 .ToListAsync();
             if (Car == null)
             {
@@ -48,7 +49,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         public async Task<IActionResult> OnPostAsync(int? CarId)
         {
             var checkNotifi = _carRepo.GetAll().FirstOrDefault(c => c.CarId == CarId);
-            checkNotifi.Notification = true;
+            checkNotifi.Notification = 1;
             _carRepo.Update(checkNotifi);
 
             Car = await _carRepo.GetAll()
@@ -65,7 +66,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(c => c.Showroom.City)
                 .Include(c => c.Showroom.District)
                 .Include(c => c.Showroom.WardsNavigation)
-                .Where(c => c.Notification == false && c.ShowroomId != null)
+                .Where(c => c.Notification.Equals(0))
                 .ToListAsync();
 
             return Page();

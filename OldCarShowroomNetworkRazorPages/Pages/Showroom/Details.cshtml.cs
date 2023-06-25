@@ -76,7 +76,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         public async Task<IActionResult> OnPostAsync(int? CarId, int? ShowroomId)
         {
             var checkNotifi = _carRepo.GetAll().FirstOrDefault(c => c.CarId == CarId);
-            checkNotifi.Notification = true;
+            checkNotifi.Notification = 1;
             _carRepo.Update(checkNotifi);
 
             Car = await _carRepo.GetAll()

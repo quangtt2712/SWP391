@@ -86,7 +86,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
            
             string userLogin = HttpContext.Session.GetString("Key");
             var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
-            Car.Notification = false;
+            Car.Notification = 0;
             Car.Status = false;
             Car.Username = user.Username;
             _context.Attach(Car).State = EntityState.Modified;
