@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
@@ -17,12 +18,14 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
     public class CreateModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
+        private readonly INotyfService _toastNotification;
 
-        public CreateModel()
+        public CreateModel(OldCarShowroomNetworkContext context, INotyfService toastNotification)
         {
             _context = new OldCarShowroomNetworkContext();
+            _toastNotification = toastNotification;
         }
-        
+
         public IActionResult OnGet()
         {
         ViewData["CarModelYear"] = new SelectList(_context.CarModelYears, "CarModelYearId", "CarModelYear1");
@@ -107,9 +110,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                 };
                 _context.ImageCars.Add(image);
                 await _context.SaveChangesAsync();
+                _toastNotification.Success("Tạo xe thành công");
             }
-            
-
             return RedirectToPage("./Index");
         }
         private bool ShowroomExists(int id)

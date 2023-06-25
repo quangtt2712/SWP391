@@ -52,13 +52,13 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
                 return Page();
             }
             var deleteBooking = _bookingRepo.GetAll().FirstOrDefault(b => b.Username.Equals(UserName) && b.DayBooking.Equals(datetime) && b.Notification.Equals(1));
-            if (deleteBooking == null)
+            if (deleteBooking != null)
             {
-                return Page();
+                _bookingRepo.Delete(deleteBooking);
+                _toastNotification.Success("Xoá lịch xem xe thành công");
+                return RedirectToPage("./ListBooking");
             }
-            _bookingRepo.Delete(deleteBooking);
-            _toastNotification.Success("Xoá lịch xem xe thành công");
-            return RedirectToPage("./ListBooking");
+            return Page();
         }
     }
 }

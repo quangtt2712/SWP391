@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
@@ -18,10 +19,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
     public class EditModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
+        private readonly INotyfService _toastNotification;
 
-        public EditModel()
+        public EditModel(OldCarShowroomNetworkContext context, INotyfService toastNotification)
         {
             _context = new OldCarShowroomNetworkContext();
+            _toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -72,6 +75,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         {
             if (!ModelState.IsValid)
             {
+                _toastNotification.Error("Chỉnh sửa showroom thất bại");
                 return Page();
             }
 
@@ -130,6 +134,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             try
             {
                 await _context.SaveChangesAsync();
+                _toastNotification.Success("Chỉnh sửa showroom thành công");
             }
             catch (DbUpdateConcurrencyException)
             {

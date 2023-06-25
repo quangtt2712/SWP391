@@ -1,3 +1,4 @@
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,11 +14,14 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
     public class RefuseCarModel : PageModel
     {
         public readonly CarRepository _carRepo;
+        private readonly INotyfService _toastNotification;
 
-        public RefuseCarModel(CarRepository carRepo)
+        public RefuseCarModel(CarRepository carRepo, INotyfService toastNotification)
         {
             _carRepo = carRepo;
+            _toastNotification = toastNotification;
         }
+
         [BindProperty]
         public string Note { get; set; }
         [BindProperty]
@@ -50,12 +54,16 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         {
             if (!ModelState.IsValid)
             {
+                _toastNotification.Error("Từ chối kí gửi xe thất bại");
                 return Page();
             }
             var checkNotifi = _carRepo.GetAll().FirstOrDefault(c => c.CarId == CarId);
-            checkNotifi.Notification = 2;
-            checkNotifi.Note = Note;
-            _carRepo.Update(checkNotifi);
+            if (checkNotifi != null) { 
+                checkNotifi.Notification = 2;
+                checkNotifi.Note = Note;
+                _carRepo.Update(checkNotifi);
+                _toastNotification.Success("Từ chối kí gửi xe thành công");
+            }
             return RedirectToPage("./ListCar");
         }
     }

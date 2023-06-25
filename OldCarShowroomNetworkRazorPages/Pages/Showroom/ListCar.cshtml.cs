@@ -1,3 +1,4 @@
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,14 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
     public class ListCarcshtmlModel : PageModel
     {
         public readonly CarRepository _carRepo;
-        public ListCarcshtmlModel(CarRepository carRepo)
+        private readonly INotyfService _toastNotification;
+
+        public ListCarcshtmlModel(CarRepository carRepo, INotyfService toastNotification)
         {
             _carRepo = carRepo;
+            _toastNotification = toastNotification;
         }
+
         public IList<BOs.Models.Car> Car { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
@@ -37,9 +42,9 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(c => c.Showroom.WardsNavigation)
                 .Include(c => c.UsernameNavigation)
                 .Include(c => c.VehiclesNavigation)
-                .Where(c => c.Notification.Equals(0) && c.ShowroomId != null)
+                .Where(c => c.Notification.Equals(0))
                 .ToListAsync();
-            if (Car == null)
+            if (Car.Count() == 0)
             {
                 return NotFound();
             }
@@ -68,7 +73,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(c => c.Showroom.WardsNavigation)
                 .Where(c => c.Notification.Equals(0))
                 .ToListAsync();
-
+            _toastNotification.Success("Chấp nhận kí gửi xe thành công");
             return Page();
         }
     }

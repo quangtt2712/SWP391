@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
@@ -17,10 +18,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
     public class CreateModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
+        private readonly INotyfService _toastNotification;
 
-        public CreateModel()
+        public CreateModel(OldCarShowroomNetworkContext context, INotyfService toastNotification)
         {
             _context = new OldCarShowroomNetworkContext();
+            _toastNotification = toastNotification;
         }
 
         public IActionResult OnGet()
@@ -43,6 +46,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         {
             if (!ModelState.IsValid)
             {
+                _toastNotification.Error("Tạo showroom thất bại");
                 return Page();
             }
             _context.Showrooms.Add(Showroom);
@@ -89,8 +93,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 await _context.SaveChangesAsync();
             }
 
-            
-           
+
+            _toastNotification.Success("Tạo showroom thành công");
             return RedirectToPage("./Index");
         }
     }

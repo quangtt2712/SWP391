@@ -41,7 +41,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages.ForgotPassword
         }
         public IActionResult OnPost(string Key)
         {
-
             if (NewPassword == null)
             {
                 Msg1 = "Nhập Mật khẩu mới";
@@ -60,9 +59,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages.ForgotPassword
                 return Page();
             }
             var checkEmail = _userRepo.GetAll().FirstOrDefault(p => p.Email.Equals(Key));
-            checkEmail.Password = ConfirmNewPassword;
-            _userRepo.Update(checkEmail);
-            _toastNotification.Success("Reset mật khẩu thành công");
+            if (checkEmail != null) { 
+                checkEmail.Password = ConfirmNewPassword;
+                _userRepo.Update(checkEmail);
+                _toastNotification.Success("Reset mật khẩu thành công");
+            }
             return RedirectToPage("./Login");
         }
     }

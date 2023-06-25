@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
@@ -15,10 +16,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
     public class DeleteModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
+        private readonly INotyfService _toastNotification;
 
-        public DeleteModel()
+        public DeleteModel(OldCarShowroomNetworkContext context, INotyfService toastNotification)
         {
             _context = new OldCarShowroomNetworkContext();
+            _toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -63,8 +66,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 await _context.SaveChangesAsync();
                 _context.Showrooms.Remove(Showroom);
                 await _context.SaveChangesAsync();
+                _toastNotification.Success("Xóa showroom thành công");
             }
-
             return RedirectToPage("./Index");
         }
     }

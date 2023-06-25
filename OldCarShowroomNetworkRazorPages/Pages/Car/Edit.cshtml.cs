@@ -12,6 +12,7 @@ using System.Data;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
@@ -19,13 +20,16 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
     public class EditModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CarId { get; set; }
-        public EditModel()
+        private readonly INotyfService _toastNotification;
+
+        public EditModel(OldCarShowroomNetworkContext context, INotyfService toastNotification)
         {
             _context = new OldCarShowroomNetworkContext();
+            _toastNotification = toastNotification;
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CarId { get; set; }
         [BindProperty]
         public BOs.Models.Car Car { get; set; }
         [BindProperty]
@@ -81,6 +85,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
         {
             if (!ModelState.IsValid)
             {
+                _toastNotification.Error("Chỉnh sửa xe thất bại");
                 return Page();
             }
            
@@ -139,6 +144,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
             try
             {
                 await _context.SaveChangesAsync();
+                _toastNotification.Success("Chỉnh sửa thông tin xe thành công");
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -151,7 +157,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                     throw;
                 }
             }
-
             return RedirectToPage("./Index");
         }
 
