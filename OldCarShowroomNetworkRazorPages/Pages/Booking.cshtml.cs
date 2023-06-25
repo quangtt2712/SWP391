@@ -1,4 +1,5 @@
-﻿using BOs.Models;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,13 +25,16 @@ namespace OldCarShowroomNetworkRazorPages.Pages
         public readonly SlotRepository _slotRepo;
         public readonly UserRepository _userRepo;
         public readonly OldCarShowroomNetworkContext _context;
-        public BookingModel(CarRepository carRepo, BookingRepository bookingRepo, SlotRepository slotRepo, UserRepository userRepo)
+        private readonly INotyfService _toastNotification;
+
+        public BookingModel(CarRepository carRepo, BookingRepository bookingRepo, SlotRepository slotRepo, UserRepository userRepo, OldCarShowroomNetworkContext context, INotyfService toastNotification)
         {
             _carRepo = carRepo;
             _bookingRepo = bookingRepo;
             _slotRepo = slotRepo;
             _userRepo = userRepo;
             _context = new OldCarShowroomNetworkContext();
+            _toastNotification = toastNotification;
         }
 
         public BOs.Models.Car Car { get; set; }
@@ -114,6 +118,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             checkTimeNow = DateTime.Now;
             if (DateTimeNow > dateTime) {
                 Msg = "Chỉ được đặt lịch từ ngày " + DateTimeNow.ToString("dd/mm/yyyy") + "trở đi";
+                _toastNotification.Error("Đặt lịch xem xe thất bại");
                 return Page();
             }
 
@@ -126,6 +131,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             var checkBookAlready = await _bookingRepo.GetAll().Include(b => b.SlotNavigation).FirstOrDefaultAsync(b => b.Username == isBooked.Username && b.CarId == isBooked.CarId && b.Notification.Equals(1));
             if(checkBookAlready != null){
                 Msg3 = "Xe này đã đặt lịch ngày "+ checkBookAlready.DayBooking.Value.ToString("dd/MM/yyyy") +" .Mời đặt lịch xem xe khác";
+                _toastNotification.Error("Đặt lịch xem xe thất bại");
                 return Page();
             }
 
@@ -133,18 +139,29 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             if (checkBooking != null)
             {
                 Msg3 = "Lịch đã có người đặt. Mời đặt lại";
+                _toastNotification.Error("Đặt lịch xem xe thất bại");
                 return Page();
             }
 
             _bookingRepo.Add(isBooked);
 
             var checkTime = await _bookingRepo.GetAll().Include(b => b.SlotNavigation).FirstOrDefaultAsync(b => b.DayBooking == isBooked.DayBooking && b.Slot == isBooked.Slot && b.Notification.Equals(1));
-            if (DateTimeNow == isBooked.DayBooking && checkTimeNow.TimeOfDay > isBooked.SlotNavigation.PickupDate)
+            if (DateTimeNow == isBooked.DayBooking && checkTimeNow.TimeOfDay > isBooked.SlotNavigation.ReturnDate)
             {
-                Msg1 = "Chỉ được đặt lịch từ " + checkTimeNow.ToString("HH:mm") + " trở đi";
+                Msg1 = "Hết thời gian xem xe hôm nay. Mời đặt lịch từ ngày mai trở đi";
+                _toastNotification.Error("Đặt lịch xem xe thất bại");
                 _bookingRepo.Delete(isBooked);
                 return Page();
             }
+
+            if (DateTimeNow == isBooked.DayBooking && checkTimeNow.TimeOfDay > isBooked.SlotNavigation.PickupDate)
+            {
+                Msg1 = "Chỉ được đặt lịch từ " + checkTimeNow.ToString("HH:mm") + " trở đi";
+                _toastNotification.Error("Đặt lịch xem xe thất bại");
+                _bookingRepo.Delete(isBooked);
+                return Page();
+            }
+            _toastNotification.Success("Đặt lịch xem xe thành công");
             return RedirectToPage("/Index");
         }
     }

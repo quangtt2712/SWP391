@@ -14,35 +14,57 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="user.Username" />
+            <input type="hidden" asp-for="user.Password" />
+            <input hidden asp-for="user.RoleId">
             <div class="form-group">
                 <label class="control-label"> Tên</label>
                 <input asp-for="user.FullName" class="form-control" />
                 <span asp-validation-for="user.FullName" class="text-danger"></span>
+                @if (Model.Msg2 != null)
+                {
+                    <p style="color: black">@Model.Msg1</p>
+                }
             </div>
             <div class="form-group">
                 <label class="control-label">Địa chỉ</label>
                 <input asp-for="user.Address" class="form-control" />
                 <span asp-validation-for="user.Address" class="text-danger"></span>
+                @if (Model.Msg3 != null)
+                {
+                    <p style="color: black">@Model.Msg1</p>
+                }
             </div>
             <div class="form-group">
                 <label asp-for="user.Email" class="control-label"></label>
                 <input asp-for="user.Email" class="form-control" />
                 <span asp-validation-for="user.Email" class="text-danger"></span>
+                @if (Model.Msg4 != null)
+                {
+                    <p style="color: black">@Model.Msg1</p>
+                }
             </div>
             <div class="form-group">
                 <label class="control-label">SĐT</label>
                 <input asp-for="user.Phone" class="form-control" />
                 <span asp-validation-for="user.Phone" class="text-danger"></span>
+                @if (Model.Msg5 != null)
+                {
+                    <p style="color: black">@Model.Msg1</p>
+                }
             </div>
             <div class="form-group">
-                <input type="hidden" asp-for="user.Password" class="form-control" />
-                <input hidden asp-for="user.RoleId"></input>
                 <input type="submit" value="Chỉnh sửa" class="btn btn-primary" />
             </div>
+            @if (Model.Msg1 != null)
+            {
+                <p style="color: black">@Model.Msg1</p>
+            }
         </form>
     </div>
 </div>
-
+<div>
+    <a asp-page="/ResetPassword" asp-route-username="user.Username">Thay đổi mật khẩu</a>
+</div>
 <div>
     <a asp-page="./Details">Back to List</a>
 </div>

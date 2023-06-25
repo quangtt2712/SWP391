@@ -1,3 +1,5 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using BOs.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -33,6 +35,12 @@ namespace OldCarShowroomNetworkRazorPages
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddNotyf(config =>
+            {
+                config.DurationInSeconds = 5;
+                config.IsDismissable = true;
+                config.Position = NotyfPosition.TopRight;
+            });
             services.AddDbContext<OldCarShowroomNetworkContext>(options =>
             options.UseSqlServer("name=ConnectionStrings:DB"
             ));
@@ -75,6 +83,7 @@ namespace OldCarShowroomNetworkRazorPages
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
             app.UseStaticFiles();
@@ -88,6 +97,8 @@ namespace OldCarShowroomNetworkRazorPages
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseNotyf();
 
             app.UseEndpoints(endpoints =>
             {

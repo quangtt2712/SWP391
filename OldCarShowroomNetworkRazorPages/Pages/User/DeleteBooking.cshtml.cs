@@ -1,3 +1,4 @@
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,12 +19,15 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
     {
         public readonly UserRepository _userRepo;
         public readonly BookingRepository _bookingRepo;
+        private readonly INotyfService _toastNotification;
 
-        public DeleteBookingModel(UserRepository userRepo, BookingRepository bookingRepo)
+        public DeleteBookingModel(UserRepository userRepo, BookingRepository bookingRepo, INotyfService toastNotification)
         {
             _userRepo = userRepo;
             _bookingRepo = bookingRepo;
+            _toastNotification = toastNotification;
         }
+
         public BOs.Models.Booking booking { get; set; }
         public async Task<IActionResult> OnGetAsync(string UserName, DateTime datetime, int carId)
         {
@@ -44,6 +48,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
         {
             if (!ModelState.IsValid)
             {
+                _toastNotification.Error("Xóa lịch xem xe thất bại");
                 return Page();
             }
             var deleteBooking = _bookingRepo.GetAll().FirstOrDefault(b => b.Username.Equals(UserName) && b.DayBooking.Equals(datetime) && b.Notification.Equals(1));
@@ -52,6 +57,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
                 return Page();
             }
             _bookingRepo.Delete(deleteBooking);
+            _toastNotification.Success("Xoá lịch xem xe thành công");
             return RedirectToPage("./ListBooking");
         }
     }
