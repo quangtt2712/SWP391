@@ -28,13 +28,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
         public async Task<IActionResult> OnGetAsync()
         {
-            string userLogin = HttpContext.Session.GetString("Key");
-            if (string.IsNullOrEmpty(userLogin))
-            {
-                return Redirect("/Login");
-            }
-            var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
-
             Car = await _context.Cars
                  .Include(c => c.CarModelYearNavigation)
                  .Include(c => c.CarNameNavigation)

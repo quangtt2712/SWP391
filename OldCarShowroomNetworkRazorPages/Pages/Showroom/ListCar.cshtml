@@ -29,6 +29,9 @@
                                     <!-- Tên sản phẩm-->
                                     <h5 class="fw-bolder">Xe @car.ManufactoryNavigation.ManufactoryName @car.CarNameNavigation.CarName1 @car.CarModelYearNavigation.CarModelYear1</h5>
                                     <h6 class="fw-bolder">Version: @car.Version </h6>
+                                    <h6 class="fw-bolder">Tên người kí gửi xe: @car.UsernameNavigation.Username </h6>
+                                    <h6 class="fw-bolder">Email: @car.UsernameNavigation.Email </h6>
+                                    <h6 class="fw-bolder">SĐT: @car.UsernameNavigation.Phone </h6>
                                 @if(car.Origin == true)
                                 {
                                     <h6 class="fw-bolder">Xuất xứ: CKD </h6>
@@ -66,14 +69,15 @@
                                     <h6 class="fw-bolder">Hệ thống nạp nhiên liệu: @car.FuelIntakeSystem</h6>
                                     <h6 class="fw-bolder">Mức tiêu thụ nhiên liệu: @car.FuelConsumption L/100Km</h6>
                                     <!-- Giá sản phẩm-->
-                                    <h6 class="fw-bolder">Giá: @car.Price Triệu</h6>
+                                    <h6 class="fw-bolder">Giá mong muốn: @car.MaxPrice Triệu</h6>
+                                    <h6 class="fw-bolder">Giá tối thiểu: @car.MinPrice Triệu</h6>
                                     @car.Description
                                     <h6 class="fw-bolder">Showroom: @car.Showroom.ShowroomName </h6>
                                     <h6 class="fw-bolder">Địa chỉ: @car.Showroom.Address, @car.Showroom.WardsNavigation.FullName, @car.Showroom.District.FullName, @car.Showroom.City.FullName</h6>
                                     <h6 class="fw-bolder">SĐT: @car.Showroom.Phone </h6>
                                 </div>
                             </div>
-                            @if (car.Notification == false)
+                            @if (car.Notification.Equals(0))
                             {
                                 <form method="post">
                                     <div class="form-group">
@@ -82,7 +86,9 @@
                                     </div>
                                 </form>
                                 <a asp-page="./RefuseCar" asp-route-id="@car.CarId" class="btn btn-link">Từ chối</a>
-                            } else {
+                            }
+                            else if (car.Notification.Equals(1))
+                            {
                                 <h6 class="fw-bolder">Tình trạng: Đang bán</h6>
                             }
                         </div>

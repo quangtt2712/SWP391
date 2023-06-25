@@ -130,7 +130,7 @@
                             </div>
                         @if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals("2"))
                         {
-                                @if (car.Notification == false)
+                                @if (car.Notification.Equals(0))
                                 {
                                     <form method="post">
                                         <div class="form-group">
@@ -139,11 +139,11 @@
                                         <input type="submit" value="Chấp nhận" class="btn btn-primary" />
                                 </div>
                             </form>
-@*                            <a asp-page="./CarDetail" asp-route-id="@car.CarId" class="btn btn-link">Xem chi tiết</a>*@
+                            <a asp-page="./CarDetail" asp-route-id="@car.CarId" class="btn btn-link">Xem chi tiết</a>
                                 }
-                                else
+                                else if (car.Notification.Equals(1))
                                 {
-                                                <h6 class="fw-bolder">Tình trạng: Đang bán</h6>
+                                    <h6 class="fw-bolder">Tình trạng: Đang bán</h6>
                                 }
                         }
                         </div>
