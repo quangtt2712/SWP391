@@ -81,7 +81,7 @@
                                     <input asp-for="@Model.Email" type="text" class="form-control border-0"
                                            placeholder="Email" maxlength="128"
                                            style="height: 55px;">
-                                    @if (@Model.Msg1 != null)
+                                    @if (Model.Msg1 != null)
                                     {
                                         <p style="color: black">@Model.Msg1</p>
                                     }
@@ -90,7 +90,7 @@
                                 <div class="col-12 ">
                                     <input asp-for="@Model.Password" type="password" class="form-control border-0" placeholder="Mật khẩu"
                                            maxlength="16" style="height: 55px;">
-                                    @if (@Model.Msg2 != null)
+                                    @if (Model.Msg2 != null)
                                     {
                                         <p style="color: black">@Model.Msg2</p>
                                     }
@@ -199,6 +199,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    @await Component.InvokeAsync("Notyf")
 </body>
 
 </html>

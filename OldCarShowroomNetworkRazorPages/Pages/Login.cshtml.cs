@@ -10,16 +10,24 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.Extensions.Logging;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace OldCarShowroomNetworkRazorPage.Pages
 {
     public class LoginModel : PageModel
     {
         public readonly UserRepository _userRepo;
-        public LoginModel(UserRepository userRepository)
+        private readonly INotyfService _toastNotification;
+        private readonly ILogger<LoginModel> _logger;
+
+        public LoginModel(UserRepository userRepo, INotyfService toastNotification, ILogger<LoginModel> logger)
         {
-            _userRepo = userRepository;
+            _userRepo = userRepo;
+            _toastNotification = toastNotification;
+            _logger = logger;
         }
+
         public string Msg1 { get; set; }
         public string Msg2 { get; set; }
 
@@ -38,12 +46,14 @@ namespace OldCarShowroomNetworkRazorPage.Pages
             if (Email == null)
             {
                 Msg1 = "Nhập tài khoản";
+                _toastNotification.Error("Đăng nhập thất bại");
                 return Page();
             }
 
             if (Password == null)
             {
                 Msg2 = "Nhập Mật khẩu";
+                _toastNotification.Error("Đăng nhập thất bại");
                 return Page();
             }
 
@@ -51,7 +61,8 @@ namespace OldCarShowroomNetworkRazorPage.Pages
 
             if (checkLoginByEmail == null)
             {
-                Msg1 = "Tài khoản không tồn tại";
+                Msg1 = "Tài khoản không tồn tại hoặc sai mật khẩu";
+                _toastNotification.Error("Đăng nhập thất bại");
                 return Page();
             }
 
@@ -67,6 +78,7 @@ namespace OldCarShowroomNetworkRazorPage.Pages
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 HttpContext.Session.SetString("Key", Email);
                 HttpContext.Session.SetString("Role", checkLoginByEmail.RoleId.ToString());
+                _toastNotification.Success("Đăng nhập thành công");
                 return RedirectToPage("./User/Index");
             }
 
@@ -82,6 +94,7 @@ namespace OldCarShowroomNetworkRazorPage.Pages
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 HttpContext.Session.SetString("Key", Email);
                 HttpContext.Session.SetString("Role", checkLoginByEmail.RoleId.ToString());
+                _toastNotification.Success("Đăng nhập thành công");
                 return RedirectToPage("./Index");
             }
 
@@ -97,6 +110,7 @@ namespace OldCarShowroomNetworkRazorPage.Pages
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 HttpContext.Session.SetString("Key", Email);
                 HttpContext.Session.SetString("Role", checkLoginByEmail.RoleId.ToString());
+                _toastNotification.Success("Đăng nhập thành công");
                 return RedirectToPage("/Showroom/Index");
             }
             return Page();

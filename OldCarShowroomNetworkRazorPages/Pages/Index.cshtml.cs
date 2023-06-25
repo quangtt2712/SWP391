@@ -11,12 +11,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using BOs.Models;
 using Microsoft.EntityFrameworkCore;
+using OldCarShowroomNetworkRazorPage.Pages;
 
 namespace OldCarShowroomNetworkRazorPages.Pages
 {
     public class IndexModel : PageModel
     {
         public readonly CarRepository _carRepo;
+        private readonly ILogger<IndexModel> _logger;
+
+        public IndexModel(CarRepository carRepo, ILogger<IndexModel> logger)
+        {
+            _carRepo = carRepo;
+            _logger = logger;
+        }
 
         [BindProperty]
         public string Key { get; set; }
@@ -27,15 +35,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages
         public IList<BOs.Models.Car> car { get; set; }
         [BindProperty]
         public string searchKey { get; set; }
-
-        public IndexModel(CarRepository carRepo)
-        {
-            _carRepo = carRepo;
-        }
-
         public async Task<IActionResult> OnGetAsync()
-        {   
-
+        {
             if (HttpContext.Session.GetString("Key") == null || HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
             {   
                 car = await _carRepo.GetAll()
