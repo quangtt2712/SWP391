@@ -53,24 +53,24 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
                 Msg1 = "Cần nhập thông tin để chỉnh sửa";
                 return Page();
             }
-            if (user.FullName != null) {
+            if (user.FullName == null) {
                 _toastNotification.Error("Chỉnh sửa thông tin thất bại");
                 Msg2 = "Cần nhập Tên để chỉnh sửa";
                 return Page();
             }
-            if (user.Address != null)
+            if (user.Address == null)
             {
                 _toastNotification.Error("Chỉnh sửa thông tin thất bại");
                 Msg2 = "Cần nhập địa chỉ để chỉnh sửa";
                 return Page();
             }
-            if (user.Email != null)
+            if (user.Email == null)
             {
                 _toastNotification.Error("Chỉnh sửa thông tin thất bại");
                 Msg2 = "Cần nhập email để chỉnh sửa";
                 return Page();
             }
-            if (user.Phone != null)
+            if (user.Phone == null)
             {
                 _toastNotification.Error("Chỉnh sửa thông tin thất bại");
                 Msg2 = "Cần nhập SĐT để chỉnh sửa";
