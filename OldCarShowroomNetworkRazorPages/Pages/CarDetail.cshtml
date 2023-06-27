@@ -241,5 +241,10 @@
         </div>
     </dl>
 </div>
+@if (Model.Msg != null)
+{
+    <p style="color: red">@Model.Msg</p>
+}else{
 <a asp-page="/Booking" class="btn btn-primary"  asp-route-id="@Model.car.CarId"> Đặt lịch xem xe</a>
+}
 <a asp-page="/Index"> Quay lại trang chủ</a>

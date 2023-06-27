@@ -46,7 +46,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .ToListAsync();
             if (Car.Count() == 0)
             {
-                return NotFound();
+                return Page();
             }
             return Page();
         }

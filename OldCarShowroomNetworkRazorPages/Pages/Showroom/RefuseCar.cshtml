@@ -1,7 +1,6 @@
 ﻿@page
 @model OldCarShowroomNetworkRazorPages.Pages.Showroom.RefuseCarModel
 @{
-    ViewData["Title"] = "Delete";
 }
 
 <h1>Xác nhận từ chối kí gửi</h1>
@@ -255,6 +254,10 @@
             <dd class="col-sm-10">
                     <input asp-for="Note" type="text" placeholder="Nhập lý do" />
             </dd>
+            @if (Model.Msg1 != null)
+            {
+                <p style="color: red">@Model.Msg1</p>
+            }
         </div>
     </dl>
         <input type="submit" value="Từ chối kí gửi" class="btn btn-danger" />

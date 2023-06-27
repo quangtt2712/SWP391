@@ -21,7 +21,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             _carRepo = carRepo;
             _toastNotification = toastNotification;
         }
-
+        public string Msg1 { get; set; }
         [BindProperty]
         public string Note { get; set; }
         [BindProperty]
@@ -52,8 +52,31 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         }
         public async Task<IActionResult> OnPostAsync(int? CarId)
         {
+            car = await _carRepo.GetAll()
+                .Include(c => c.ImageCars)
+                .Include(c => c.CarModelYearNavigation)
+                .Include(c => c.CarNameNavigation)
+                .Include(c => c.ColorInsideNavigation)
+                .Include(c => c.ColorNavigation)
+                .Include(c => c.DriveNavigation)
+                .Include(c => c.FuelNavigation)
+                .Include(c => c.ManufactoryNavigation)
+                .Include(c => c.Showroom)
+                .Include(c => c.Showroom.City)
+                .Include(c => c.Showroom.District)
+                .Include(c => c.Showroom.WardsNavigation)
+                .Include(c => c.UsernameNavigation)
+                .Include(c => c.VehiclesNavigation)
+                .FirstOrDefaultAsync(c => c.CarId == CarId);
+
             if (!ModelState.IsValid)
             {
+                _toastNotification.Error("Từ chối kí gửi xe thất bại");
+                return Page();
+            }
+            if (Note == null)
+            {
+                Msg1 = "Cần nhập lý do để từ chối kí gửi xe";
                 _toastNotification.Error("Từ chối kí gửi xe thất bại");
                 return Page();
             }
