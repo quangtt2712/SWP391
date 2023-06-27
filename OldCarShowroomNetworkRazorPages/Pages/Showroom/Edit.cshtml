@@ -2,7 +2,7 @@
 @model OldCarShowroomNetworkRazorPages.Pages.Showroom.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+	ViewData["Title"] = "Edit";
 }
 
 <h1>Chỉnh sửa</h1>
@@ -10,89 +10,94 @@
 <h4>Showroom</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Showroom.ShowroomId" />
-            <div class="form-group">
-                <label asp-for="Showroom.ShowroomName" class="control-label"></label>
-                <input asp-for="Showroom.ShowroomName" class="form-control" />
-                <span asp-validation-for="Showroom.ShowroomName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Showroom.Address" class="control-label"></label>
-                <input asp-for="Showroom.Address" class="form-control" />
-                <span asp-validation-for="Showroom.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Showroom.Phone" class="control-label"></label>
-                <input asp-for="Showroom.Phone" class="form-control" id="checkvalidphone" />
-                <p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningphone"></p>
-                <span asp-validation-for="Showroom.Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Showroom.Website" class="control-label"></label>
-                <input asp-for="Showroom.Website" class="form-control" />
-                <span asp-validation-for="Showroom.Website" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Showroom.CityId" class="control-label">Thành phố</label>
-                <select asp-for="Showroom.CityId" class="form-control" asp-items="ViewBag.CityId" id="listCity" onchange="getDistrictName(this)"></select>
-                <span asp-validation-for="Showroom.CityId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Showroom.DistrictId" class="control-label">Quận/Huyện</label>
-                <select asp-for="Showroom.DistrictId" class="form-control" asp-items="ViewBag.DistrictId" id="listDistrictName" onchange="getWardName(this)"></select>
-                <span asp-validation-for="Showroom.DistrictId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Showroom.Wards" class="control-label">Phường/Xã</label>
-                <select asp-for="Showroom.Wards" class="form-control" asp-items="ViewBag.Wards" id="listWardName"></select>
-                <span asp-validation-for="Showroom.Wards" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageShowroom.Url" class="control-label">Ảnh showroom chính</label>
-                @if (Model.ImageShowroom != null)
-                {
-                    <div id="currentImage">
-                        <img src="@Url.Content(Model.ImageShowroom.Url)" alt="Current Image" class="img-thumbnail" />
-            </div>
-                }
-                <input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*"/>
-                <p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningmain"></p>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageShowroom.Url" class="control-label">Ảnh showroom phụ</label>
-                @if (Model.ImageShowrooms != null && Model.ImageShowrooms.Count > 0)
-                {
-                    foreach (var image in Model.ImageShowrooms)
-                    {
-                        <div id="currentImage">
+	<div class="col-md-4">
+		<form method="post" enctype="multipart/form-data">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="Showroom.ShowroomId" />
+			<div class="form-group">
+				<label asp-for="Showroom.ShowroomName" class="control-label">Tên</label>
+				<input asp-for="Showroom.ShowroomName" class="form-control" id="checkvalidname" />
+				<p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningname"></p>
+				<span asp-validation-for="Showroom.ShowroomName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Showroom.Address" class="control-label">Địa chỉ</label>
+				<input asp-for="Showroom.Address" class="form-control" id="checkvalidaddress" />
 
-                            <img src="@Url.Content(image.Url)" alt="Current Image" class="img-thumbnail" />
+				<p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningaddress"></p>
+				<span asp-validation-for="Showroom.Address" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Showroom.Phone" class="control-label">Số điện thoại</label>
+				<input asp-for="Showroom.Phone" class="form-control" id="checkvalidphone" />
+				<p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningphone"></p>
+				<span asp-validation-for="Showroom.Phone" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Showroom.Website" class="control-label">Web hoặc Email</label>
+				<input asp-for="Showroom.Website" class="form-control" />
+				<span asp-validation-for="Showroom.Website" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Showroom.CityId" class="control-label">Thành phố</label>
+				<select asp-for="Showroom.CityId" class="form-control" asp-items="ViewBag.CityId" id="listCity" onchange="getDistrictName(this)"></select>
+				<span asp-validation-for="Showroom.CityId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Showroom.DistrictId" class="control-label">Quận/Huyện</label>
+				<select asp-for="Showroom.DistrictId" class="form-control" asp-items="ViewBag.DistrictId" id="listDistrictName" onchange="getWardName(this)"></select>
+				<span asp-validation-for="Showroom.DistrictId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Showroom.Wards" class="control-label">Phường/Xã</label>
+				<select asp-for="Showroom.Wards" class="form-control" asp-items="ViewBag.Wards" id="listWardName"></select>
+				<span asp-validation-for="Showroom.Wards" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ImageShowroom.Url" class="control-label">Ảnh showroom chính</label>
+				@if (Model.ImageShowroom != null)
+				{
+					<div id="currentImage">
+						<img src="@Url.Content(Model.ImageShowroom.Url)" alt="Current Image" class="img-thumbnail" />
+					</div>
+				}
+				<input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*" />
+				<p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningmain"></p>
+			</div>
+			<div class="form-group">
+				<label asp-for="ImageShowroom.Url" class="control-label">Ảnh showroom phụ</label>
+				@if (Model.ImageShowrooms != null && Model.ImageShowrooms.Count > 0)
+				{
+					foreach (var image in Model.ImageShowrooms)
+					{
+						<div id="currentImage">
 
-                        </div>
-                    }
-                }
-                <input type="file" id="uploadimg" name="uploadimg" accept="image/*" />
-                
-            </div>
-          
+							<img src="@Url.Content(image.Url)" alt="Current Image" class="img-thumbnail" />
 
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" id="checkvalid" />
-                <p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningsave"></p>
-            </div>
-        </form>
-    </div>
+						</div>
+					}
+				}
+				<input type="file" id="uploadimg" name="uploadimg" accept="image/*" />
+
+			</div>
+
+
+			<div class="form-group">
+				<input type="submit" value="Lưu" class="btn btn-primary" id="checkvalid" />
+				<p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningsave"></p>
+			</div>
+		</form>
+	</div>
 </div>
-<script src="~/js/Adress.js"></script>
+<script src="~/js/checkvalid - Copy.js"></script>
 <div>
-    <a asp-page="./Index">Back to List</a>
+	<a asp-page="./Index">Trở lại</a>
 </div>
 
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }

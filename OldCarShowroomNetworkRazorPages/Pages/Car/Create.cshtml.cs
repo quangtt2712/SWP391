@@ -66,6 +66,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
             Car.Notification = 0;
             Car.Status = false;
             Car.Note = string.Empty;
+            Car.Expense = 100000;
+            Car.CreatedAt= DateTime.Now;
             _context.Cars.Add(Car);
             await _context.SaveChangesAsync();
             

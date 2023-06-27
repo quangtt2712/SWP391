@@ -13,11 +13,11 @@ using Microsoft.AspNetCore.Http;
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
     [Authorize(Roles = "User")]
-    public class IndexModel : PageModel
+    public class IndexModel2 : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
 
-        public IndexModel()
+        public IndexModel2()
         {
             _context = new OldCarShowroomNetworkContext();
         }
@@ -40,7 +40,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                  .Include(c => c.ManufactoryNavigation)
                  .Include(c => c.Showroom).ThenInclude(s => s.City)
                  .Include(c => c.UsernameNavigation)
-                 .Include(c => c.VehiclesNavigation).Where(s => s.Username.Equals(user.Username) && s.Notification == 0 && s.Note.Equals("")).ToListAsync();
+                 .Include(c => c.VehiclesNavigation).Where(s => s.Username.Equals(user.Username) && s.Notification == 2).ToListAsync();
             ImageCar = await _context.ImageCars.ToListAsync();
             return Page();
         }

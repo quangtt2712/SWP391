@@ -63,7 +63,15 @@
                 @if (Accessor.HttpContext.Session.GetString("Key") == null || Accessor.HttpContext.Session.GetString("Key") != null && Accessor.HttpContext.Session.GetString("Role").Equals("1"))
                 {
                     <a href="/Car/Showroom" class="nav-item nav-link">Bạn muốn bán xe?</a>
-                    <a href="/Car/Index" class="nav-item nav-link">Lịch sử kí gửi</a>
+                     <div class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Lịch sử</a>
+                        <div class="dropdown-menu fade-up m-0">
+                            <a href="/Car/Index1" class="dropdown-item">Lịch sử xe đang kí gửi</a>
+                            <a href="/Car/Index - Copy - Copy" class="dropdown-item">Lịch sử xe đã kí gửi thành công</a>
+                            <a href="/Car/Index" class="dropdown-item">Lịch sử đang chờ kí gửi</a>
+                            <a href="404.html" class="dropdown-item">404 Page</a>
+                        </div>
+                    </div>
                 }
                 <a href="/Showroom/Index" class="nav-item nav-link">Showroom</a>
             </div>

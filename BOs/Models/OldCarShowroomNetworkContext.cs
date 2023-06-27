@@ -55,12 +55,12 @@ namespace BOs.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Vietnamese_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.HasKey(e => new { e.Username, e.CarId, e.Slot })
-                    .HasName("PK__Bookings__E25AFD0C9FA82D61");
+                    .HasName("PK__Bookings__E25AFD0C6DE896BE");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(128)
@@ -82,13 +82,13 @@ namespace BOs.Models
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.Slot)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Bookings__Slot__59FA5E80");
+                    .HasConstraintName("FK__Bookings__Slot__59063A47");
 
                 entity.HasOne(d => d.UsernameNavigation)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.Username)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Bookings__Userna__59063A47");
+                    .HasConstraintName("FK__Bookings__Userna__59FA5E80");
             });
 
             modelBuilder.Entity<Car>(entity =>
@@ -274,7 +274,7 @@ namespace BOs.Models
             modelBuilder.Entity<Drife>(entity =>
             {
                 entity.HasKey(e => e.DriveId)
-                    .HasName("PK__Drives__9610CA385E934F74");
+                    .HasName("PK__Drives__9610CA388C8A7D8F");
 
                 entity.Property(e => e.DriveId).HasColumnName("DriveID");
 
@@ -291,7 +291,7 @@ namespace BOs.Models
             modelBuilder.Entity<ImageCar>(entity =>
             {
                 entity.HasKey(e => e.ImageId)
-                    .HasName("PK__ImageCar__7516F4ECFE7DE2BF");
+                    .HasName("PK__ImageCar__7516F4ECF58A8924");
 
                 entity.Property(e => e.ImageId).HasColumnName("ImageID");
 
@@ -310,7 +310,7 @@ namespace BOs.Models
             modelBuilder.Entity<ImageShowroom>(entity =>
             {
                 entity.HasKey(e => e.ImageId)
-                    .HasName("PK__ImageSho__7516F4ECF31B0B0F");
+                    .HasName("PK__ImageSho__7516F4EC6FF5A563");
 
                 entity.Property(e => e.ImageId).HasColumnName("ImageID");
 
@@ -395,7 +395,7 @@ namespace BOs.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.Username)
-                    .HasName("PK__Users__536C85E501388125");
+                    .HasName("PK__Users__536C85E52A8231C0");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(128)
@@ -435,7 +435,7 @@ namespace BOs.Models
             modelBuilder.Entity<Vehicle>(entity =>
             {
                 entity.HasKey(e => e.VehiclesId)
-                    .HasName("PK__Vehicles__C683EFD273E7DDBD");
+                    .HasName("PK__Vehicles__C683EFD2FB11D0F8");
 
                 entity.Property(e => e.VehiclesId).HasColumnName("VehiclesID");
 

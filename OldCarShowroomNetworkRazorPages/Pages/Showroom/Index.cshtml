@@ -68,14 +68,14 @@
                 @if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals("2"))
                 {
                     <td>
-                    <a asp-page="./Edit" asp-route-id="@item.ShowroomId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.ShowroomId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.ShowroomId">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@item.ShowroomId">Sửa</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ShowroomId">Chi tiết</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ShowroomId">Xóa</a>
                     </td>
                 }
                 else
                 {
-                    <td><a asp-page="./Details" asp-route-id="@item.ShowroomId">Details</a></td>
+                    <td><a asp-page="./Details" asp-route-id="@item.ShowroomId">Chi tiết</a></td>
 
                 }
             </tr>

@@ -2,7 +2,7 @@
 @model OldCarShowroomNetworkRazorPages.Pages.Car.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+	ViewData["Title"] = "Create";
 }
 
 <h1>Create</h1>
@@ -10,147 +10,162 @@
 <h4>Car</h4>
 <hr />
 <div class="row">
-    <div>
-        <form method="post" enctype="multipart/form-data" style="
+	<div>
+		<form method="post" enctype="multipart/form-data" style="
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 30px;
     padding: 20px;
 ">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Car.Manufactory" class="control-label">Hãng chế tạo</label>
+				<select style="background-color: #f5f3ff;" asp-for="Car.Manufactory" class="form-control" asp-items="ViewBag.Manufactory" id="listCarManufactory" onchange="getCarName(this) "></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.CarName" class="control-label">Tên xe</label>
+				<select style="background-color: #f5f3ff;" asp-for="Car.CarName" class="form-control" asp-items="ViewBag.CarName" id="listCarName"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.Version" class="control-label">Phiên bản</label>
+				<input asp-for="Car.Version" class="form-control" />
+				<span asp-validation-for="Car.Version" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.CarModelYear" class="control-label">Năm sản xuất/đời</label>
+				<select style="background-color: #f5f3ff;" asp-for="Car.CarModelYear" class="form-control" asp-items="ViewBag.CarModelYear"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.Origin" class="control-label">Xuất xứ</label>
+				<select style="background-color: #f5f3ff;" asp-for="Car.Origin" class="form-control">
+					<option value="false">Nhập khẩu</option>
+					<option value="true">Lắp ráp trong nước</option>
+				</select>
+				<span asp-validation-for="Car.Origin" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.NumberOfKilometersTraveled" class="control-label">Số Km đã đi</label>
+				<input asp-for="Car.NumberOfKilometersTraveled" class="form-control" />
+				<span asp-validation-for="Car.NumberOfKilometersTraveled" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.Vehicles" class="control-label">Dòng xe</label>
+				<select style="background-color: #f5f3ff;" asp-for="Car.Vehicles" class="form-control" asp-items="ViewBag.Vehicles"></select>
+			</div>
+			
+		
             <div class="form-group">
-                <label asp-for="Car.Manufactory" class="control-label">Hãng chế tạo</label>
-                <select style="background-color: #f5f3ff;" asp-for="Car.Manufactory" class="form-control" asp-items="ViewBag.Manufactory" id="listCarManufactory" onchange="getCarName(this) "></select>
+                <label asp-for="Car.MinPrice" class="control-label">Giá tiền thấp nhất có thể bán</label>
+                <input asp-for="Car.MinPrice" class="form-control" />
+                <span asp-validation-for="Car.MinPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Car.CarName" class="control-label">Tên xe</label>
-                <select style="background-color: #f5f3ff;" asp-for="Car.CarName" class="form-control" asp-items="ViewBag.CarName" id="listCarName"></select>
+                <label asp-for="Car.MaxPrice" class="control-label">Giá tiền cao nhất có thể bản</label>
+                <input asp-for="Car.MaxPrice" class="form-control" />
+                <span asp-validation-for="Car.MaxPrice" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Car.Version" class="control-label">Phiên bản</label>
-                <input asp-for="Car.Version" class="form-control" />
-                <span asp-validation-for="Car.Version" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.CarModelYear" class="control-label">Năm sản xuất/đời</label>
-                <select style="background-color: #f5f3ff;" asp-for="Car.CarModelYear" class="form-control" asp-items="ViewBag.CarModelYear"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.Origin" class="control-label">Xuất xứ</label>
-                <select style="background-color: #f5f3ff;" asp-for="Car.Origin" class="form-control">
-                    <option value="false">Nhập khẩu</option>
-                    <option value="true">Lắp ráp trong nước</option>
-                </select>
-                <span asp-validation-for="Car.Origin" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.NumberOfKilometersTraveled" class="control-label">Số Km đã đi</label>
-                <input asp-for="Car.NumberOfKilometersTraveled" class="form-control" />
-                <span asp-validation-for="Car.NumberOfKilometersTraveled" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.Vehicles" class="control-label">Dòng xe</label>
-                <select style="background-color: #f5f3ff;" asp-for="Car.Vehicles" class="form-control" asp-items="ViewBag.Vehicles"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.Price" class="control-label">Giá tiền</label>
-                <input asp-for="Car.Price" class="form-control" />
-                <span asp-validation-for="Car.Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.Color" class="control-label">Ngoại thất</label>
-                <select style="background-color: #f5f3ff;" asp-for="Car.Color" class="form-control" asp-items="ViewBag.Color"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.ColorInside" class="control-label">Nội thất</label>
-                <select style="background-color: #f5f3ff;" asp-for="Car.ColorInside" class="form-control" asp-items="ViewBag.ColorInside"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.NumberOfDoors" class="control-label">Số cửa</label>
-                <input asp-for="Car.NumberOfDoors" class="form-control" />
-                <span asp-validation-for="Car.NumberOfDoors" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.NumberOfSeats" class="control-label">Số chỗ ngồi</label>
-                <input asp-for="Car.NumberOfSeats" class="form-control" />
-                <span asp-validation-for="Car.NumberOfSeats" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.Gear" class="control-label">Hộp số</label>
-                <select style="background-color: #f5f3ff;" asp-for="Car.Gear" class="form-control">
-                    <option value="false">Số tay</option>
-                    <option value="true">Số tự động</option>
-                </select>
-                <span asp-validation-for="Car.Gear" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.Drive" class="control-label">Dẫn động</label>
-                <select style="background-color: #f5f3ff;" asp-for="Car.Drive" class="form-control" asp-items="ViewBag.Drive"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.Fuel" class="control-label">Nhiên liệu</label>
-                <select style="background-color: #f5f3ff;" asp-for="Car.Fuel" class="form-control" asp-items="ViewBag.Fuel"></select>
-            </div>
-            
-            <div class="form-group">
-                <label asp-for="Car.FuelIntakeSystem" class="control-label">Hệ thống nạp nhiên liệu</label>
-                <input asp-for="Car.FuelIntakeSystem" class="form-control" />
-                <span asp-validation-for="Car.FuelIntakeSystem" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.FuelConsumption" class="control-label">Mức tiêu thụ nhiên liệu</label>
-                <input asp-for="Car.FuelConsumption" class="form-control" />L/100Km 
-                <span asp-validation-for="Car.FuelConsumption" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.Description" class="control-label">Thông tin mô tả</label>
-                <textarea asp-for="Car.Description" class="form-control" /></textarea>
-                <span asp-validation-for="Car.Description" class="text-danger"></span>
-            </div>
-             @*<div class="form-group">
-                <label asp-for="Car.ImageCar" class="control-label">Ảnh xe</label>
-                <input type="file" id="uploadimg" name="uploadimg" accept="image/*"/>
-                
-            </div>*@
-            <div class="form-group">
-                <label asp-for="ImageCar.Url" class="control-label">Ảnh xe chính</label>
-                <input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*" />
+			<div class="form-group">
+				<label asp-for="Car.Color" class="control-label">Ngoại thất</label>
+				<select style="background-color: #f5f3ff;" asp-for="Car.Color" class="form-control" asp-items="ViewBag.Color"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.ColorInside" class="control-label">Nội thất</label>
+				<select style="background-color: #f5f3ff;" asp-for="Car.ColorInside" class="form-control" asp-items="ViewBag.ColorInside"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.NumberOfDoors" class="control-label">Số cửa</label>
+				<input asp-for="Car.NumberOfDoors" class="form-control" />
+				<span asp-validation-for="Car.NumberOfDoors" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.NumberOfSeats" class="control-label">Số chỗ ngồi</label>
+				<input asp-for="Car.NumberOfSeats" class="form-control" />
+				<span asp-validation-for="Car.NumberOfSeats" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.Gear" class="control-label">Hộp số</label>
+				<select style="background-color: #f5f3ff;" asp-for="Car.Gear" class="form-control">
+					<option value="false">Số tay</option>
+					<option value="true">Số tự động</option>
+				</select>
+				<span asp-validation-for="Car.Gear" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.Drive" class="control-label">Dẫn động</label>
+				<select style="background-color: #f5f3ff;" asp-for="Car.Drive" class="form-control" asp-items="ViewBag.Drive"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.Fuel" class="control-label">Nhiên liệu</label>
+				<select style="background-color: #f5f3ff;" asp-for="Car.Fuel" class="form-control" asp-items="ViewBag.Fuel"></select>
+			</div>
 
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageCar.Url" class="control-label">Ảnh xe phụ</label>
-                <input type="file" id="uploadimg" name="uploadimg" accept="image/*" />
+			<div class="form-group">
+				<label asp-for="Car.FuelIntakeSystem" class="control-label">Hệ thống nạp nhiên liệu</label>
+				<input asp-for="Car.FuelIntakeSystem" class="form-control" />
+				<span asp-validation-for="Car.FuelIntakeSystem" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.FuelConsumption" class="control-label">Mức tiêu thụ nhiên liệu</label>
+				<input asp-for="Car.FuelConsumption" class="form-control" />L/100Km
+				<span asp-validation-for="Car.FuelConsumption" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.Description" class="control-label">Thông tin mô tả</label>
+				<textarea asp-for="Car.Description" class="form-control" /></textarea>
+				<span asp-validation-for="Car.Description" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.Expense" class="control-label">Chi phí kí gửi khi kí gửi thành công theo tháng</label>
 
-            </div>
-            
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" id="checkvalid"/>
-            </div>
-        </form>
-    </div>
+				<input asp-for="Car.Expense" class="form-control" value="100000" readonly/>
+				<span asp-validation-for="Car.Expense" class="text-danger"></span>
+			</div>
+			@*<div class="form-group">
+			<label asp-for="Car.ImageCar" class="control-label">Ảnh xe</label>
+			<input type="file" id="uploadimg" name="uploadimg" accept="image/*"/>
+
+			</div>*@
+			<div class="form-group">
+				<label asp-for="ImageCar.Url" class="control-label">Ảnh xe chính</label>
+				<input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*" />
+
+			</div>
+			<div class="form-group">
+				<label asp-for="ImageCar.Url" class="control-label">Ảnh xe phụ</label>
+				<input type="file" id="uploadimg" name="uploadimg" accept="image/*" />
+
+			</div>
+
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" id="checkvalid" />
+			</div>
+		</form>
+	</div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+	<a asp-page="Index">Quay lại</a>
 </div>
 
 <script>
-    function getCarName(eel) {
-        console.log(eel.value)
-        fetch("/api/car/carName/" + eel.value)
-        .then(cars => cars.json())
-        .then(carsList => {
-            console.log(carsList)
-                const select = document.getElementById("listCarName")
-                let htmls = carsList.map(car => `<option value="${car.manufactoryId}" > ${car.carName1} </option>`)
-                select.innerHTML = htmls.join("")
-        })
-    }
+	function getCarName(eel) {
+		console.log(eel.value)
+		fetch("/api/car/carName/" + eel.value)
+			.then(cars => cars.json())
+			.then(carsList => {
+				console.log(carsList)
+				const select = document.getElementById("listCarName")
+				let htmls = carsList.map(car => `<option value="${car.manufactoryId}" > ${car.carName1} </option>`)
+				select.innerHTML = htmls.join("")
+			})
+	}
 
-    window.onload = getCarName(document.querySelector("#listCarManufactory"));
+	window.onload = getCarName(document.querySelector("#listCarManufactory"));
 
 </script>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }

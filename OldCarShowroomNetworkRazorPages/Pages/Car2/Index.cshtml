@@ -1,0 +1,193 @@
+﻿@*@page
+@model OldCarShowroomNetworkRazorPages.Pages.Car2.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Version)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Origin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].NumberOfKilometersTraveled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].MinPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].MaxPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].NumberOfDoors)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].NumberOfSeats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Gear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Notification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Expense)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].FuelIntakeSystem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].FuelConsumption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].CarModelYearNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].CarNameNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].ColorInsideNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].ColorNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].DriveNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].FuelNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].ManufactoryNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].Showroom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].UsernameNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].VehiclesNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Car) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Version)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Origin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfKilometersTraveled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfDoors)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfSeats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Expense)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FuelIntakeSystem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FuelConsumption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarModelYearNavigation.CarModelYearId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarNameNavigation.CarNameId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ColorInsideNavigation.ColorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ColorNavigation.ColorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriveNavigation.DriveId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FuelNavigation.FuelId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufactoryNavigation.ManufactoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Showroom.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsernameNavigation.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehiclesNavigation.VehiclesId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.CarId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.CarId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.CarId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@

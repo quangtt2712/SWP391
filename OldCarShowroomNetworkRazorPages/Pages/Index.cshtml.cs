@@ -71,7 +71,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 return Page();
             }
             var checkCar = _carRepo.GetAll().Where(p => p.Notification.Equals(1) && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()) 
-            || p.Equals(1) && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
+            || p.Notification.Equals(1) && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
             if (checkCar.Count() == 0)
             {
                 Msg1 = "Không tìm thấy xe";

@@ -122,31 +122,6 @@ namespace OldCarShowroomNetworkRazorPage.Pages
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToPage("./Index");
         }
-        //public async Task Login()
-        //{
-        //    await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
-        //    {
-        //        RedirectUri = Url.Action("GoogleResponse")
-        //    });
-        //}
-
-
-        //public async Task<IActionResult> GoogleResponse()
-        //{
-        //    var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        //    if (result != null)
-        //    {
-        //        HttpContext.Session.SetString("Key", Key);
-        //        var scheme = CookieAuthenticationDefaults.AuthenticationScheme;
-
-        //        var User = new ClaimsPrincipal(
-        //            new ClaimsIdentity(
-        //                new[] { new Claim(ClaimTypes.Name, Key) },
-        //                scheme
-        //                ));
-        //        return RedirectToPage("./Home");
-        //    }
-        //    return Page();
-        //}
+        
     }
 }

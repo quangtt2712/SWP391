@@ -53,17 +53,26 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             {
                 return NotFound();
             }
-
-            Showroom = await _context.Showrooms.FindAsync(id);
+            Showroom = await _context.Showrooms.Include(s => s.Cars).FirstOrDefaultAsync(s => s.ShowroomId == id);
 
             if (Showroom != null)
             {
                 var associatedImages = await _context.ImageShowrooms
-            .Where(img => img.ShowroomId == Showroom.ShowroomId)
-            .ToListAsync();
+                .Where(img => img.ShowroomId == Showroom.ShowroomId)
+                .ToListAsync();
 
                 _context.ImageShowrooms.RemoveRange(associatedImages);
                 await _context.SaveChangesAsync();
+                if (Showroom.Cars.Any())
+                {
+                    Showroom.Cars.ToList().ForEach(c =>
+                    {
+                        c.Showroom = null;
+                        _context.Cars.Update(c);
+                        _context.SaveChanges();
+                    });
+                }
+                Showroom.Cars= null;
                 _context.Showrooms.Remove(Showroom);
                 await _context.SaveChangesAsync();
                 _toastNotification.Success("Xóa showroom thành công");
