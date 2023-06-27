@@ -22,7 +22,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         public DetailsModel(CarRepository carRepo, OldCarShowroomNetworkContext context)
         {
             _carRepo = carRepo;
-            _context = context;
+            _context =  new OldCarShowroomNetworkContext();
         }
 
         public BOs.Models.Showroom Showroom { get; set; }
@@ -30,9 +30,9 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         public IList<BOs.Models.ImageShowroom> ImageShowrooms { get; set; }
 
         public IList<BOs.Models.Car> Car { get; set; }
+		public IList<BOs.Models.ImageCar> ImageCar { get; set; }
 
-        
-        public async Task<IActionResult> OnGetAsync(int? id)
+		public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
@@ -50,22 +50,21 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             ImageShowrooms = await _context.ImageShowrooms
                 .Where(img => img.ShowroomId == id && img.ImageMain == false)
             .ToListAsync();
-
-            Car = await _carRepo.GetAll()
-            .Include(c => c.CarModelYearNavigation)
-            .Include(c => c.CarNameNavigation)
-            .Include(c => c.ColorInsideNavigation)
-            .Include(c => c.ColorNavigation)
-            .Include(c => c.DriveNavigation)
-            .Include(c => c.FuelNavigation)
-            .Include(c => c.ManufactoryNavigation)
-            .Include(c => c.Showroom)
-            .Include(c => c.UsernameNavigation)
-            .Include(c => c.VehiclesNavigation)
-            .Where(c => c.ShowroomId == id)
-            .ToListAsync();
-
-            if (Showroom == null)
+			
+			Car = await _context.Cars
+				 .Include(c => c.CarModelYearNavigation)
+				 .Include(c => c.CarNameNavigation)
+				 .Include(c => c.ColorInsideNavigation)
+				 .Include(c => c.ColorNavigation)
+				 .Include(c => c.DriveNavigation)
+				 .Include(c => c.FuelNavigation)
+				 .Include(c => c.ManufactoryNavigation)
+				 .Include(c => c.Showroom).ThenInclude(s => s.City)
+				 .Include(c => c.UsernameNavigation)
+				 .Include(c => c.VehiclesNavigation)
+			.ToListAsync();
+			ImageCar = await _context.ImageCars.ToListAsync();
+			if (Showroom == null)
             {
                 return NotFound();
             }

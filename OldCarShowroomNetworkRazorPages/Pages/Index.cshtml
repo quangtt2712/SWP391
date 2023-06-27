@@ -77,7 +77,7 @@
                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Lịch sử</a>
                         <div class="dropdown-menu fade-up m-0">
                             <a href="/Car/Index1" class="dropdown-item">Lịch sử xe đang kí gửi</a>
-                            <a href="/Car/Index - Copy - Copy" class="dropdown-item">Lịch sử xe đã kí gửi thành công</a>
+                            <a href="/Car/Index - Copy - Copy" class="dropdown-item">Lịch sử xe đã bị từ chối</a>
                             <a href="/Car/Index" class="dropdown-item">Lịch sử đang chờ kí gửi</a>
                             <a href="404.html" class="dropdown-item">404 Page</a>
                         </div>
@@ -189,7 +189,7 @@
                         }
                     }
                             <!-- Chi tiết sản phẩm-->
-                           @* <div class="card-body p-4">
+                            <div class="card-body p-4">
                                 <div class="text-center">
                                 <!-- Tên sản phẩm-->
                                 <h5 class="fw-bolder">Xe @car.ManufactoryNavigation.ManufactoryName @car.CarNameNavigation.CarName1</h5>
@@ -199,7 +199,7 @@
                                 <h6 class="fw-bolder">Showroom @car.Showroom.ShowroomName</h6>
                                 <h6 class="fw-bolder">@car.Showroom.City.FullName</h6>
                                 </div>
-                            </div>*@
+                            </div>
                             <a asp-page="./CarDetail" asp-route-id="@car.CarId" class="btn btn-link">Xem chi tiết</a>
                         </div>
                     </div>
