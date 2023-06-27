@@ -49,11 +49,22 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
         [BindProperty]
         public BOs.Models.ImageCar ImageCar { get; set; }
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync(IFormFile uploadimg, IFormFile uploadimgmain, int? id)
+		public string Msg1 { get; set; }
+		public string Msg2 { get; set; }
+		// To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+		public async Task<IActionResult> OnPostAsync(IFormFile uploadimg, IFormFile uploadimgmain, int? id)
         {
-          
-            if (id == null)
+			ViewData["CarModelYear"] = new SelectList(_context.CarModelYears, "CarModelYearId", "CarModelYear1");
+			ViewData["CarName"] = new SelectList(_context.CarNames, "CarNameId", "CarName1");
+			ViewData["ColorInside"] = new SelectList(_context.Colors, "ColorId", "ColorName");
+			ViewData["Color"] = new SelectList(_context.Colors, "ColorId", "ColorName");
+			ViewData["Drive"] = new SelectList(_context.Drives, "DriveId", "DriveName");
+			ViewData["Fuel"] = new SelectList(_context.Fuels, "FuelId", "FuelName");
+			ViewData["ImageCar"] = new SelectList(_context.ImageCars, "ImageId", "ImageId");
+			ViewData["Manufactory"] = new SelectList(_context.Manufactorys, "ManufactoryId", "ManufactoryName");
+			ViewData["Username"] = new SelectList(_context.Users, "Username", "FullName");
+			ViewData["Vehicles"] = new SelectList(_context.Vehicles, "VehiclesId", "VehiclesName");
+			if (id == null)
             {
                 return NotFound();
             }
@@ -68,7 +79,36 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
             Car.Note = string.Empty;
             Car.Expense = 100000;
             Car.CreatedAt= DateTime.Now;
-            _context.Cars.Add(Car);
+            if(Car.NumberOfKilometersTraveled == null || Car.NumberOfKilometersTraveled <= 0 )
+            {
+
+				Msg2 = "Vui lòng nhập km đúng";
+
+				return Page();
+			}
+			if (Car.MaxPrice == null || Car.MinPrice == null)
+			{
+
+				Msg1 = "Vui lòng nhập tiền";
+
+				return Page();
+			}
+			if (Car.MaxPrice <= 0 || Car.MinPrice <= 0)
+			{
+
+				Msg1 = "Không được nhập số âm";
+
+				return Page();
+			}
+			if (Car.MaxPrice <=  Car.MinPrice)
+            {
+
+				Msg1 = "Giá cao phải lớn hơn giá thấp";
+				
+				return Page();
+			}
+			
+			_context.Cars.Add(Car);
             await _context.SaveChangesAsync();
             
             

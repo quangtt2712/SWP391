@@ -6,14 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BOs.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
-namespace OldCarShowroomNetworkRazorPages.Pages.Car2
+namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
-    public class DetailsModel : PageModel
+    [Authorize(Roles = "User")]
+    public class DetailsModel1 : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
 
-        public DetailsModel(BOs.Models.OldCarShowroomNetworkContext context)
+        public DetailsModel1()
         {
             _context = new OldCarShowroomNetworkContext();
         }

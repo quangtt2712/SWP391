@@ -5,9 +5,7 @@
 	ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Car</h4>
+<h1>Kí gửi ôto</h1>
 <hr />
 <div class="row">
 	<div>
@@ -19,11 +17,11 @@
 ">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-				<label asp-for="Car.Manufactory" class="control-label">Hãng chế tạo</label>
+				<label asp-for="Car.Manufactory" class="control-label">Hãng chế tạo <span title="required" style="color: #f00">*</span></label>
 				<select style="background-color: #f5f3ff;" asp-for="Car.Manufactory" class="form-control" asp-items="ViewBag.Manufactory" id="listCarManufactory" onchange="getCarName(this) "></select>
 			</div>
 			<div class="form-group">
-				<label asp-for="Car.CarName" class="control-label">Tên xe</label>
+				<label asp-for="Car.CarName" class="control-label">Tên xe <span title="required" style="color: #f00">*</span></label>
 				<select style="background-color: #f5f3ff;" asp-for="Car.CarName" class="form-control" asp-items="ViewBag.CarName" id="listCarName"></select>
 			</div>
 			<div class="form-group">
@@ -32,11 +30,11 @@
 				<span asp-validation-for="Car.Version" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="Car.CarModelYear" class="control-label">Năm sản xuất/đời</label>
+				<label asp-for="Car.CarModelYear" class="control-label">Năm sản xuất/đời <span title="required" style="color: #f00">*</span></label>
 				<select style="background-color: #f5f3ff;" asp-for="Car.CarModelYear" class="form-control" asp-items="ViewBag.CarModelYear"></select>
 			</div>
 			<div class="form-group">
-				<label asp-for="Car.Origin" class="control-label">Xuất xứ</label>
+				<label asp-for="Car.Origin" class="control-label">Xuất xứ <span title="required" style="color: #f00">*</span></label>
 				<select style="background-color: #f5f3ff;" asp-for="Car.Origin" class="form-control">
 					<option value="false">Nhập khẩu</option>
 					<option value="true">Lắp ráp trong nước</option>
@@ -44,26 +42,38 @@
 				<span asp-validation-for="Car.Origin" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="Car.NumberOfKilometersTraveled" class="control-label">Số Km đã đi</label>
-				<input asp-for="Car.NumberOfKilometersTraveled" class="form-control" />
+				<label asp-for="Car.NumberOfKilometersTraveled" class="control-label">Số Km đã đi <span title="required" style="color: #f00">*</span></label>
+				<input asp-for="Car.NumberOfKilometersTraveled" class="form-control" id="kiloid" />
+				@if (Model.Msg2 != null)
+				{
+					<p style="color: red">@Model.Msg2</p>
+				}
 				<span asp-validation-for="Car.NumberOfKilometersTraveled" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="Car.Vehicles" class="control-label">Dòng xe</label>
+				<label asp-for="Car.Vehicles" class="control-label">Dòng xe <span title="required" style="color: #f00">*</span></label>
 				<select style="background-color: #f5f3ff;" asp-for="Car.Vehicles" class="form-control" asp-items="ViewBag.Vehicles"></select>
 			</div>
-			
-		
-            <div class="form-group">
-                <label asp-for="Car.MinPrice" class="control-label">Giá tiền thấp nhất có thể bán</label>
-                <input asp-for="Car.MinPrice" class="form-control" />
-                <span asp-validation-for="Car.MinPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.MaxPrice" class="control-label">Giá tiền cao nhất có thể bản</label>
-                <input asp-for="Car.MaxPrice" class="form-control" />
-                <span asp-validation-for="Car.MaxPrice" class="text-danger"></span>
-            </div>
+
+
+			<div class="form-group">
+				<label asp-for="Car.MinPrice" class="control-label">Giá tiền thấp nhất có thể bán(VND) <span title="required" style="color: #f00">*</span></label>
+				<input asp-for="Car.MinPrice" class="form-control" id="minPriceid" />
+				@if (Model.Msg1 != null)
+				{
+					<p style="color: red">@Model.Msg1</p>
+				}
+				<span asp-validation-for="Car.MinPrice" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Car.MaxPrice" class="control-label">Giá tiền cao nhất có thể bán(VND) <span title="required" style="color: #f00">*</span></label>
+				<input asp-for="Car.MaxPrice" class="form-control" id="maxPriceid" />
+				@if (Model.Msg1 != null)
+				{
+					<p style="color: red">@Model.Msg1</p>
+				}
+				<span asp-validation-for="Car.MaxPrice" class="text-danger"></span>
+			</div>
 			<div class="form-group">
 				<label asp-for="Car.Color" class="control-label">Ngoại thất</label>
 				<select style="background-color: #f5f3ff;" asp-for="Car.Color" class="form-control" asp-items="ViewBag.Color"></select>
@@ -115,9 +125,9 @@
 				<span asp-validation-for="Car.Description" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="Car.Expense" class="control-label">Chi phí kí gửi khi kí gửi thành công theo tháng</label>
+				<label asp-for="Car.Expense" class="control-label">Chi phí kí gửi khi kí gửi thành công theo tháng(VND)</label>
 
-				<input asp-for="Car.Expense" class="form-control" value="100000" readonly/>
+				<input asp-for="Car.Expense" class="form-control" value="100000" readonly />
 				<span asp-validation-for="Car.Expense" class="text-danger"></span>
 			</div>
 			@*<div class="form-group">
@@ -126,18 +136,18 @@
 
 			</div>*@
 			<div class="form-group">
-				<label asp-for="ImageCar.Url" class="control-label">Ảnh xe chính</label>
+				<label asp-for="ImageCar.Url" class="control-label">Ảnh xe chính<span title="required" style="color: #f00">*</span></label>
 				<input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*" />
-
+				<p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningmain"></p>
 			</div>
 			<div class="form-group">
 				<label asp-for="ImageCar.Url" class="control-label">Ảnh xe phụ</label>
 				<input type="file" id="uploadimg" name="uploadimg" accept="image/*" />
 
 			</div>
-
+			<div style="float:left;margin-left:10px;font-style:italic;color:red">Chú ý: Các mục có dấu * là bắt buộc phải nhập</div>
 			<div class="form-group">
-				<input type="submit" value="Create" class="btn btn-primary" id="checkvalid" />
+				<input type="submit" value="Kí gửi" class="btn btn-primary" id="checkvalid" />
 			</div>
 		</form>
 	</div>
@@ -146,7 +156,7 @@
 <div>
 	<a asp-page="Index">Quay lại</a>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.8.1/autoNumeric.min.js"></script>
 <script>
 	function getCarName(eel) {
 		console.log(eel.value)
@@ -161,6 +171,37 @@
 	}
 
 	window.onload = getCarName(document.querySelector("#listCarManufactory"));
+	const checkvalid = document.getElementById("checkvalid");
+	const checkvalidimg = document.getElementById("uploadimgmain");
+	checkvalid.addEventListener("click", (e) => {
+		console.log(checkvalidimg.value)
+		if (checkvalidimg.value == "") {
+			e.preventDefault()
+			document.getElementById("warningmain").innerHTML = "Them img"
+		}
+
+
+	})
+	checkvalidimg.addEventListener('change', function () {
+		let file = this.files[0]
+		console.log(file.name)
+		document.getElementById("warningmain").innerHTML = "";
+		let file_name = file.name
+		let idsx_dot = file_name.lastIndexOf('.') + 1
+		let extFile = file_name.substr(idsx_dot, file_name.length).toLowerCase()
+		console.log(extFile)
+		if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+			courseImage.src = URL.createObjectURL(file)
+		} else {
+			checkvalidimg.value = ''
+			document.getElementById("warningmain").innerHTML = "Vui lòng chọn ảnh định dạng .jpg/.jpeg/.png";
+		}
+		// let idxDot = fileName.lastIndexOf(".") + 1;
+		// let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+
+
+	})
+
 
 </script>
 
