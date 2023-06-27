@@ -87,7 +87,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
 
             booking = await _bookingRepo.GetAll()
                 .Include(s => s.SlotNavigation)
-                .Where(b => b.Username != null && b.Notification.Equals(1)).ToListAsync();
+                .Where(b => b.Username != user.Username && b.Notification.Equals(1)).ToListAsync();
 
             Slot = await _slotRepo.GetAll().ToListAsync();
             return Page();
@@ -127,7 +127,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             isBooked.Notification = 1;
             isBooked.DayBooking = dateTime.Date;
 
-
             var checkBookAlready = await _bookingRepo.GetAll().Include(b => b.SlotNavigation).FirstOrDefaultAsync(b => b.Username == isBooked.Username && b.CarId == isBooked.CarId && b.Notification.Equals(1));
             if(checkBookAlready != null){
                 Msg3 = "Xe này đã đặt lịch ngày "+ checkBookAlready.DayBooking.Value.ToString("dd/MM/yyyy") +" .Mời đặt lịch xem xe khác";
@@ -145,7 +144,16 @@ namespace OldCarShowroomNetworkRazorPages.Pages
 
             _bookingRepo.Add(isBooked);
 
+
             var checkTime = await _bookingRepo.GetAll().Include(b => b.SlotNavigation).FirstOrDefaultAsync(b => b.DayBooking == isBooked.DayBooking && b.Slot == isBooked.Slot && b.Notification.Equals(1));
+            if (DateTimeNow == isBooked.DayBooking && checkTimeNow.TimeOfDay > isBooked.SlotNavigation.PickupDate)
+            {
+                Msg1 = "Chỉ được đặt lịch từ " + checkTimeNow.ToString("HH:mm") + " trở đi";
+                _toastNotification.Error("Đặt lịch xem xe thất bại");
+                _bookingRepo.Delete(isBooked);
+                return Page();
+            }
+
             if (DateTimeNow == isBooked.DayBooking && checkTimeNow.TimeOfDay > isBooked.SlotNavigation.ReturnDate)
             {
                 Msg1 = "Hết thời gian xem xe hôm nay. Mời đặt lịch từ ngày mai trở đi";
@@ -154,13 +162,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 return Page();
             }
 
-            if (DateTimeNow == isBooked.DayBooking && checkTimeNow.TimeOfDay > isBooked.SlotNavigation.PickupDate)
-            {
-                Msg1 = "Chỉ được đặt lịch từ " + checkTimeNow.ToString("HH:mm") + " trở đi";
-                _toastNotification.Error("Đặt lịch xem xe thất bại");
-                _bookingRepo.Delete(isBooked);
-                return Page();
-            }
+
             _toastNotification.Success("Đặt lịch xem xe thành công");
             return RedirectToPage("/Index");
         }
