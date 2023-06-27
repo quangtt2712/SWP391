@@ -17,8 +17,8 @@
     padding: 20px;
 " method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-           <input type="hidden" asp-for="Car.CarId" />
+
+            <input type="hidden" id="carId" name="carId" asp-for="Car.CarId" />
             <input type="hidden" asp-for="Car.ShowroomId" />
             <div class="form-group">
                 

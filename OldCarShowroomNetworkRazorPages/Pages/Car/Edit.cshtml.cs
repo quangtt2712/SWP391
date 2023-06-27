@@ -81,14 +81,42 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(IFormFile uploadimg, IFormFile uploadimgmain)
+        public async Task<IActionResult> OnPostAsync(IFormFile uploadimg, IFormFile uploadimgmain, int? carId)
         {
+            ViewData["CarModelYear"] = new SelectList(_context.CarModelYears, "CarModelYearId", "CarModelYear1");
+            ViewData["CarName"] = new SelectList(_context.CarNames, "CarNameId", "CarName1");
+            ViewData["ColorInside"] = new SelectList(_context.Colors, "ColorId", "ColorName");
+            ViewData["Color"] = new SelectList(_context.Colors, "ColorId", "ColorName");
+            ViewData["Drive"] = new SelectList(_context.Drives, "DriveId", "DriveName");
+            ViewData["Fuel"] = new SelectList(_context.Fuels, "FuelId", "FuelName");
+            ViewData["ImageCar"] = new SelectList(_context.ImageCars, "ImageId", "ImageId");
+            ViewData["Manufactory"] = new SelectList(_context.Manufactorys, "ManufactoryId", "ManufactoryName");
+            ViewData["Username"] = new SelectList(_context.Users, "Username", "FullName");
+            ViewData["Vehicles"] = new SelectList(_context.Vehicles, "VehiclesId", "VehiclesName");
+
+            Car = await _context.Cars
+.Include(c => c.ImageCars)
+.Include(c => c.CarModelYearNavigation)
+.Include(c => c.CarNameNavigation)
+.Include(c => c.ColorInsideNavigation)
+.Include(c => c.ColorNavigation)
+.Include(c => c.DriveNavigation)
+.Include(c => c.FuelNavigation)
+.Include(c => c.ManufactoryNavigation)
+.Include(c => c.Showroom)
+.Include(c => c.Showroom.City)
+.Include(c => c.Showroom.District)
+.Include(c => c.Showroom.WardsNavigation)
+.Include(c => c.UsernameNavigation)
+.Include(c => c.VehiclesNavigation)
+.FirstOrDefaultAsync(c => c.CarId == carId);
             if (!ModelState.IsValid)
             {
                 _toastNotification.Error("Chỉnh sửa xe thất bại");
                 return Page();
             }
-           
+
+
             string userLogin = HttpContext.Session.GetString("Key");
             var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
             Car.Notification = 0;
