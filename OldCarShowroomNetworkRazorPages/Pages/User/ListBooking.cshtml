@@ -25,6 +25,9 @@
             <th>
                 SĐT Showroom
             </th>
+            <th>
+                Lý do bị hủy lịch đặt
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -50,6 +53,10 @@
                 <td>
                     @item.Car.Showroom.Phone
                 </td>
+                <td>
+                    @item.Note
+                </td>
+            @if(item.Notification == 1){
                 <form method="get" asp-page="DeleteBooking">
                     <td class="form-group">
                         <input type="hidden" id="datetime" name="datetime" asp-for="@item.DayBooking">
@@ -57,7 +64,26 @@
                         <input type="hidden" id="carId" name="carId" asp-for="@item.CarId">
                         <input type="submit" value="Xóa lịch" class="btn btn-primary" />
                     </td>
-                </form>
+                    </form>
+                }
+                else if (item.Notification == 2)
+                {   
+                    <td class="form-group">
+                        <a asp-page="/Booking" class="btn btn-primary" asp-route-id="@item.CarId"> Đặt lịch xem xe</a>
+                    </td>
+                    <form method="get" asp-page="DeleteBooking">
+                    <td class="form-group">
+                        <input type="hidden" id="datetime" name="datetime" asp-for="@item.DayBooking">
+                        <input type="hidden" id="UserName" name="UserName" asp-for="@item.Username">
+                        <input type="hidden" id="carId" name="carId" asp-for="@item.CarId">
+                        <input type="submit" value="Xóa lịch" class="btn btn-primary" />
+                    </td>
+                    </form>
+                }else if(item.Notification == 3)
+                
+                {
+                    <td>Đã mua xe với giá: @item.Car.Expense VNĐ</td>    
+                }
             </tr>
         }
     </tbody>

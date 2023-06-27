@@ -21,7 +21,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             _carRepo = carRepo;
             _toastNotification = toastNotification;
         }
-        public string Msg1 { get; set; }
+        public string Msg { get; set; }
         [BindProperty]
         public string Note { get; set; }
         [BindProperty]
@@ -76,7 +76,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             }
             if (Note == null)
             {
-                Msg1 = "Cần nhập lý do để từ chối kí gửi xe";
+                Msg = "Cần nhập lý do để từ chối kí gửi xe";
                 _toastNotification.Error("Từ chối kí gửi xe thất bại");
                 return Page();
             }

@@ -123,7 +123,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 .Include(c => c.Showroom.District)
                 .Include(c => c.ImageCars)
                 .Include(c => c.Showroom.WardsNavigation)
-                .Where(c => c.Notification.Equals(1)).ToListAsync();
+                .Where(c => c.Notification.Equals(1) && c.Username != user.Username).ToListAsync();
             return Page();
         }
 
