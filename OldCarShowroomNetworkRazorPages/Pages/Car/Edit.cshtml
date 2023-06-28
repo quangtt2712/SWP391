@@ -175,7 +175,7 @@
             .then(carsList => {
                 console.log(carsList)
                 const select = document.getElementById("listCarName")
-                let htmls = carsList.map(car => `<option value="${car.manufactoryId}" > ${car.carName1} </option>`)
+				let htmls = carsList.map(car => `<option value="${car.carNameId}" > ${car.carName1} </option>`)
                 select.innerHTML = htmls.join("")
             })
     }

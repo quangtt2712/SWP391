@@ -115,7 +115,8 @@
                                     <p style="color: black">@Model.Msg4</p>
                                 }
                                 <div class="col-12">
-                                    <input asp-for="user.Phone" type="tel" class="form-control border-0" placeholder="Số điện thoại" style="height: 55px;">
+                                    <input asp-for="user.Phone" type="tel" class="form-control border-0" placeholder="Số điện thoại" style="height: 55px;" id="checkvalidphone">
+                                    <p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningname"></p>
                                     <span asp-validation-for="user.Phone" class="text-danger"></span>
                                 </div>
                                 @if (@Model.Msg5 != null)
@@ -131,7 +132,7 @@
                                     <p style="color: black">@Model.Msg6</p>
                                 }
                                 <div class="col-12">
-                                    <button class="btn btn-secondary w-100 py-3" type="submit">Đăng ký</button>
+                                    <button class="btn btn-secondary w-100 py-3" type="submit" id="checkvalid">Đăng ký</button>
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-light w-80 py-3" type="button" onclick="signInWithGoogle()">
@@ -213,6 +214,54 @@
     <!-- JavaScript Libraries -->
     <script>
 
+        const checkvalidphone = document.getElementById("checkvalidphone")
+
+        const checkValid_Phone = () => {
+            /* const wanrning_phone_div = document.querySelector('.warning_phone')*/
+            let regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+            document.getElementById("warningphone").innerHTML = ""
+            if (!regex.test(checkvalidphone.value)) {
+                document.getElementById("warningphone").innerHTML = 'Số điện thoại không đúng định dạng.'
+                return false
+            }
+            return true
+
+        }
+        checkvalidphone.addEventListener("input", checkValid_Phone)
+        const checkvalidimg = document.getElementById("uploadimgmain");
+        const checkvalid = document.getElementById("checkvalid");
+        const listcities = document.getElementById("listCity");
+        const listDistrictNames = document.getElementById("listDistrictName");
+        const listWardNames = document.getElementById("listWardName");
+        const checkvalidname = document.getElementById("checkvalidname");
+        const checkvalidaddress = document.getElementById("checkvalidaddress");
+        checkvalid.addEventListener("click", (e) => {
+            console.log(checkvalidimg.value)
+            if (checkvalidimg.value == "") {
+                e.preventDefault()
+                document.getElementById("warningmain").innerHTML = "Them img"
+            }
+            if (!checkValid_Phone()) {
+                e.preventDefault()
+                document.getElementById("warningsave").innerHTML = "Vui lòng nhập đầy đủ thông tin"
+            }
+            if (listWardNames.value == "") {
+                e.preventDefault()
+
+                alert("Vui lòng chọn đủ phường");
+
+            }
+            if (checkvalidname.value == "") {
+
+                e.preventDefault()
+                document.getElementById("warningname").innerHTML = "Vui lòng nhập đầy đủ thông tin"
+            }
+            if (checkvalidaddress.value == "") {
+                e.preventDefault()
+                document.getElementById("warningaddress").innerHTML = "Vui lòng nhập đầy đủ thông tin"
+            }
+
+        })
     </script>
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

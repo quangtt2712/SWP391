@@ -145,7 +145,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 			Car.CarId = id;
 			Car.Note = string.Empty;
 			Car.Expense = 100_000;
-			_context.Attach(Car).State = EntityState.Modified;
+            
+            _context.Attach(Car).State = EntityState.Modified;
 			if (uploadimg != null && uploadimg.Length > 0)
 			{
 				// Lưu trữ file ảnh vào thư mục hoặc dịch vụ lưu trữ của bạn
