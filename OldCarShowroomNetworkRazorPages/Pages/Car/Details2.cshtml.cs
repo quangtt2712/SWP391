@@ -12,11 +12,11 @@ using System.Data;
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
 	[Authorize(Roles = "User")]
-	public class DetailsModel1 : PageModel
+	public class DetailsModel2 : PageModel
 	{
 		private readonly BOs.Models.OldCarShowroomNetworkContext _context;
 
-		public DetailsModel1()
+		public DetailsModel2()
 		{
 			_context = new OldCarShowroomNetworkContext();
 		}
