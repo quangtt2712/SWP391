@@ -41,17 +41,31 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
                 .Include(b => b.Car.Showroom.District)
                 .Include(b => b.Car.Showroom.WardsNavigation)
                 .Include(b => b.SlotNavigation)
-                .FirstOrDefaultAsync(b => b.Username.Equals(UserName) && b.DayBooking.Equals(datetime) && b.CarId == carId && b.Notification.Equals(1));
+                .FirstOrDefaultAsync(b => b.Username.Equals(UserName) && b.DayBooking.Equals(datetime.Date) && b.CarId == carId && b.Notification.Equals(1) 
+                || b.Username.Equals(UserName) && b.DayBooking.Equals(datetime.Date) && b.CarId == carId && b.Notification.Equals(2));
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync(string UserName, DateTime datetime)
+        public async Task<IActionResult> OnPostAsync(string UserName, DateTime datetime, int carId)
         {
+            booking = await _bookingRepo.GetAll()
+            .Include(b => b.Car)
+            .Include(b => b.Car.ManufactoryNavigation)
+            .Include(b => b.Car.CarNameNavigation)
+            .Include(b => b.Car.CarModelYearNavigation)
+            .Include(b => b.Car.Showroom)
+            .Include(b => b.Car.Showroom.City)
+            .Include(b => b.Car.Showroom.District)
+            .Include(b => b.Car.Showroom.WardsNavigation)
+            .Include(b => b.SlotNavigation)
+            .FirstOrDefaultAsync(b => b.Username.Equals(UserName) && b.DayBooking.Equals(datetime.Date) && b.CarId == carId && b.Notification.Equals(1)
+            || b.Username.Equals(UserName) && b.DayBooking.Equals(datetime.Date) && b.CarId == carId && b.Notification.Equals(2));
             if (!ModelState.IsValid)
             {
                 _toastNotification.Error("Xóa lịch xem xe thất bại");
                 return Page();
             }
-            var deleteBooking = _bookingRepo.GetAll().FirstOrDefault(b => b.Username.Equals(UserName) && b.DayBooking.Equals(datetime) && b.Notification.Equals(1));
+            var deleteBooking = _bookingRepo.GetAll().FirstOrDefault(b => b.Username.Equals(UserName) && b.DayBooking.Equals(datetime) && b.Notification.Equals(1)
+            || b.Username.Equals(UserName) && b.DayBooking.Equals(datetime.Date) && b.CarId == carId && b.Notification.Equals(2));
             if (deleteBooking != null)
             {
                 _bookingRepo.Delete(deleteBooking);

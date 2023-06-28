@@ -43,7 +43,16 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         }
         public async Task<IActionResult> OnPostAsync(string UserName, int? carId)
         {
-            if (!ModelState.IsValid)
+			booking = await _bookingRepo.GetAll()
+	        .Include(b => b.UsernameNavigation)
+	        .Include(b => b.Car)
+	        .Include(b => b.Car.ManufactoryNavigation)
+	        .Include(b => b.Car.CarNameNavigation)
+	        .Include(b => b.Car.CarModelYearNavigation)
+	        .Include(b => b.Car.Showroom)
+	        .Include(b => b.SlotNavigation)
+	        .FirstOrDefaultAsync(b => b.Username.Equals(UserName) && b.CarId == carId && b.Notification.Equals(1));
+			if (!ModelState.IsValid)
             {
                 _toastNotification.Error("Xoá lịch khách xem xe thất bại");
                 return Page();
