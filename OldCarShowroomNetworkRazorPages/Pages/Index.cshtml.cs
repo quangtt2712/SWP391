@@ -91,40 +91,70 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string searchKey)
         {
             if (string.IsNullOrWhiteSpace(searchKey))
             {   
                 Msg1 = "Vui lòng nhập tên xe để tìm kiếm";
                 return Page();
             }
-            var checkCar = _carRepo.GetAll().Where(p => p.Notification.Equals(1) && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()) 
-            || p.Notification.Equals(1) && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
-            var checkCar2 = _carRepo.GetAll().Where(p => p.Notification.Equals(1) && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim())
-            || p.Notification.Equals(1) && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
+            var checkCar = _carRepo.GetAll()
+                .Include(c => c.ManufactoryNavigation)
+                .Include(c => c.CarNameNavigation)
+                .Where(p => p.Notification.Equals(1) && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()) 
+                    || p.Notification.Equals(1) && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
             if (checkCar.Count() == 0)
             {
                 Msg1 = "Không tìm thấy xe";
                 return Page();
             }
-            car = await checkCar
-                .Include(c => c.ImageCars)
-                .Include(c => c.CarModelYearNavigation)
-                .Include(c => c.CarNameNavigation)
-                .Include(c => c.ColorInsideNavigation)
-                .Include(c => c.ColorNavigation)
-                .Include(c => c.DriveNavigation)
-                .Include(c => c.FuelNavigation)
-                .Include(c => c.ManufactoryNavigation)
-                .Include(c => c.Showroom)
-                .Include(c => c.UsernameNavigation)
-                .Include(c => c.VehiclesNavigation)
-                .Include(c => c.Showroom.City)
-                .Include(c => c.Showroom.District)
-                .Include(c => c.ImageCars)
-                .Include(c => c.Showroom.WardsNavigation)
-                .Where(c => c.Notification.Equals(1) && c.Username != user.Username).ToListAsync();
-            return Page();
+			if (HttpContext.Session.GetString("Key") == null)
+			{
+				car = await checkCar
+					.Include(c => c.ImageCars)
+					.Include(c => c.CarModelYearNavigation)
+					.Include(c => c.CarNameNavigation)
+					.Include(c => c.ColorInsideNavigation)
+					.Include(c => c.ColorNavigation)
+					.Include(c => c.DriveNavigation)
+					.Include(c => c.FuelNavigation)
+					.Include(c => c.ManufactoryNavigation)
+					.Include(c => c.Showroom)
+					.Include(c => c.UsernameNavigation)
+					.Include(c => c.Showroom.City)
+					.Include(c => c.VehiclesNavigation)
+					.Include(c => c.Showroom.City)
+					.Include(c => c.ImageCars)
+					.Include(c => c.Showroom.District)
+					.Include(c => c.Showroom.WardsNavigation)
+					.Where(c => c.Notification.Equals(1)).ToListAsync();
+
+				return Page();
+			}
+			if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
+			{
+				car = await checkCar
+					.Include(c => c.ImageCars)
+					.Include(c => c.CarModelYearNavigation)
+					.Include(c => c.CarNameNavigation)
+					.Include(c => c.ColorInsideNavigation)
+					.Include(c => c.ColorNavigation)
+					.Include(c => c.DriveNavigation)
+					.Include(c => c.FuelNavigation)
+					.Include(c => c.ManufactoryNavigation)
+					.Include(c => c.Showroom)
+					.Include(c => c.UsernameNavigation)
+					.Include(c => c.Showroom.City)
+					.Include(c => c.VehiclesNavigation)
+					.Include(c => c.Showroom.City)
+					.Include(c => c.ImageCars)
+					.Include(c => c.Showroom.District)
+					.Include(c => c.Showroom.WardsNavigation)
+					.Where(c => c.Notification.Equals(1) && c.Username != user.Username).ToListAsync();
+
+				return Page();
+			}
+			return Page();
         }
 
 
