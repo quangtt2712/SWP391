@@ -5,57 +5,67 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Tạo Staff</h1>
 
-<h4>User</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
             <div class="form-group">
-                <label asp-for="User.Username" class="control-label"></label>
-                <input asp-for="User.Username" class="form-control" />
-                <span asp-validation-for="User.Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.FullName" class="control-label"></label>
+                <label asp-for="User.FullName" class="control-label">Họ và tên</label>
                 <input asp-for="User.FullName" class="form-control" />
                 <span asp-validation-for="User.FullName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="User.Address" class="control-label"></label>
+                <label asp-for="User.Username" class="control-label">Nhập Username</label>
+                <input asp-for="User.Username" class="form-control" />
+                @if (@Model.Msg6 != null)
+                {
+                                        <p style="color: red">@Model.Msg6</p>
+                }
+                <span asp-validation-for="User.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Address" class="control-label">Địa chỉ</label>
                 <input asp-for="User.Address" class="form-control" />
                 <span asp-validation-for="User.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="User.Email" class="control-label"></label>
-                <input asp-for="User.Email" class="form-control" />
+                <input asp-for="User.Email" class="form-control" type="email"/>
+                @if (@Model.Msg4 != null)
+                {
+                                        <p style="color: red">@Model.Msg4</p>
+                }
                 <span asp-validation-for="User.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="User.Password" class="control-label"></label>
-                <input asp-for="User.Password" class="form-control" />
+                <label asp-for="User.Password" class="control-label">Mật khẩu</label>
+                <input asp-for="User.Password" class="form-control" type="password"/>
+                @if (@Model.Msg5 != null)
+                {
+                                            <p style="color: red">@Model.Msg5</p>
+                }
                 <span asp-validation-for="User.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="User.Phone" class="control-label"></label>
+                <label asp-for="User.Phone" class="control-label">Số điện thoại</label>
                 <input asp-for="User.Phone" class="form-control" />
                 <span asp-validation-for="User.Phone" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
-                <label asp-for="User.RoleId" class="control-label"></label>
-                <select asp-for="User.RoleId" class ="form-control" asp-items="ViewBag.RoleId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Tạo" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index">Quay lại</a>
 </div>
 
 @section Scripts {
