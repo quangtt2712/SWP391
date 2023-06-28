@@ -5,32 +5,30 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Chào mừng admin, trang quản lí toàn bộ STAFF</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Tạo Staff</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].FullName)
+                Họ tên
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Address)
+                Địa chỉ
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.User[0].Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Password)
+                Mật khẩu
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Phone)
+               Số điện thoại
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Role)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -52,12 +50,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role.RoleId)
-            </td>
+            
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Username">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Username">Details</a> |
+              
                 <a asp-page="./Delete" asp-route-id="@item.Username">Delete</a>
             </td>
         </tr>

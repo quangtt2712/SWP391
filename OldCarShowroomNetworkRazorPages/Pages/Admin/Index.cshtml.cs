@@ -23,7 +23,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Admin
         public async Task OnGetAsync()
         {
             User = await _context.Users
-                .Include(u => u.Role).ToListAsync();
+                .Include(u => u.Role).Where(u => u.RoleId == 2).ToListAsync();
         }
     }
 }

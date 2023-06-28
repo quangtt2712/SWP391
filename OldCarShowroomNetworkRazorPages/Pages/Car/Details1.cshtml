@@ -54,7 +54,7 @@
 		</div>
 		<div class="form-group">
 			<dt class="col-sm-2">
-				Dòng
+				Dòng xe
 			</dt>
 			<dd class="col-sm-10">
 				@Html.DisplayFor(model => model.car.VehiclesNavigation.VehiclesName)
@@ -78,7 +78,7 @@
 		</div>
 		<div class="form-group">
 			<dt class="col-sm-2">
-				Màu ngoại thấ
+				Màu ngoại thất
 			</dt>
 			<dd class="col-sm-10">
 				@Html.DisplayFor(model => model.car.ColorNavigation.ColorName)
@@ -248,8 +248,8 @@
 		<dt class="col-sm-2">
 			Lý do
 		</dt>
-		<div class="form-group">
-			<dd class="col-sm-10">
+		<div class="form-group text-danger">
+			<dd class="col-sm-10 text-danger">
 				@Html.DisplayFor(model => model.car.Note)
 			</dd>
 		</div>
@@ -258,5 +258,5 @@
 
 <div>
     
-    <a asp-page="./Index - Copy - Copy">Back to List</a>
+    <a asp-page="./Index2">Quay lại</a>
 </div>

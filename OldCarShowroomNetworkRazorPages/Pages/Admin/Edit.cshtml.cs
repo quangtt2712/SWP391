@@ -7,16 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BOs.Models;
+using REPOs;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Admin
 {
     public class EditModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
-
-        public EditModel(BOs.Models.OldCarShowroomNetworkContext context)
+        public readonly UserRepository _userRepo;
+        private readonly INotyfService _toastNotification;
+        public string Msg4 { get; set; }
+        public string Msg5 { get; set; }
+        public string Msg6 { get; set; }
+        public EditModel(BOs.Models.OldCarShowroomNetworkContext context, UserRepository userRepo, INotyfService toastNotification)
         {
             _context = context;
+            _userRepo = userRepo;
+            _toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -48,7 +56,29 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Admin
             {
                 return Page();
             }
+            
+            
+            if (User.Password == null)
+            {
+                Msg5 = "không được để trống mật khẩu";
+                _toastNotification.Error("Đăng kí thất bại");
+                return Page();
+            }
+            if (User.FullName == null)
+            {
+                User.FullName = "";
+            }
+            if (User.Address == null)
+            {
+                User.Address = "";
+            }
+            if (User.Phone == null)
+            {
+                User.Phone = "";
+            }
+           
 
+            User.RoleId = 2;
             _context.Attach(User).State = EntityState.Modified;
 
             try
