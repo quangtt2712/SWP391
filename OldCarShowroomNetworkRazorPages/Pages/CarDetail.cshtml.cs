@@ -14,13 +14,13 @@ namespace OldCarShowroomNetworkRazorPages.Pages
     {
         public readonly CarRepository _carRepo;
         public readonly BookingRepository _bookRepo;
-        public readonly UserRepository _userkRepo;
+        public readonly UserRepository _userRepo;
 
-        public CarDetailModel(CarRepository carRepo, BookingRepository bookRepo, UserRepository userkRepo)
+        public CarDetailModel(CarRepository carRepo, BookingRepository bookRepo, UserRepository userRepo)
         {
             _carRepo = carRepo;
             _bookRepo = bookRepo;
-            _userkRepo = userkRepo;
+            _userRepo = userRepo;
         }
 
         public BOs.Models.Car car { get; set; }
@@ -56,7 +56,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
             {
                 email = HttpContext.Session.GetString("Key");
-                user = await _userkRepo.GetAll().FirstOrDefaultAsync(u => u.Email == email);
+                user = await _userRepo.GetAll().FirstOrDefaultAsync(u => u.Email == email);
                 if (_carRepo.GetAll() != null)
                 {
                     car = await _carRepo.GetAll()

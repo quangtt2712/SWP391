@@ -42,7 +42,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             Showroom = await _context.Showrooms
                 .Include(s => s.City)
                 .Include(s => s.District)
-
                 .Include(s => s.WardsNavigation).FirstOrDefaultAsync(m => m.ShowroomId == id);
             ImageShowroom = await _context.ImageShowrooms
                .FirstOrDefaultAsync(img => img.ShowroomId == id && img.ImageMain == true);
@@ -62,7 +61,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 				 .Include(c => c.Showroom).ThenInclude(s => s.City)
 				 .Include(c => c.UsernameNavigation)
 				 .Include(c => c.VehiclesNavigation)
-			.ToListAsync();
+                 .Where(c => c.ShowroomId == id)
+                 .ToListAsync();
 			ImageCar = await _context.ImageCars.ToListAsync();
 			if (Showroom == null)
             {
