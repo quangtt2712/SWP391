@@ -18,28 +18,33 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car2
             _context = new OldCarShowroomNetworkContext();
         }
 
-        public BOs.Models.Car Car { get; set; }
+        public BOs.Models.Car car { get; set; }
+		public IList<BOs.Models.ImageCar> ImageCar { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+		public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Car = await _context.Cars
+            car = await _context.Cars
                 .Include(c => c.CarModelYearNavigation)
                 .Include(c => c.CarNameNavigation)
-                .Include(c => c.ColorInsideNavigation)
+				  .Include(c => c.ImageCars)
+				.Include(c => c.ColorInsideNavigation)
                 .Include(c => c.ColorNavigation)
                 .Include(c => c.DriveNavigation)
                 .Include(c => c.FuelNavigation)
                 .Include(c => c.ManufactoryNavigation)
                 .Include(c => c.Showroom)
-                .Include(c => c.UsernameNavigation)
+				.Include(c => c.Showroom.City)
+						.Include(c => c.Showroom.District)
+						.Include(c => c.Showroom.WardsNavigation)
+				.Include(c => c.UsernameNavigation)
                 .Include(c => c.VehiclesNavigation).FirstOrDefaultAsync(m => m.CarId == id);
-
-            if (Car == null)
+			ImageCar = await _context.ImageCars.ToListAsync();
+			if (car == null)
             {
                 return NotFound();
             }
