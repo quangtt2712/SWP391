@@ -106,7 +106,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             if (checkAcceptSell != null)
             {
                 checkAcceptSell.Notification = 3;
-                checkAcceptSell.Expense = Money;
+                checkAcceptSell.Price = Money;
                 _carRepo.Update(checkAcceptSell);
                 Booking.Notification = 3;
                 _bookingRepo.Update(Booking);
