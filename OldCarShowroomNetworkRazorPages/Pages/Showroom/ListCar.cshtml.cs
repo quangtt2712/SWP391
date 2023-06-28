@@ -25,6 +25,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         }
 
         public IList<BOs.Models.Car> Car { get; set; }
+        public string Msg1 { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
             Car = await _carRepo.GetAll()
@@ -46,6 +47,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .ToListAsync();
             if (Car.Count() == 0)
             {
+                Msg1 = "Hiện tại không có xe chờ kí gửi";
                 return Page();
             }
             return Page();
@@ -73,6 +75,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(c => c.Showroom.WardsNavigation)
                 .Where(c => c.Notification.Equals(0))
                 .ToListAsync();
+            if (Car.Count() == 0)
+            {
+                Msg1 = "Hiện tại không có xe chờ kí gửi";
+                return Page();
+            }
             _toastNotification.Success("Chấp nhận kí gửi xe thành công");
             return Page();
         }

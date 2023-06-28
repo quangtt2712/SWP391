@@ -126,17 +126,15 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             isBooked.Username = userName;
             isBooked.Notification = 1;
             isBooked.DayBooking = dateTime.Date;
-            isBooked.Note = "";
-            var checkUserAlreadyBooking = await _bookingRepo.GetAll().FirstOrDefaultAsync(b => b.CarId == carId && b.Username == userName && b.Notification.Equals(2));
-            if (checkUserAlreadyBooking != null) {
-                checkUserAlreadyBooking.Notification = 1;
-                checkUserAlreadyBooking.DayBooking = dateTime.Date;
-                checkUserAlreadyBooking.Slot = isBooked.Slot;
-                checkUserAlreadyBooking.Note = "";
-                _bookingRepo.Update(checkUserAlreadyBooking);
-                _toastNotification.Success("Đặt laị lịch xem xe thành công");
-                return RedirectToPage("/Index");
+
+            List<Booking> countBooking = await _bookingRepo.GetAll().Where(b => b.Username == userName && b.Notification.Equals(1)).ToListAsync();
+            if (countBooking.Count() == 3)
+            {
+                Msg3 = "Bạn đã đặt lịch tối đa 3 lần. Không thể đặt thêm lịch nữa";
+                _toastNotification.Error("Đặt lịch xem xe thất bại");
+                return Page();
             }
+
             var checkBooking = await _bookingRepo.GetAll().FirstOrDefaultAsync(b => b.DayBooking == isBooked.DayBooking && b.Slot == isBooked.Slot && b.Notification.Equals(1));
             if (checkBooking != null)
             {
