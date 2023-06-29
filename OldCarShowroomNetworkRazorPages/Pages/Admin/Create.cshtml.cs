@@ -9,10 +9,13 @@ using BOs.Models;
 using REPOs;
 using OldCarShowroomNetworkRazorPages.Api;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Admin
 {
-    public class CreateModel : PageModel
+	[Authorize(Roles = "Admin")]
+	public class CreateModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
 		public readonly UserRepository _userRepo;

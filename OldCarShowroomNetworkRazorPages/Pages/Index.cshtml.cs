@@ -103,7 +103,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 .Include(c => c.CarNameNavigation)
                 .Where(p => p.Notification.Equals(1) && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()) 
                     || p.Notification.Equals(1) && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
-            if (checkCar.Count() == 0)
+            if (checkCar.Count() == 0 || checkCar != null)
             {
                 Msg1 = "Không tìm thấy xe";
                 return Page();
