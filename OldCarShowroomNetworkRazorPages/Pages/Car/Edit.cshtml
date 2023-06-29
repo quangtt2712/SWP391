@@ -194,6 +194,26 @@
             }
         });
     });
+	const checkvalidimg = document.getElementById("uploadimgmain");
+	checkvalidimg.addEventListener('change', function () {
+		let file = this.files[0]
+		console.log(file.name)
+		document.getElementById("warningmain").innerHTML = "";
+		let file_name = file.name
+		let idsx_dot = file_name.lastIndexOf('.') + 1
+		let extFile = file_name.substr(idsx_dot, file_name.length).toLowerCase()
+		console.log(extFile)
+		if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+			courseImage.src = URL.createObjectURL(file)
+		} else {
+			checkvalidimg.value = ''
+			document.getElementById("warningmain").innerHTML = "Vui lòng chọn ảnh định dạng .jpg/.jpeg/.png";
+		}
+		// let idxDot = fileName.lastIndexOf(".") + 1;
+		// let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+
+
+	})
 </script>
 
 @section Scripts {
