@@ -1,195 +1,355 @@
 ﻿@page
 @model OldCarShowroomNetworkRazorPage.Pages.LoginModel
 @{
-    Layout = null;
+	Layout = null;
 }
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>CarServ - Car Repair HTML Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+	<meta charset="utf-8">
+	<title>CarServ - Car Repair HTML Template</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="" name="keywords">
+	<meta content="" name="description">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700&family=Ubuntu:wght@400;500&display=swap"
-          rel="stylesheet">
+	<!-- Google Web Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700&family=Ubuntu:wght@400;500&display=swap"
+		  rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	<!-- Icon Font Stylesheet -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+	<!-- Libraries Stylesheet -->
+	<link href="lib/animate/animate.min.css" rel="stylesheet">
+	<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+	<link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<!-- Customized Bootstrap Stylesheet -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+	<!-- Template Stylesheet -->
+	<link href="css/style.css" rel="stylesheet">
+	@*<style>
+	#google-button {
+	margin: 20px;
+	margin-top: 25px;
+	}
+
+	.container {
+	margin: 20px;
+	background-color: rgba(66, 133, 244, 0.15);
+	padding: 10px;
+	border-radius: 10px;
+	width: 450px;
+	margin-top: 25px;
+	display: none;
+	}
+
+	img {
+	width: 56px;
+	border-radius: 50%;
+	}
+
+	.id,
+	.email,
+	.name {
+	display: inline-block;
+	font-family: 'Verdana';
+	}
+
+	.name {
+	font-size: 30px;
+	position: relative;
+	top: -16px;
+	margin-left: 5px;
+	}
+
+	lable {
+	font-family: 'Arial Black';
+	}
+
+	button {
+	display: block;
+	background-color: #4285F4;
+	border: 0px;
+	padding: 8px 20px;
+	color: white;
+	margin-top: 15px;
+	cursor: pointer;
+	outline: none;
+	}
+	</style>*@
 </head>
 
 <body>
-    <!-- Spinner Start -->
-    <div id="spinner"
-         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-    <!-- Spinner End -->
-    <!-- Topbar Start -->
-    <!-- Topbar End -->
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="Index" class="navbar-brand d-flex align-items-center px-4 px-lg-5"
-           style="margin-right: 0; margin-left: 200px;">
-            <h2 class="m-0 text-primary"><i class="fa fa-car me-3"></i>CarServ</h2>
-        </a>
-        <div class="u9tve2">Đăng nhập</div>
-    </nav>
-    <div class="container-fluid bg-secondary booking my-0 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" >
-            <div class="row gx-5 justify-content-center">
-                
-                <div class="col-lg-6">
-                    <div class="bg-primary h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn"
-                         data-wow-delay="0.6s">
-                        <h1 class="text-white mb-4">Đăng nhập</h1>
-                        <form method ="post" asp-page="LoginPage">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <input asp-for="@Model.Email" type="text" class="form-control border-0"
-                                           placeholder="Email" maxlength="128"
-                                           style="height: 55px;">
-                                    @if (Model.Msg1 != null)
-                                    {
-                                        <p style="color: black">@Model.Msg1</p>
-                                    }
-                                </div>
+	<!-- Spinner Start -->
+	<div id="spinner"
+		 class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+		<div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+	<!-- Spinner End -->
+	<!-- Topbar Start -->
+	<!-- Topbar End -->
+	<!-- Navbar Start -->
+	<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+		<a href="Index" class="navbar-brand d-flex align-items-center px-4 px-lg-5"
+		   style="margin-right: 0; margin-left: 200px;">
+			<h2 class="m-0 text-primary"><i class="fa fa-car me-3"></i>CarServ</h2>
+		</a>
+		<div class="u9tve2">Đăng nhập</div>
+	</nav>
+	<div class="container-fluid bg-secondary booking my-0 wow fadeInUp" data-wow-delay="0.1s">
+		<div class="container">
+			<div class="row gx-5 justify-content-center">
 
-                                <div class="col-12 ">
-                                    <input asp-for="@Model.Password" type="password" class="form-control border-0" placeholder="Mật khẩu"
-                                           maxlength="16" style="height: 55px;">
-                                    @if (Model.Msg2 != null)
-                                    {
-                                        <p style="color: black">@Model.Msg2</p>
-                                    }
-                                </div>
+				<div class="col-lg-6">
+					<div class="bg-primary h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn"
+						 data-wow-delay="0.6s">
+						<h1 class="text-white mb-4">Đăng nhập</h1>
+						<form method="post" asp-page="LoginPage">
+							<div class="row g-3">
+								<div class="col-12">
+									<input asp-for="@Model.Email" type="text" class="form-control border-0"
+										   placeholder="Email" maxlength="128"
+										   style="height: 55px;">
+									@if (Model.Msg1 != null)
+									{
+										<p style="color: black">@Model.Msg1</p>
+									}
+								</div>
 
-                                <div class="col-12">
-                                    <button class="btn btn-secondary w-100 py-3" type="submit">Đăng nhập</button>
-                                </div>
-                                <div class="text-start col-12">
-                                    <a href="/ForgotPassword" class="text-white mb-4" style="font-size: .95rem;">Quên mật khẩu?</a>
-                                </div>
+								<div class="col-12 ">
+									<input asp-for="@Model.Password" type="password" class="form-control border-0" placeholder="Mật khẩu"
+										   maxlength="16" style="height: 55px;">
+									@if (Model.Msg2 != null)
+									{
+										<p style="color: black">@Model.Msg2</p>
+									}
+								</div>
+
+								<div class="col-12">
+									<button class="btn btn-secondary w-100 py-3" type="submit">Đăng nhập</button>
+								</div>
+								<div class="text-start col-12">
+									<a href="/ForgotPassword" class="text-white mb-4" style="font-size: .95rem;">Quên mật khẩu?</a>
+								</div>
 
 
-                                <div class="text-white mb-4">Bạn chưa có tài khoản?&nbsp;<a class="text-info" href="./Register">Đăng kí</a></div>
-                                <div class="col-12">
-                                    <button class="btn btn-light w-80 py-3" type="button">
-                                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                                             alt="Google Logo" class="google-logo" style="width: 33px; height: 33px;">
-                                        Đăng nhập bằng Google
-                                    </button>
-                                </div>
+								<div class="text-white mb-4">Bạn chưa có tài khoản?&nbsp;<a class="text-info" href="./Register">Đăng kí</a></div>
+								<div class="col-12">
 
-                            </div>
-                        </form>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid bg-dark text-light footer pt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Address</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Opening Hours</h4>
-                    <h6 class="text-light">Monday - Friday:</h6>
-                    <p class="mb-4">09.00 AM - 09.00 PM</p>
-                    <h6 class="text-light">Saturday - Sunday:</h6>
-                    <p class="mb-0">09.00 AM - 12.00 PM</p>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Services</h4>
-                    <a class="btn btn-link" href="">Diagnostic Test</a>
-                    <a class="btn btn-link" href="">Engine Servicing</a>
-                    <a class="btn btn-link" href="">Tires Replacement</a>
-                    <a class="btn btn-link" href="">Oil Changing</a>
-                    <a class="btn btn-link" href="">Vacuam Cleaning</a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Newsletter</h4>
-                    <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button"
-                                class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">
-                            SignUp
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
+									<div id="g_id_onload"
+										 data-client_id="724415071324-5upjhbukt35208b3akgtnn1n5ebe0ak7.apps.googleusercontent.com"
+										 data-context="signin"
+										 data-ux_mode="popup"
+										 data-callback="handleCredentialResponse"
+										 data-auto_select="true"
+										 data-itp_support="true">
+									</div>
 
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="">Home</a>
-                            <a href="">Cookies</a>
-                            <a href="">Help</a>
-                            <a href="">FQAs</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+									<div class="g_id_signin"
+										 data-type="standard"
+										 data-shape="pill"
+										 data-theme="filled_blue"
+										 data-text="signin_with"
+										 data-size="large"
+										 data-logo_alignment="left">
+									</div>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-    @await Component.InvokeAsync("Notyf")
+								</div>
+
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid bg-dark text-light footer pt-5 wow fadeIn" data-wow-delay="0.1s">
+		<div class="container py-5">
+			<div class="row g-5">
+				<div class="col-lg-3 col-md-6">
+					<h4 class="text-light mb-4">Address</h4>
+					<p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+					<p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+					<p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+					<div class="d-flex pt-2">
+						<a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+						<a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+						<a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+						<a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<h4 class="text-light mb-4">Opening Hours</h4>
+					<h6 class="text-light">Monday - Friday:</h6>
+					<p class="mb-4">09.00 AM - 09.00 PM</p>
+					<h6 class="text-light">Saturday - Sunday:</h6>
+					<p class="mb-0">09.00 AM - 12.00 PM</p>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<h4 class="text-light mb-4">Services</h4>
+					<a class="btn btn-link" href="">Diagnostic Test</a>
+					<a class="btn btn-link" href="">Engine Servicing</a>
+					<a class="btn btn-link" href="">Tires Replacement</a>
+					<a class="btn btn-link" href="">Oil Changing</a>
+					<a class="btn btn-link" href="">Vacuam Cleaning</a>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<h4 class="text-light mb-4">Newsletter</h4>
+					<p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+					<div class="position-relative mx-auto" style="max-width: 400px;">
+						<input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+						<button type="button"
+								class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">
+							SignUp
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="copyright">
+				<div class="row">
+					<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+						&copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
+
+						<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+						Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+					</div>
+					<div class="col-md-6 text-center text-md-end">
+						<div class="footer-menu">
+							<a href="">Home</a>
+							<a href="">Cookies</a>
+							<a href="">Help</a>
+							<a href="">FQAs</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/wow/wow.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/waypoints/waypoints.min.js"></script>
+	<script src="lib/counterup/counterup.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="lib/tempusdominus/js/moment.min.js"></script>
+	<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
+	<script>
+		var googleButton = document.getElementById('google-button');
+		var container = document.getElementsByClassName('container')[0];
+		var img = document.getElementsByClassName('img')[0];
+		var getName = document.getElementsByClassName('name')[0];
+		var id = document.getElementsByClassName('id')[0];
+		var email = document.getElementsByClassName('email')[0];
+
+		// function to get response
+		function handleCredentialResponse(response) {
+			console.log(response)
+			const responsePayload = decodeJwtResponse(response.credential);
+			console.log(responsePayload)
+			//img.src = responsePayload.picture;
+			//getName.innerHTML = responsePayload.name;
+			//id.innerHTML = responsePayload.sub;
+			//email.innerHTML = responsePayload.responsePayload;
+			fetch('http://localhost:23211/api/User/login-google?email=' + responsePayload.email)
+				.then(res => {
+					return res.json()
+				})
+				.then(user => {
+					console.log(user)
+					if (user !=1) {
+						if (user.roleId == 1) {
+							window.location = './Index'
+							
+							return
+						}
+						if (user.roleId == 0) {
+							window.location = '/Admin/Index'
+							return
+						}
+						if (user.roleId == 2) {
+							window.location = '/Showroom/Index'
+							return
+						}
+					}
+					else if (user == 1) {
+						console.log(responsePayload.email)
+						return new Promise(res => {
+							return res(fetch(
+								`http://localhost:23211/api/User/login-google1?email=${responsePayload.email}&username=${responsePayload.email}`, {
+								method: "POST", // or 'PUT'
+								headers: {
+									"Content-Type": "application/json",
+								}
+
+							}))
+						}).then(() => { window.location = './Index' })
+
+
+			
+					}
+
+				})
+				
+				
+
+		}
+
+
+		window.onload = function () {
+			// google.accounts.id.initialize({
+			//     // replace your client id below
+			//     client_id: "148898507863-35p32uerrpsqcs752loi69eb9ouji8k1.apps.googleusercontent.com",
+			//     callback: handleCredentialResponse,
+			//     auto_select: true,
+			//     auto: true
+			// });
+			// google.accounts.id.renderButton(
+			//     document.getElementById("google-button"),
+			//     { theme: "filled_blue", size: "medium", width: '200' }  // customization attributes
+			// );
+			// also display the One Tap dialog on right side
+			// important for auto login
+			// google.accounts.id.prompt();
+		}
+
+		// function to decode the response.credential
+		function decodeJwtResponse(token) {
+			var base64Url = token.split('.')[1];
+			var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+			var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+				return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+			}).join(''));
+			return JSON.parse(jsonPayload);
+		}
+
+		function signOut() {
+			google.accounts.id.disableAutoSelect();
+			// do anything on logout
+			location.reload();
+		}
+	</script>
+	<script src="https://accounts.google.com/gsi/client" async defer></script>
+	@await Component.InvokeAsync("Notyf")
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 @inject IHttpContextAccessor Accessor
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
 	<meta charset="utf-8">
@@ -54,7 +54,7 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
-			@if (Accessor.HttpContext.Session.GetString("Key") == null || Accessor.HttpContext.Session.GetString("Key") != null && Accessor.HttpContext.Session.GetString("Role").Equals("1"))
+			@if (Accessor.HttpContext.Session.GetString("Key") == null || (Accessor.HttpContext.Session.GetString("Key") != null && Accessor.HttpContext.Session.GetString("Role").Equals("1")))
 			{
 				<form method="post" asp-page="/Index" class="d-flex ms-auto p-4 p-lg-0">
 					<input class="form-control me-2" id="searchKey" name="searchKey" type="search" placeholder="Nhập tên xe bạn muốn mua" aria-label="Tìm kiếm" style="width: 250px;">
@@ -63,7 +63,7 @@
 			}
 			<div class="navbar-nav ms-auto p-4 p-lg-0">
 				<a asp-page="/Index" class="nav-item nav-link active">Trang chủ</a>
-				@if (Accessor.HttpContext.Session.GetString("Key") == null || Accessor.HttpContext.Session.GetString("Key") != null && Accessor.HttpContext.Session.GetString("Role").Equals("1"))
+				@if (Accessor.HttpContext.Session.GetString("Key") == null || (Accessor.HttpContext.Session.GetString("Key") != null && Accessor.HttpContext.Session.GetString("Role").Equals("1")))
 				{
 					<a href="/Car/Showroom" class="nav-item nav-link">Bạn muốn bán xe?</a>
 					<div class="nav-item dropdown">
@@ -78,6 +78,10 @@
 					</div>
 				}
 				<a href="/Showroom/Index" class="nav-item nav-link">Showroom</a>
+				@if (Accessor.HttpContext.Session.GetString("Key") != null && Accessor.HttpContext.Session.GetString("Role").Equals("0"))
+				{
+					<a href="/Admin/Index" class="nav-item nav-link">Quản lí Staff</a>
+				}
 			</div>
 			@if (Accessor.HttpContext.Session.GetString("Key") != null)
 			{
@@ -89,7 +93,8 @@
 						<button type="submit" class="btn btn-link">Logout</button>
 					</div>
 				</form>
-			}
+			} 
+			
 			else
 			{
 				<a asp-page="/Login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">

@@ -13,30 +13,33 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.ShowroomName)
+           Tên Showroom
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.ShowroomName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.Address)
+           Địa chỉ
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.Address)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.Phone)
+            Số phone
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.Phone)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Showroom.Website)
+            Web
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Showroom.Website)
         </dd>
-       
+        @if (Model.Msg5 != null)
+        {
+                    <p style="color: red">@Model.Msg5</p>
+        }
     </dl>
     
     <form method="post">

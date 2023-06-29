@@ -88,7 +88,7 @@ namespace OldCarShowroomNetworkRazorPage.Pages
                 HttpContext.Session.SetString("Key", Email);
                 HttpContext.Session.SetString("Role", checkLoginByEmail.RoleId.ToString());
                 _toastNotification.Success("Đăng nhập thành công");
-                return RedirectToPage("./User/Index");
+                return RedirectToPage("./Admin/Index");
             }
 
             if (checkLoginByEmail.RoleId.Equals(1))

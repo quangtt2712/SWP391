@@ -15,7 +15,7 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.User
 {
-    [Authorize(Roles = "User,Staff")]
+    [Authorize(Roles = "User,Staff, Admin")]
     public class EditModel : PageModel
     {
         public readonly UserRepository _userRepo;

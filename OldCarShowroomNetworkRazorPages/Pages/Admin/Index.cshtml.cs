@@ -11,8 +11,8 @@ using System.Data;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Admin
 {
-	[Authorize(Roles = "Admin")]
-	public class IndexModel : PageModel
+    [Authorize(Roles = "Admin")]
+    public class IndexModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
 

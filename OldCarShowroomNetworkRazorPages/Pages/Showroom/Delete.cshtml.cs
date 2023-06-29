@@ -26,8 +26,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
         [BindProperty]
         public BOs.Models.Showroom Showroom { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+		public string Msg5 { get; set; }
+		public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
@@ -54,7 +54,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 return NotFound();
             }
             Showroom = await _context.Showrooms.Include(s => s.Cars).FirstOrDefaultAsync(s => s.ShowroomId == id);
+            if(Showroom.Cars != null) {
 
+				_toastNotification.Error("Có xe trong showroom, không được xóa. Phải xóa xe trước");
+				Msg5 = "Có xe trong showroom, không được xóa. Phải xóa xe trước";
+				return Page();
+            }
             if (Showroom != null)
             {
                 var associatedImages = await _context.ImageShowrooms
