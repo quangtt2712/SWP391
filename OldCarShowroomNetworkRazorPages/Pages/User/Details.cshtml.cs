@@ -13,7 +13,7 @@ using REPOs;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.User
 {
-    [Authorize(Roles = "User,Staff")]
+    [Authorize(Roles = "User,Staff,Admin")]
     public class DetailsModel : PageModel
     {
         public readonly UserRepository _userRepo;

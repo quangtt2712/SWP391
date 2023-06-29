@@ -9,9 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using BOs.Models;
 using REPOs;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
