@@ -144,7 +144,7 @@
                     </div>
                 }
                 <input type="file" id="uploadimgmain" name="uploadimgmain" accept="image/*" />
-
+				<p style="color: red; font-weight:600; font-style: italic; font-size: 12px" id="warningmain"></p>
             </div>
             <div class="form-group">
                 <label asp-for="ImageCar.Url" class="control-label">Ảnh xe phụ</label>
@@ -187,22 +187,9 @@
                 select.innerHTML = htmls.join("")
             })
     }
-
-    window.onload = getCarName(document.querySelector("#listCarManufactory"));
-    document.addEventListener("DOMContentLoaded", function() {
-        var uploadImgInput = document.getElementById("UploadImg");
-        var imageIdInput = document.getElementById("ImageId");
-
-        uploadImgInput.addEventListener("change", function() {
-            if (uploadImgInput.files.length === 0) {
-                // Không có tệp mới được chọn, giữ lại ID ảnh hiện tại
-                imageIdInput.disabled = false;
-            } else {
-                imageIdInput.disabled = true;
-            }
-        });
-    });
 	const checkvalidimg = document.getElementById("uploadimgmain");
+	const checkvalid = document.getElementById("checkvalid");
+
 	checkvalidimg.addEventListener('change', function () {
 		let file = this.files[0]
 		console.log(file.name)
@@ -216,12 +203,39 @@
 		} else {
 			checkvalidimg.value = ''
 			document.getElementById("warningmain").innerHTML = "Vui lòng chọn ảnh định dạng .jpg/.jpeg/.png";
+			checkvalid.addEventListener("click", (e) => {
+				console.log(checkvalidimg.value)
+
+				
+				if (checkvalidimg.value == null) {
+					e.preventDefault()
+					document.getElementById("warningmain").innerHTML = "Vui lòng chọn ảnh định dạng .jpg/.jpeg/.png"
+				}
+
+
+			})
+			
 		}
 		// let idxDot = fileName.lastIndexOf(".") + 1;
 		// let extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
 
 
 	})
+    window.onload = getCarName(document.querySelector("#listCarManufactory"));
+   /* document.addEventListener("DOMContentLoaded", function() {
+        var uploadImgInput = document.getElementById("UploadImg");
+        var imageIdInput = document.getElementById("ImageId");
+
+        uploadImgInput.addEventListener("change", function() {
+            if (uploadImgInput.files.length === 0) {
+                // Không có tệp mới được chọn, giữ lại ID ảnh hiện tại
+                imageIdInput.disabled = false;
+            } else {
+                imageIdInput.disabled = true;
+            }
+        });
+    });*/
+	
 </script>
 
 @section Scripts {
