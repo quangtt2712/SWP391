@@ -41,6 +41,7 @@ namespace BOs.Models
         public DateTime? CreatedAt { get; set; }
         public bool? Status { get; set; }
         public int? ShowroomId { get; set; }
+        public DateTime? AcceptedAt { get; set; }
 
         public virtual CarModelYear CarModelYearNavigation { get; set; }
         public virtual CarName CarNameNavigation { get; set; }

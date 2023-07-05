@@ -13,16 +13,17 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="user.Username" />
-            <input type="hidden" asp-for="user.Password" />
+            <input type="hidden" asp-for="user.Username"/>
+            <input type="hidden" asp-for="user.Password"/>
             <input type="hidden" asp-for="user.RoleId">
+            <input asp-for="user.Email" class="form-control" type="hidden"/>
             <div class="form-group">
                 <label class="control-label"> Tên</label>
                 <input asp-for="user.FullName" class="form-control" />
                 <span asp-validation-for="user.FullName" class="text-danger"></span>
                 @if (Model.Msg2 != null)
                 {
-                    <p style="color: black">@Model.Msg1</p>
+                    <p style="color: red">@Model.Msg2</p>
                 }
             </div>
             <div class="form-group">
@@ -31,25 +32,16 @@
                 <span asp-validation-for="user.Address" class="text-danger"></span>
                 @if (Model.Msg3 != null)
                 {
-                    <p style="color: black">@Model.Msg1</p>
+                    <p style="color: red">@Model.Msg3</p>
                 }
             </div>
-            @*<div class="form-group">
-                <label asp-for="user.Email" class="control-label"></label>*@
-                <input asp-for="user.Email" class="form-control" type= "hidden"/>
-                @*<span asp-validation-for="user.Email" class="text-danger"></span>
-                @if (Model.Msg4 != null)
-                {
-                    <p style="color: black">@Model.Msg1</p>
-                }
-            </div>*@
             <div class="form-group">
                 <label class="control-label">SĐT</label>
                 <input asp-for="user.Phone" class="form-control" />
                 <span asp-validation-for="user.Phone" class="text-danger"></span>
-                @if (Model.Msg5 != null)
+                @if (Model.Msg4 != null)
                 {
-                    <p style="color: black">@Model.Msg1</p>
+                    <p style="color: red">@Model.Msg4</p>
                 }
             </div>
             <div class="form-group">
@@ -57,7 +49,7 @@
             </div>
             @if (Model.Msg1 != null)
             {
-                <p style="color: black">@Model.Msg1</p>
+                <p style="color: red">@Model.Msg1</p>
             }
         </form>
     </div>

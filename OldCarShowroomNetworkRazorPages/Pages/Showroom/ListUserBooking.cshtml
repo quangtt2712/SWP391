@@ -73,3 +73,12 @@
         }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.booking.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.booking.HasNextPage ? "disabled" : "";
+}
+<a asp-page="./Index" asp-route-pageIndex="@(Model.booking.PageIndex - 1)"
+   class="btn btn-primary @prevDisabled">Previous</a>
+
+<a asp-page="./Index" asp-route-pageIndex="@(Model.booking.PageIndex + 1)"
+   class="btn btn-primary @nextDisabled">Next</a>

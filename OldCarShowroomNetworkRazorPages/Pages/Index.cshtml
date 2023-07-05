@@ -170,7 +170,7 @@
         </div>
     </div>
     <section class="py-5">
-        @if (@Model.Msg1 != null)
+        @if (Model.Msg1 != null)
         {
             <h4 style="color: red">@Model.Msg1</h4>
         }
@@ -210,7 +210,19 @@
             }
             </div>
         </div>
+    @if(Model.searchKey != null){
+
+            var prevDisabled = !Model.car.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.car.HasNextPage ? "disabled" : "";
+
+        <a asp-page="./Index" asp-route-pageIndex="@(Model.car.PageIndex - 1)"
+           class="btn btn-primary @prevDisabled">Previous</a>
+
+        <a asp-page="./Index" asp-route-pageIndex="@(Model.car.PageIndex + 1)"
+           class="btn btn-primary @nextDisabled">Next</a>
+        }
     </section>
+
     <!-- Carousel End -->
     <!-- Service Start -->
     

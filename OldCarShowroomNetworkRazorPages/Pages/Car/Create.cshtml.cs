@@ -51,6 +51,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
         public BOs.Models.ImageCar ImageCar { get; set; }
 		public string Msg1 { get; set; }
 		public string Msg2 { get; set; }
+		public string Msg3 { get; set; }
+		public string Msg4 { get; set; }
 		// To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
 		public async Task<IActionResult> OnPostAsync(IFormFile uploadimg, IFormFile uploadimgmain, int? id)
         {
@@ -107,7 +109,18 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 				
 				return Page();
 			}
-			
+
+            if (Car.NumberOfDoors <= 0 || Car.NumberOfDoors >5 || Car.NumberOfDoors == null) 
+            {
+                Msg3 = "Sô cửa cần nhập > 0 và <5";
+				return Page();
+			}
+			if (Car.NumberOfSeats <= 0 || Car.NumberOfSeats > 5 || Car.NumberOfSeats == null)
+			{
+				Msg4 = "Sô chỗ ngồi cần nhập > 0 và <5";
+				return Page();
+			}
+
 			_context.Cars.Add(Car);
             await _context.SaveChangesAsync();
             

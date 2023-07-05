@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using OldCarShowroomNetworkRazorPages.Pagination;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Admin
 {
@@ -21,12 +22,15 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Admin
             _context = context;
         }
 
-        public IList<BOs.Models.User> User { get;set; }
+        public PaginatedList<BOs.Models.User> User { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? pageIndex)
         {
-            User = await _context.Users
-                .Include(u => u.Role).Where(u => u.RoleId == 2).ToListAsync();
-        }
+			var pageSize = 8;
+            var list = from u in _context.Users
+                .Include(u => u.Role).Where(u => u.RoleId == 2)
+                select u;
+			User = await PaginatedList<BOs.Models.User>.CreateAsync(list, pageIndex ?? 1, pageSize);
+		}
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using OldCarShowroomNetworkRazorPages.Pagination;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
@@ -32,19 +33,22 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 			_context = new OldCarShowroomNetworkContext();
 		}
 
-		public IList<BOs.Models.Showroom> Showroom { get; set; }
-		public IList<BOs.Models.ImageShowroom> ImageShowroom { get; set; }
-		public async Task<IActionResult> OnGetAsync()
+		public PaginatedList<BOs.Models.Showroom> Showroom { get; set; }
+		public async Task<IActionResult> OnGetAsync(int? pageIndex)
 		{
             ViewData["city"] = new SelectList(_context.Cities, "CityId", "Name");
 			ViewData["district"] = new SelectList(_context.Districts, "DistrictId", "Name");
 			ViewData["ward"] = new SelectList(_context.Wards, "WardId", "Name");
-			Showroom = await _context.Showrooms
+            var pageSize = 8;
+			var list = from s in _context.Showrooms
+				.Include(s => s.ImageShowrooms)
 				.Include(s => s.City)
 				.Include(s => s.District)
 				.Include(s => s.ImageShowrooms)
-				.Include(s => s.WardsNavigation).ToListAsync();
-			ImageShowroom = await _context.ImageShowrooms.ToListAsync();
+				.Include(s => s.WardsNavigation)
+                .OrderBy(s => s.ShowroomName)
+                select s;
+            Showroom = await PaginatedList<BOs.Models.Showroom>.CreateAsync(list, pageIndex ?? 1, pageSize);
             return Page();
 		}
 	}

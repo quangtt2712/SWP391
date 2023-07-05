@@ -102,6 +102,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 _toastNotification.Error("Xác nhận bán xe thất bại");
                 return Page();
             }
+            if (Money < Car.MinPrice)
+            {
+                Msg = "Cần nhập số cao hơn giá tối thiểu";
+                _toastNotification.Error("Xác nhận bán xe thất bại");
+                return Page();
+            }
             var checkAcceptSell = _carRepo.GetAll().FirstOrDefault(c => c.CarId == CarId);
             if (checkAcceptSell != null)
             {
@@ -110,6 +116,13 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 _carRepo.Update(checkAcceptSell);
                 Booking.Notification = 3;
                 _bookingRepo.Update(Booking);
+                var listBooking = await _bookingRepo.GetAll().Where(b => b.CarId == CarId && b.Username != Username && b.Notification.Equals(1)).ToListAsync();
+                foreach(var item in listBooking)
+                {
+                    item.Notification = 2;
+                    item.Note = "Hủy vì xe đã bán rồi";
+                    _bookingRepo.Update(item);
+                }
                 _toastNotification.Success("Xác nhận bán xe thành công");
             }
             return RedirectToPage("./ListUserBooking");

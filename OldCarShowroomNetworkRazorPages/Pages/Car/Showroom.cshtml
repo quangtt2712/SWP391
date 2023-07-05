@@ -97,6 +97,15 @@
 			}
 		</div>
 	</div>
+@{
+	var prevDisabled = !Model.Showroom.HasPreviousPage ? "disabled" : "";
+		var nextDisabled = !Model.Showroom.HasNextPage ? "disabled" : "";
+}
+	<a asp-page="./Index" asp-route-pageIndex="@(Model.Showroom.PageIndex - 1)"
+	class="btn btn-primary @prevDisabled">Previous</a>
+
+	<a asp-page="./Index" asp-route-pageIndex="@(Model.Showroom.PageIndex + 1)"
+	class="btn btn-primary @nextDisabled">Next</a>
 </section>
 <script src="~/js/Adress.js"></script>
 

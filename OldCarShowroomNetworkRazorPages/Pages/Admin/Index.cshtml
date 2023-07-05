@@ -52,11 +52,20 @@
             </td>
             
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Username">Edit</a> |
+                <a asp-page="./Edit" asp-route-id="@item.Username">Chỉnh sửa</a> |
               
-                <a asp-page="./Delete" asp-route-id="@item.Username">Delete</a>
+                <a asp-page="./Delete" asp-route-id="@item.Username">Xóa</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.User.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.User.HasNextPage ? "disabled" : "";
+}
+<a asp-page="./Index" asp-route-pageIndex="@(Model.User.PageIndex - 1)"
+   class="btn btn-primary @prevDisabled">Previous</a>
+
+<a asp-page="./Index" asp-route-pageIndex="@(Model.User.PageIndex + 1)"
+   class="btn btn-primary @nextDisabled">Next</a>

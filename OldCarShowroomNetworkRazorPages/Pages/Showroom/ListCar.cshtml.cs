@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using OldCarShowroomNetworkRazorPages.Pagination;
 using REPOs;
 using System.Collections.Generic;
 using System.Data;
@@ -24,11 +25,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             _toastNotification = toastNotification;
         }
 
-        public IList<BOs.Models.Car> Car { get; set; }
+        public PaginatedList<BOs.Models.Car> car { get; set; }
         public string Msg1 { get; set; }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? pageIndex)
         {
-            Car = await _carRepo.GetAll()
+            var pageSize = 8;
+            var list = from c in _carRepo.GetAll()
                 .Include(c => c.ImageCars)
                 .Include(c => c.CarModelYearNavigation)
                 .Include(c => c.CarNameNavigation)
@@ -44,43 +46,15 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(c => c.UsernameNavigation)
                 .Include(c => c.VehiclesNavigation)
                 .Where(c => c.Notification.Equals(0))
-                .ToListAsync();
-            if (Car.Count() == 0)
+                .OrderByDescending(c => c.CreatedAt)
+                select c;
+            car = await PaginatedList<BOs.Models.Car>.CreateAsync(list, pageIndex ?? 1, pageSize);
+
+            if (car.Count() == 0 || car == null)
             {
                 Msg1 = "Hiện tại không có xe chờ kí gửi";
                 return Page();
             }
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? CarId)
-        {
-            var checkNotifi = _carRepo.GetAll().FirstOrDefault(c => c.CarId == CarId);
-            checkNotifi.Notification = 1;
-            _carRepo.Update(checkNotifi);
-
-            Car = await _carRepo.GetAll()
-                .Include(c => c.CarModelYearNavigation)
-                .Include(c => c.CarNameNavigation)
-                .Include(c => c.ColorInsideNavigation)
-                .Include(c => c.ColorNavigation)
-                .Include(c => c.DriveNavigation)
-                .Include(c => c.FuelNavigation)
-                .Include(c => c.ManufactoryNavigation)
-                .Include(c => c.Showroom)
-                .Include(c => c.UsernameNavigation)
-                .Include(c => c.VehiclesNavigation)
-                .Include(c => c.Showroom.City)
-                .Include(c => c.Showroom.District)
-                .Include(c => c.Showroom.WardsNavigation)
-                .Where(c => c.Notification.Equals(0))
-                .ToListAsync();
-            if (Car.Count() == 0)
-            {
-                Msg1 = "Hiện tại không có xe chờ kí gửi";
-                return Page();
-            }
-            _toastNotification.Success("Chấp nhận kí gửi xe thành công");
             return Page();
         }
     }

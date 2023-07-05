@@ -34,7 +34,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
         public string Msg2 { get; set; }
         public string Msg3 { get; set; }
         public string Msg4 { get; set; }
-        public string Msg5 { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
             Email = HttpContext.Session.GetString("Key");
@@ -61,20 +60,18 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
             if (user.Address == null)
             {
                 _toastNotification.Error("Chỉnh sửa thông tin thất bại");
-                Msg2 = "Cần nhập địa chỉ để chỉnh sửa";
-                return Page();
-            }
-            if (user.Email == null)
-            {
-                _toastNotification.Error("Chỉnh sửa thông tin thất bại");
-                Msg2 = "Cần nhập email để chỉnh sửa";
+                Msg3 = "Cần nhập địa chỉ để chỉnh sửa";
                 return Page();
             }
             if (user.Phone == null)
             {
                 _toastNotification.Error("Chỉnh sửa thông tin thất bại");
-                Msg2 = "Cần nhập SĐT để chỉnh sửa";
+                Msg4 = "Cần nhập SĐT để chỉnh sửa";
                 return Page();
+            }
+            if (user.Password == null) 
+            {
+                user.Password = "";
             }
             _userRepo.Update(user);
             _toastNotification.Success("Chỉnh sửa thông tin thành công");

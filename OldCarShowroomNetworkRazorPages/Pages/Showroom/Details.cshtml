@@ -82,8 +82,8 @@
 @if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals("2"))
 {
 	<div>
-		<a asp-page="./Edit" asp-route-id="@Model.Showroom.ShowroomId">Edit</a>
-		<a asp-page="./Index">Back to List</a>
+		<a asp-page="./Edit" asp-route-id="@Model.Showroom.ShowroomId">Chỉnh sửa</a> |
+		<a asp-page="./Index">Quay lại</a>
 	</div>
 }
 <h1>Danh sách các xe đang bán trong showroom</h1>
@@ -91,9 +91,9 @@
 	<div class="container px-4 px-lg-5 mt-5">
 
 		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-			@if (Model.Car != null)
+			@if (Model.car != null)
 			{
-				@foreach (var car in Model.Car)
+				@foreach (var car in Model.car)
 				{
 					<div class="col mb-5">
 						<div class="card h-100">
@@ -122,22 +122,10 @@
 							</div>
 						@if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals("2"))
 						{
-							@if (car.Notification.Equals(0))
-							{
-								<form method="post">
-									<div class="form-group">
-										<input type="hidden" id="ShowroomId" name="ShowroomId" asp-for="@car.ShowroomId" />
-										<input type="hidden" id="CarId" name="CarId" asp-for="@car.CarId" />
-										<input type="submit" value="Chấp nhận" class="btn btn-primary" />
-									</div>
-								</form>
-								<a asp-page="../CarDetail" asp-route-id="@car.CarId" class="btn btn-link">Xem chi tiết</a>
-								<a asp-page="./RefuseCar" asp-route-id="@car.CarId" class="btn btn-link">Từ chối</a>
-							}
-							else if (car.Notification.Equals(1))
+							@if (car.Notification.Equals(1))
 							{
 								<h6 class="fw-bolder">Tình trạng: Đang bán</h6>
-								}
+							}
 						}else if (HttpContext.Session.GetString("Key") == null || HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals("1"))
 						{
 								<a asp-page="../CarDetail" asp-route-id="@car.CarId" class="btn btn-link">Xem chi tiết</a>
@@ -146,6 +134,15 @@
 				</div>
 				}
 			}
+		</div>
 	</div>
-	</div>
+@{
+	var prevDisabled = !Model.car.HasPreviousPage ? "disabled" : "";
+	var nextDisabled = !Model.car.HasNextPage ? "disabled" : "";
+}
+<a asp-page="./Index" asp-route-pageIndex="@(Model.car.PageIndex - 1)"
+	class="btn btn-primary @prevDisabled">Previous</a>
+
+<a asp-page="./Index" asp-route-pageIndex="@(Model.car.PageIndex + 1)"
+	class="btn btn-primary @nextDisabled">Next</a>
 </section>

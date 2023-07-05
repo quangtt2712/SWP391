@@ -9,6 +9,7 @@ using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using Microsoft.AspNetCore.Http;
+using OldCarShowroomNetworkRazorPages.Pagination;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
@@ -22,15 +23,15 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
             _context = new OldCarShowroomNetworkContext();
         }
 
-        public IList<BOs.Models.Car> Car { get; set; }
+        public PaginatedList<BOs.Models.Car> Car { get; set; }
 
-        public IList<BOs.Models.ImageCar> ImageCar { get; set; }
-
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? pageIndex)
         {
 			string userLogin = HttpContext.Session.GetString("Key");
 			var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
-			Car = await _context.Cars
+            var pageSize = 8;
+            var list = from c in _context.Cars
+                 .Include(c => c.ImageCars)
                  .Include(c => c.CarModelYearNavigation)
                  .Include(c => c.CarNameNavigation)
                  .Include(c => c.ColorInsideNavigation)
@@ -40,8 +41,10 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                  .Include(c => c.ManufactoryNavigation)
                  .Include(c => c.Showroom).ThenInclude(s => s.City)
                  .Include(c => c.UsernameNavigation)
-                 .Include(c => c.VehiclesNavigation).Where(s => s.Username.Equals(user.Username) && s.Notification == 2).ToListAsync();
-            ImageCar = await _context.ImageCars.ToListAsync();
+                 .Include(c => c.VehiclesNavigation).Where(s => s.Username.Equals(user.Username) && s.Notification == 2)
+                 .OrderByDescending(c => c.CreatedAt)
+                 select c;
+            Car = await PaginatedList<BOs.Models.Car>.CreateAsync(list, pageIndex ?? 1, pageSize);
             return Page();
         }
     }

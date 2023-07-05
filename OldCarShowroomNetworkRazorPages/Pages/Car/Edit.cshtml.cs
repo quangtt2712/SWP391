@@ -38,6 +38,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 		public BOs.Models.ImageCar ImageCar { get; set; }
 		public string Msg1 { get; set; }
 		public string Msg2 { get; set; }
+		public string Msg3 { get; set; }
+		public string Msg4 { get; set; }
 
 		public IList<BOs.Models.ImageCar> ImageCars { get; set; }
 		public async Task<IActionResult> OnGetAsync(int? id)
@@ -136,7 +138,16 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 				return Page();
 			}
 
-
+			if (Car.NumberOfDoors <= 0 || Car.NumberOfDoors > 5 || Car.NumberOfDoors == null)
+			{
+				Msg3 = "Sô cửa cần nhập > 0 và <5";
+				return Page();
+			}
+			if (Car.NumberOfSeats <= 0 || Car.NumberOfSeats > 5 || Car.NumberOfSeats == null)
+			{
+				Msg4 = "Sô chỗ ngồi cần nhập > 0 và <5";
+				return Page();
+			}
 			string userLogin = HttpContext.Session.GetString("Key");
 			var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
 			Car.Notification = 0;

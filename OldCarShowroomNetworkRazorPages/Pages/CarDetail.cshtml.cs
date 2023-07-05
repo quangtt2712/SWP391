@@ -74,7 +74,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                         .Include(c => c.Showroom.City)
                         .Include(c => c.Showroom.District)
                         .Include(c => c.Showroom.WardsNavigation).FirstOrDefaultAsync(m => m.CarId == id);
-                    var checkBooking = await _bookRepo.GetAll().FirstOrDefaultAsync(b => b.CarId == id && b.Username == user.Username);
+                    var checkBooking = await _bookRepo.GetAll().FirstOrDefaultAsync(b => b.CarId == id && b.Username == user.Username && b.Notification == 1);
                     if (checkBooking != null)
                     {
                         Msg = "Bạn đã đặt lịch xem xe này rồi mời bạn xem xe khác";

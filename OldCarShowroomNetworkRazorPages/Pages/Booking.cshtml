@@ -88,7 +88,7 @@
             <dd class="col-sm-10">
                 <input id="dateTime" name="dateTime" type="date" asp-for="@Model.dateTime" placeholder="Chọn ngày tháng">
             </dd>
-            @if (@Model.Msg != null)
+            @if (Model.Msg != null)
             {
                 <p style="color: red">@Model.Msg</p>
             }
@@ -97,21 +97,27 @@
             <label asp-for="isBooked.Slot" class="control-label">Thời gian xem xe (Giờ kết thúc là 2 tiếng kể từ giờ bắt đầu xem xe)</label>
             <select style="background-color: #f5f3ff;" asp-for="isBooked.Slot" class="form-control" asp-items="ViewBag.Slot" id="listCarName"></select>
         </div>
-        @if (@Model.Msg1 != null)
+        @if (Model.Msg1 != null)
         {
             <p style="color: red">@Model.Msg1</p>
         }
     </dl>
-    @if (@Model.Msg2 != null)
+    @if (Model.Msg2 != null)
     {
         <p style="color: red">@Model.Msg2</p>
     }
-    @if (@Model.Msg3 != null)
+    @if (Model.Msg3 != null)
     {
         <p style="color: red">@Model.Msg3</p>
     }
+
         <div class="form-group">
-            <input type="submit" value="Đặt lịch xem xe" class="btn btn-primary" />
+            @if (string.IsNullOrEmpty(Model.user.Phone))
+            {
+                <p style="color: red">Bạn phải có SĐT mới được đặt lịch</p>
+            }else{
+                <input type="submit" value="Đặt lịch xem xe" class="btn btn-primary" />
+            }
             <a asp-page="/Index"> Quay lại trang chủ</a>
         </div>
     </form>

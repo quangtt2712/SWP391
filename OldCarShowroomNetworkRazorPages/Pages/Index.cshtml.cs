@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using BOs.Models;
 using Microsoft.EntityFrameworkCore;
 using OldCarShowroomNetworkRazorPage.Pages;
-
+using OldCarShowroomNetworkRazorPages.Pagination;
 namespace OldCarShowroomNetworkRazorPages.Pages
 {
     public class IndexModel : PageModel
@@ -35,39 +35,16 @@ namespace OldCarShowroomNetworkRazorPages.Pages
         public string email { get; set; }
         public string Msg1 ;
 
-        public IList<BOs.Models.Car> car { get; set; }
+        public PaginatedList<BOs.Models.Car> car { get; set; }
+        public IList<BOs.Models.Car> checkList { get; set; }
         [BindProperty]
         public string searchKey { get; set; }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? pageIndex)
         {
+            var pageSize = 8;
             if (HttpContext.Session.GetString("Key") == null)
-            {   
-                car = await _carRepo.GetAll()
-                    .Include(c => c.ImageCars)
-                    .Include(c => c.CarModelYearNavigation)
-                    .Include(c => c.CarNameNavigation)
-                    .Include(c => c.ColorInsideNavigation)
-                    .Include(c => c.ColorNavigation)
-                    .Include(c => c.DriveNavigation)
-                    .Include(c => c.FuelNavigation)
-                    .Include(c => c.ManufactoryNavigation)
-                    .Include(c => c.Showroom)
-                    .Include(c => c.UsernameNavigation)
-                    .Include(c => c.Showroom.City)
-                    .Include(c => c.VehiclesNavigation)
-                    .Include(c => c.Showroom.City)
-					.Include(c => c.ImageCars)
-					.Include(c => c.Showroom.District)
-                    .Include(c => c.Showroom.WardsNavigation)
-                    .Where(c => c.Notification.Equals(1)).ToListAsync();
-                
-                return Page();
-            }
-            if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
             {
-                email = HttpContext.Session.GetString("Key");
-                user = await _userRepo.GetAll().FirstOrDefaultAsync(u => u.Email == email);
-                car = await _carRepo.GetAll()
+                var list = from p in _carRepo.GetAll()
                     .Include(c => c.ImageCars)
                     .Include(c => c.CarModelYearNavigation)
                     .Include(c => c.CarNameNavigation)
@@ -84,18 +61,51 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                     .Include(c => c.ImageCars)
                     .Include(c => c.Showroom.District)
                     .Include(c => c.Showroom.WardsNavigation)
-                    .Where(c => c.Notification.Equals(1) && c.Username != user.Username).ToListAsync();
+                    .Where(c => c.Notification.Equals(1))
+                    .OrderByDescending(c => c.AcceptedAt)
+                    select p;
 
+                car = await PaginatedList<BOs.Models.Car>.CreateAsync(list, pageIndex ?? 1, pageSize);
+                return Page();
+
+            }
+            if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
+            {
+                email = HttpContext.Session.GetString("Key");
+                user = await _userRepo.GetAll().FirstOrDefaultAsync(u => u.Email == email);
+                var list = from p in _carRepo.GetAll()
+                    .Include(c => c.ImageCars)
+                    .Include(c => c.CarModelYearNavigation)
+                    .Include(c => c.CarNameNavigation)
+                    .Include(c => c.ColorInsideNavigation)
+                    .Include(c => c.ColorNavigation)
+                    .Include(c => c.DriveNavigation)
+                    .Include(c => c.FuelNavigation)
+                    .Include(c => c.ManufactoryNavigation)
+                    .Include(c => c.Showroom)
+                    .Include(c => c.UsernameNavigation)
+                    .Include(c => c.Showroom.City)
+                    .Include(c => c.VehiclesNavigation)
+                    .Include(c => c.Showroom.City)
+                    .Include(c => c.ImageCars)
+                    .Include(c => c.Showroom.District)
+                    .Include(c => c.Showroom.WardsNavigation)
+                    .Where(c => c.Notification.Equals(1) && c.Username != user.Username)
+                    .OrderByDescending(c => c.AcceptedAt)
+                    select p;
+
+                car = await PaginatedList<BOs.Models.Car>.CreateAsync(list, pageIndex ?? 1, pageSize);
                 return Page();
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string searchKey)
+        public async Task<IActionResult> OnPostAsync(string searchKey, int? pageIndex)
         {
+            var pageSize = 8;
             if (string.IsNullOrWhiteSpace(searchKey))
             {   
-                Msg1 = "Vui lòng nhập tên xe để tìm kiếm";
+                Msg1 = "Vui lòng nhập tên xe hoặc hãng xe để tìm kiếm";
                 return Page();
             }
             var checkCar = _carRepo.GetAll()
@@ -103,56 +113,65 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 .Include(c => c.CarNameNavigation)
                 .Where(p => p.Notification.Equals(1) && p.ManufactoryNavigation.ManufactoryName.ToLower().Contains(searchKey.ToLower().Trim()) 
                     || p.Notification.Equals(1) && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
-            if (checkCar.Count() == 0 || checkCar != null)
+
+            car = await PaginatedList<BOs.Models.Car>.CreateAsync(checkCar, pageIndex ?? 1, pageSize);
+            if (car.Count() == 0 || car == null)
             {
                 Msg1 = "Không tìm thấy xe";
                 return Page();
             }
 			if (HttpContext.Session.GetString("Key") == null)
 			{
-				car = await checkCar
-					.Include(c => c.ImageCars)
-					.Include(c => c.CarModelYearNavigation)
-					.Include(c => c.CarNameNavigation)
-					.Include(c => c.ColorInsideNavigation)
-					.Include(c => c.ColorNavigation)
-					.Include(c => c.DriveNavigation)
-					.Include(c => c.FuelNavigation)
-					.Include(c => c.ManufactoryNavigation)
-					.Include(c => c.Showroom)
-					.Include(c => c.UsernameNavigation)
-					.Include(c => c.Showroom.City)
-					.Include(c => c.VehiclesNavigation)
-					.Include(c => c.Showroom.City)
-					.Include(c => c.ImageCars)
-					.Include(c => c.Showroom.District)
-					.Include(c => c.Showroom.WardsNavigation)
-					.Where(c => c.Notification.Equals(1)).ToListAsync();
+                var list = from p in checkCar.Include(c => c.ImageCars)
+                    .Include(c => c.CarModelYearNavigation)
+                    .Include(c => c.CarNameNavigation)
+                    .Include(c => c.ColorInsideNavigation)
+                    .Include(c => c.ColorNavigation)
+                    .Include(c => c.DriveNavigation)
+                    .Include(c => c.FuelNavigation)
+                    .Include(c => c.ManufactoryNavigation)
+                    .Include(c => c.Showroom)
+                    .Include(c => c.UsernameNavigation)
+                    .Include(c => c.Showroom.City)
+                    .Include(c => c.VehiclesNavigation)
+                    .Include(c => c.Showroom.City)
+                    .Include(c => c.ImageCars)
+                    .Include(c => c.Showroom.District)
+                    .Include(c => c.Showroom.WardsNavigation)
+                    .Where(c => c.Notification.Equals(1))
+                    .OrderByDescending(c => c.AcceptedAt)
+                    select p;
 
-				return Page();
+                car = await PaginatedList<BOs.Models.Car>.CreateAsync(list, pageIndex ?? 1, pageSize);
+                return Page();
 			}
 			if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
-			{
-				car = await checkCar
-					.Include(c => c.ImageCars)
-					.Include(c => c.CarModelYearNavigation)
-					.Include(c => c.CarNameNavigation)
-					.Include(c => c.ColorInsideNavigation)
-					.Include(c => c.ColorNavigation)
-					.Include(c => c.DriveNavigation)
-					.Include(c => c.FuelNavigation)
-					.Include(c => c.ManufactoryNavigation)
-					.Include(c => c.Showroom)
-					.Include(c => c.UsernameNavigation)
-					.Include(c => c.Showroom.City)
-					.Include(c => c.VehiclesNavigation)
-					.Include(c => c.Showroom.City)
-					.Include(c => c.ImageCars)
-					.Include(c => c.Showroom.District)
-					.Include(c => c.Showroom.WardsNavigation)
-					.Where(c => c.Notification.Equals(1) && c.Username != user.Username).ToListAsync();
+            {
+                email = HttpContext.Session.GetString("Key");
+                user = await _userRepo.GetAll().FirstOrDefaultAsync(u => u.Email == email);
 
-				return Page();
+                var list = from p in checkCar.Include(c => c.ImageCars)
+                   .Include(c => c.CarModelYearNavigation)
+                   .Include(c => c.CarNameNavigation)
+                   .Include(c => c.ColorInsideNavigation)
+                   .Include(c => c.ColorNavigation)
+                   .Include(c => c.DriveNavigation)
+                   .Include(c => c.FuelNavigation)
+                   .Include(c => c.ManufactoryNavigation)
+                   .Include(c => c.Showroom)
+                   .Include(c => c.UsernameNavigation)
+                   .Include(c => c.Showroom.City)
+                   .Include(c => c.VehiclesNavigation)
+                   .Include(c => c.Showroom.City)
+                   .Include(c => c.ImageCars)
+                   .Include(c => c.Showroom.District)
+                   .Include(c => c.Showroom.WardsNavigation)
+                   .Where(c => c.Notification.Equals(1) && c.Username != user.Username)
+                   .OrderByDescending(c => c.AcceptedAt)
+                   select p;
+
+                car = await PaginatedList<BOs.Models.Car>.CreateAsync(list, pageIndex ?? 1, pageSize);
+                return Page();
 			}
 			return Page();
         }

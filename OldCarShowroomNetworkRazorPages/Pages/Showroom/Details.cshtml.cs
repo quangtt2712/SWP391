@@ -12,6 +12,7 @@ using REPOs;
 using System.Runtime.ConstrainedExecution;
 using Microsoft.AspNetCore.Http;
 using OldCarShowroomNetworkRazorPages.Api;
+using OldCarShowroomNetworkRazorPages.Pagination;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
@@ -33,12 +34,10 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         public BOs.Models.Showroom Showroom { get; set; }
         public BOs.Models.ImageShowroom ImageShowroom { get; set; }
         public IList<BOs.Models.ImageShowroom> ImageShowrooms { get; set; }
-
-        public IList<BOs.Models.Car> Car { get; set; }
-		public IList<BOs.Models.ImageCar> ImageCar { get; set; }
+        public PaginatedList<BOs.Models.Car> car { get; set; }
 		public BOs.Models.User user { get; set; }
 		public string email { get; set; }
-		public async Task<IActionResult> OnGetAsync(int? id)
+		public async Task<IActionResult> OnGetAsync(int? id, int? pageIndex)
         {
             if (id == null)
             {
@@ -55,83 +54,58 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             ImageShowrooms = await _context.ImageShowrooms
                 .Where(img => img.ShowroomId == id && img.ImageMain == false)
             .ToListAsync();
-			
-			Car = await _context.Cars
-				 .Include(c => c.CarModelYearNavigation)
-				 .Include(c => c.CarNameNavigation)
-				 .Include(c => c.ColorInsideNavigation)
-				 .Include(c => c.ColorNavigation)
-				 .Include(c => c.DriveNavigation)
-				 .Include(c => c.FuelNavigation)
-				 .Include(c => c.ManufactoryNavigation)
-				 .Include(c => c.Showroom).ThenInclude(s => s.City)
-				 .Include(c => c.UsernameNavigation)
-				 .Include(c => c.VehiclesNavigation).Where(c => c.ShowroomId == id && c.Notification == 1)
-			.ToListAsync();
-			ImageCar = await _context.ImageCars.ToListAsync();
-			if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
+
+            var pageSize = 8;
+            var list = from c in _context.Cars
+                 .Include(c => c.ImageCars)
+                 .Include(c => c.CarModelYearNavigation)
+                 .Include(c => c.CarNameNavigation)
+                 .Include(c => c.ColorInsideNavigation)
+                 .Include(c => c.ColorNavigation)
+                 .Include(c => c.DriveNavigation)
+                 .Include(c => c.FuelNavigation)
+                 .Include(c => c.ManufactoryNavigation)
+                 .Include(c => c.Showroom).ThenInclude(s => s.City)
+                 .Include(c => c.UsernameNavigation)
+                 .Include(c => c.VehiclesNavigation).Where(c => c.ShowroomId == id && c.Notification == 1)
+                 .OrderByDescending(c => c.AcceptedAt)
+                 select c;
+            car  = await PaginatedList<BOs.Models.Car>.CreateAsync(list, pageIndex ?? 1, pageSize);
+
+            if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
             {
                 email = HttpContext.Session.GetString("Key");
 				user = await _userkRepo.GetAll().FirstOrDefaultAsync(u => u.Email == email);
-				Car = await _carRepo.GetAll()
-					.Include(c => c.ImageCars)
-					.Include(c => c.CarModelYearNavigation)
-					.Include(c => c.CarNameNavigation)
-					.Include(c => c.ColorInsideNavigation)
-					.Include(c => c.ColorNavigation)
-					.Include(c => c.DriveNavigation)
-					.Include(c => c.FuelNavigation)
-					.Include(c => c.ManufactoryNavigation)
-					.Include(c => c.Showroom)
-					.Include(c => c.UsernameNavigation)
-					.Include(c => c.Showroom.City)
-					.Include(c => c.VehiclesNavigation)
-					.Include(c => c.Showroom.City)
-					.Include(c => c.ImageCars)
-                .Include(c => c.Showroom.District)
-					.Include(c => c.Showroom.WardsNavigation)
-					.Where(c => c.Notification.Equals(1) && c.Username != user.Username && c.ShowroomId == id).ToListAsync();
 
-				return Page();
+                list = from c in _carRepo.GetAll()
+                    .Include(c => c.ImageCars)
+                    .Include(c => c.CarModelYearNavigation)
+                    .Include(c => c.CarNameNavigation)
+                    .Include(c => c.ColorInsideNavigation)
+                    .Include(c => c.ColorNavigation)
+                    .Include(c => c.DriveNavigation)
+                    .Include(c => c.FuelNavigation)
+                    .Include(c => c.ManufactoryNavigation)
+                    .Include(c => c.Showroom)
+                    .Include(c => c.UsernameNavigation)
+                    .Include(c => c.Showroom.City)
+                    .Include(c => c.VehiclesNavigation)
+                    .Include(c => c.Showroom.City)
+                    .Include(c => c.ImageCars)
+                    .Include(c => c.Showroom.District)
+                    .Include(c => c.Showroom.WardsNavigation)
+                    .Where(c => c.Notification.Equals(1) && c.Username != user.Username && c.ShowroomId == id)
+                    .OrderByDescending(c => c.AcceptedAt)
+                    select c;
+                car = await PaginatedList<BOs.Models.Car>.CreateAsync(list, pageIndex ?? 1, pageSize);
+
+                return Page();
 			}
 			if (Showroom == null)
             {
                 return NotFound();
             }
 
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(int? CarId, int? ShowroomId)
-        {
-            var checkNotifi = _carRepo.GetAll().FirstOrDefault(c => c.CarId == CarId);
-            checkNotifi.Notification = 1;
-            _carRepo.Update(checkNotifi);
-
-            Car = await _carRepo.GetAll()
-                .Include(c => c.CarModelYearNavigation)
-                .Include(c => c.CarNameNavigation)
-                .Include(c => c.ColorInsideNavigation)
-                .Include(c => c.ColorNavigation)
-                .Include(c => c.DriveNavigation)
-                .Include(c => c.FuelNavigation)
-                .Include(c => c.ManufactoryNavigation)
-                .Include(c => c.Showroom)
-                .Include(c => c.UsernameNavigation)
-                .Include(c => c.VehiclesNavigation)
-                .Where(c => c.ShowroomId == ShowroomId)
-                .ToListAsync();
-            Showroom = await _context.Showrooms
-                .Include(s => s.City)
-                .Include(s => s.District)
-
-                .Include(s => s.WardsNavigation).FirstOrDefaultAsync(m => m.ShowroomId == ShowroomId);
-            ImageShowroom = await _context.ImageShowrooms
-               .FirstOrDefaultAsync(img => img.ShowroomId == ShowroomId && img.ImageMain == true);
-
-            ImageShowrooms = await _context.ImageShowrooms
-                .Where(img => img.ShowroomId == ShowroomId && img.ImageMain == false)
-            .ToListAsync();
             return Page();
         }
     }

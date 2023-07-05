@@ -1,22 +1,23 @@
 ﻿@page
-@model OldCarShowroomNetworkRazorPages.Pages.Car2.DetailsModel
-
+@model OldCarShowroomNetworkRazorPages.Pages.Showroom.UserCarDetailModel
 @{
-    ViewData["Title"] = "Details";
 }
-
 <div>
 	<h4>Xe @Model.car.ManufactoryNavigation.ManufactoryName @Model.car.CarNameNavigation.CarName1 @Model.car.CarModelYearNavigation.CarModelYear1</h4>
 	<hr />
-	<dl class="row">
+	<dl style="
+		display: grid;
+		grid-template-columns: repeat(2,1fr);
+		grid-gap: 30px;
+		padding: 20px;" class="row">
 		<div class="form-group">
 			<dt class="col-sm-2">
 				Hình xe
 			</dt>
 			<dd class="col-sm-10">
-				@if (@Model.car.ImageCars != null && @Model.car.ImageCars.Count > 0)
+				@if (Model.car.ImageCars != null && Model.car.ImageCars.Count > 0)
 				{
-					var mainImage = @Model.car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
+					var mainImage = Model.car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
 					if (mainImage != null)
 					{
 						<img src="@Url.Content(mainImage.Url)" alt="Ảnh chính" style="
@@ -54,7 +55,7 @@
 		</div>
 		<div class="form-group">
 			<dt class="col-sm-2">
-				Dòng xe
+				Dòng
 			</dt>
 			<dd class="col-sm-10">
 				@Html.DisplayFor(model => model.car.VehiclesNavigation.VehiclesName)
@@ -175,10 +176,18 @@
 		</div>
 		<div class="form-group">
 			<dt class="col-sm-2">
-				Giá bán
+				Giá mong muốn
 			</dt>
 			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.car.MaxPrice) VND
+				@Html.DisplayFor(model => model.car.MaxPrice) Triệu
+			</dd>
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Giá tối thiểu
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.car.MinPrice) Triệu
 			</dd>
 		</div>
 		<div class="form-group">
@@ -246,10 +255,16 @@
 			</dd>
 		</div>
 	</dl>
-</div>
-
-
-<div>
-    
-    <a asp-page="./Index">Quay lại</a>
+	@if (Model.car.Notification.Equals(0))
+	{
+		<form method="post">
+			<div class="form-group">
+				<input type="hidden" id="CarId" name="CarId" asp-for="@Model.car.CarId" />
+				<input type="submit" value="Chấp nhận kí gửi" class="btn btn-primary" />
+			</div>
+		</form>
+		<a asp-page="./RefuseCar" asp-route-id="@Model.car.CarId" class="btn btn-link">Từ chối</a>
+	}
+	<br>
+	<a asp-page="./ListCar" class="btn btn-link">Quay lại</a>
 </div>

@@ -9,6 +9,7 @@ using BOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using Microsoft.AspNetCore.Hosting;
+using OldCarShowroomNetworkRazorPages.Pagination;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
@@ -16,7 +17,6 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
         public IndexModel(IWebHostEnvironment webHostEnvironment)
         {
             _context = new OldCarShowroomNetworkContext();
@@ -24,18 +24,17 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         }
        
 
-        public IList<BOs.Models.Showroom> Showroom { get;set; }
-        public IList<BOs.Models.ImageShowroom> ImageShowroom { get; set; }
-        public async Task OnGetAsync()
+        public PaginatedList<BOs.Models.Showroom> Showroom { get;set; }
+        public async Task OnGetAsync(int? pageIndex)
         {
-            Showroom = await _context.Showrooms
+            var pageSize = 8;
+            var list = from s in _context.Showrooms
+                .Include(s => s.ImageShowrooms)
                 .Include(s => s.City)
                 .Include(s => s.District)
-                
-                .Include(s => s.WardsNavigation).ToListAsync();
-
-            ImageShowroom = await _context.ImageShowrooms.ToListAsync();
-
+                .Include(s => s.WardsNavigation)
+                select s;
+            Showroom = await PaginatedList<BOs.Models.Showroom>.CreateAsync(list, pageIndex ?? 1, pageSize);
         }
      
     }
