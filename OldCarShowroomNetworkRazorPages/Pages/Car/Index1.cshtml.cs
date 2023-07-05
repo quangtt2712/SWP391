@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using Microsoft.AspNetCore.Http;
 using OldCarShowroomNetworkRazorPages.Pagination;
+using REPOs;
+using System.Xml.Schema;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Car
 {
@@ -17,14 +19,15 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
     public class IndexModel1: PageModel
     {
         private readonly BOs.Models.OldCarShowroomNetworkContext _context;
+        public readonly BookingRepository _bookingRepo;
 
-        public IndexModel1()
+        public IndexModel1(OldCarShowroomNetworkContext context, BookingRepository bookingRepo)
         {
             _context = new OldCarShowroomNetworkContext();
+            _bookingRepo = bookingRepo;
         }
 
         public PaginatedList<BOs.Models.Car> Car { get; set; }
-
 
         public async Task<IActionResult> OnGetAsync(int? pageIndex)
         {
@@ -32,6 +35,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 			var user = _context.Users.FirstOrDefault(s => s.Email.Equals(userLogin));
 			var pageSize = 8;
 			var list = from c in _context.Cars
+				 .Include(c => c.Bookings)
 				 .Include(c => c.ImageCars)
 				 .Include(c => c.CarModelYearNavigation)
 				 .Include(c => c.CarNameNavigation)
