@@ -210,8 +210,8 @@
             }
             </div>
         </div>
-    @if(Model.searchKey != null){
 
+    @if(Model.car != null){
             var prevDisabled = !Model.car.HasPreviousPage ? "disabled" : "";
             var nextDisabled = !Model.car.HasNextPage ? "disabled" : "";
 
@@ -220,7 +220,7 @@
 
         <a asp-page="./Index" asp-route-pageIndex="@(Model.car.PageIndex + 1)"
            class="btn btn-primary @nextDisabled">Next</a>
-        }
+    }
     </section>
 
     <!-- Carousel End -->

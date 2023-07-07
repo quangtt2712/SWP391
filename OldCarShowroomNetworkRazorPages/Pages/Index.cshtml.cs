@@ -108,6 +108,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 Msg1 = "Vui lòng nhập tên xe hoặc hãng xe để tìm kiếm";
                 return Page();
             }
+
             var checkCar = _carRepo.GetAll()
                 .Include(c => c.ManufactoryNavigation)
                 .Include(c => c.CarNameNavigation)
@@ -115,6 +116,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                     || p.Notification.Equals(1) && p.CarNameNavigation.CarName1.ToLower().Contains(searchKey.ToLower()));
 
             car = await PaginatedList<BOs.Models.Car>.CreateAsync(checkCar, pageIndex ?? 1, pageSize);
+
             if (car.Count() == 0 || car == null)
             {
                 Msg1 = "Không tìm thấy xe";
