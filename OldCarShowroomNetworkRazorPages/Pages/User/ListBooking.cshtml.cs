@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using OldCarShowroomNetworkRazorPages.Pagination;
 using REPOs;
 using System;
 using System.Collections.Generic;
@@ -23,15 +24,16 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
             _bookingRepo = bookingRepo;
         }
 
-        public IList<BOs.Models.Booking> booking { get; set; }
+        public PaginatedList<BOs.Models.Booking> booking { get; set; }
         [BindProperty]
         public BOs.Models.User user { get; set; }
         public string Email { get; set; }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? pageIndex)
         {
             Email = HttpContext.Session.GetString("Key");
             user = await _userRepo.GetAll().FirstOrDefaultAsync(u => u.Email.Equals(Email));
-            booking = await _bookingRepo.GetAll()
+            var pageSize = 8;
+            var list = from b in _bookingRepo.GetAll()
                 .Include(b => b.Car)
                 .Include(b => b.Car.ManufactoryNavigation)
                 .Include(b => b.Car.CarNameNavigation)
@@ -41,7 +43,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
                 .Include(b => b.Car.Showroom.District)
                 .Include(b => b.Car.Showroom.WardsNavigation)
                 .Include(b => b.SlotNavigation)
-                .Where(b => b.Username.Equals(user.Username)).ToListAsync();
+                .Where(b => b.Username.Equals(user.Username))
+                .OrderByDescending(b => b.DayBooking)
+                .ThenByDescending(b => b.SlotNavigation.PickupDate)
+                select b;
+
+            booking = await PaginatedList<BOs.Models.Booking>.CreateAsync(list, pageIndex ?? 1, pageSize);
             return Page();
         }
     }

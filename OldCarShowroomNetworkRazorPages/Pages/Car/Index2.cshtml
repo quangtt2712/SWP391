@@ -59,10 +59,12 @@
     var prevDisabled = !Model.Car.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.Car.HasNextPage ? "disabled" : "";
 }
+    <div style="text-align: center;">
 <a asp-page="./Index2" asp-route-pageIndex="@(Model.Car.PageIndex - 1)"
     class="btn btn-primary @prevDisabled">Previous</a>
 
 <a asp-page="./Index2" asp-route-pageIndex="@(Model.Car.PageIndex + 1)"
     class="btn btn-primary @nextDisabled">Next</a>
+    </div>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
