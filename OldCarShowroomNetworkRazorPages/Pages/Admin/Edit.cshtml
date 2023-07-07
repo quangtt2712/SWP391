@@ -26,9 +26,15 @@
                 <input asp-for="User.Address" class="form-control" />
                 <span asp-validation-for="User.Address" class="text-danger"></span>
             </div>
-            
-                <input asp-for="User.Email" class="form-control" type="email" type="hidden" />
-               
+            <div class="form-group">
+				<label asp-for="User.Email" class="control-label"></label>
+				<input asp-for="User.Email" class="form-control" type="email" />
+				@if (@Model.Msg4 != null)
+				{
+					<p style="color: red">@Model.Msg4</p>
+				}
+				<span asp-validation-for="User.Email" class="text-danger"></span>
+			</div>
             <div class="form-group">
                 <label asp-for="User.Password" class="control-label">Mật khẩu</label>
                 <input asp-for="User.Password" class="form-control" />
@@ -41,6 +47,10 @@
             <div class="form-group">
                 <label asp-for="User.Phone" class="control-label">Số điện thoại</label>
                 <input asp-for="User.Phone" class="form-control" />
+                @if (@Model.MsgPhone != null)
+                {
+                    <p style="color: red">@Model.MsgPhone</p>
+                }
                 <span asp-validation-for="User.Phone" class="text-danger"></span>
             </div>
            

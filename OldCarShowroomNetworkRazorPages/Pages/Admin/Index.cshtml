@@ -2,70 +2,82 @@
 @model OldCarShowroomNetworkRazorPages.Pages.Admin.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
 
 <h1>Chào mừng admin, trang quản lí toàn bộ STAFF</h1>
 
 <p>
-    <a asp-page="Create">Tạo Staff</a>
+	<a asp-page="Create">Tạo Staff</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Họ tên
-            </th>
-            <th>
-                Địa chỉ
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Email)
-            </th>
-            <th>
-                Mật khẩu
-            </th>
-            <th>
-               Số điện thoại
-            </th>
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.User) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Username">Chỉnh sửa</a> |
-              
-                <a asp-page="./Delete" asp-route-id="@item.Username">Xóa</a>
-            </td>
-        </tr>
+@if (Model.Msg != null)
+{
+	<h4 style="color: red; text-align: center;">@Model.Msg</h4>
 }
-    </tbody>
-</table>
-@{
-    var prevDisabled = !Model.User.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.User.HasNextPage ? "disabled" : "";
-}
-<a asp-page="./Index" asp-route-pageIndex="@(Model.User.PageIndex - 1)"
-   class="btn btn-primary @prevDisabled">Previous</a>
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					Họ tên
+				</th>
+				<th>
+					Địa chỉ
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.User[0].Email)
+				</th>
+				<th>
+					Mật khẩu
+				</th>
+				<th>
+					Số điện thoại
+				</th>
 
-<a asp-page="./Index" asp-route-pageIndex="@(Model.User.PageIndex + 1)"
-   class="btn btn-primary @nextDisabled">Next</a>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model.User)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.FullName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Address)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Email)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Password)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Phone)
+					</td>
+
+					<td>
+						<a asp-page="./Edit" asp-route-id="@item.Username">Chỉnh sửa</a> |
+
+						<a asp-page="./Delete" asp-route-id="@item.Username">Xóa</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	
+
+}
+@{
+	var prevDisabled = !Model.User.HasPreviousPage ? "disabled" : "";
+	var nextDisabled = !Model.User.HasNextPage ? "disabled" : "";
+}
+<div style="text-align: center;">
+	<a asp-page="./Index" asp-route-pageIndex="@(Model.User.PageIndex - 1)"
+	   class="btn btn-primary @prevDisabled">Previous</a>
+
+	<a asp-page="./Index" asp-route-pageIndex="@(Model.User.PageIndex + 1)"
+	   class="btn btn-primary @nextDisabled">Next</a>
+</div>

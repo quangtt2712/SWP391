@@ -172,7 +172,7 @@
     <section class="py-5">
         @if (Model.Msg1 != null)
         {
-            <h4 style="color: red">@Model.Msg1</h4>
+            <h4 style="color: red; text-align: center;">@Model.Msg1</h4>
         }
         <div class="container px-4 px-lg-5 mt-5">
 
@@ -214,12 +214,13 @@
 
             var prevDisabled = !Model.car.HasPreviousPage ? "disabled" : "";
             var nextDisabled = !Model.car.HasNextPage ? "disabled" : "";
-
+            <div style="text-align: center;">
         <a asp-page="./Index" asp-route-pageIndex="@(Model.car.PageIndex - 1)"
            class="btn btn-primary @prevDisabled">Previous</a>
 
         <a asp-page="./Index" asp-route-pageIndex="@(Model.car.PageIndex + 1)"
            class="btn btn-primary @nextDisabled">Next</a>
+           </div>
         }
     </section>
 

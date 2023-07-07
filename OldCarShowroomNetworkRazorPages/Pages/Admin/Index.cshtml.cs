@@ -21,16 +21,25 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Admin
         {
             _context = context;
         }
-
+        public string Msg { get; set; }
         public PaginatedList<BOs.Models.User> User { get;set; }
 
-        public async Task OnGetAsync(int? pageIndex)
+        public async Task<IActionResult> OnGetAsync(int? pageIndex)
         {
 			var pageSize = 8;
             var list = from u in _context.Users
                 .Include(u => u.Role).Where(u => u.RoleId == 2)
                 select u;
-			User = await PaginatedList<BOs.Models.User>.CreateAsync(list, pageIndex ?? 1, pageSize);
+            
+
+          
+            User = await PaginatedList<BOs.Models.User>.CreateAsync(list, pageIndex ?? 1, pageSize);
+			if (!list.Any() || list.Count() == 0)
+			{
+				Msg = "Hiện tại chưa có STAFF nào";
+				return Page();
+			}
+			return Page();
 		}
     }
 }

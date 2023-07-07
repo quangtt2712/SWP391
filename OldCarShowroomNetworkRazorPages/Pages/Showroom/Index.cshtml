@@ -92,8 +92,10 @@
     var prevDisabled = !Model.Showroom.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.Showroom.HasNextPage ? "disabled" : "";
 }
-<a asp-page="./Index" asp-route-pageIndex="@(Model.Showroom.PageIndex - 1)"
-   class="btn btn-primary @prevDisabled">Previous</a>
+<div style="text-align: center;">
+    <a asp-page="./Index" asp-route-pageIndex="@(Model.Showroom.PageIndex - 1)"
+       class="btn btn-primary @prevDisabled">Previous</a>
 
-<a asp-page="./Index" asp-route-pageIndex="@(Model.Showroom.PageIndex + 1)"
-   class="btn btn-primary @nextDisabled">Next</a>
+    <a asp-page="./Index" asp-route-pageIndex="@(Model.Showroom.PageIndex + 1)"
+       class="btn btn-primary @nextDisabled">Next</a>
+</div>

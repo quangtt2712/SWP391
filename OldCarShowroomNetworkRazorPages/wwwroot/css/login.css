@@ -1,0 +1,145 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eff0f4;
+    min-height: 100vh;
+    background-position: bottom;
+    background-size: 30px;
+    background-repeat: no-repeat;
+}
+
+.box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box .drop {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    box-shadow: inset 20px 20px 20px rgba(0, 0, 0, 0.05), 25px 35px 20px rgba(0, 0, 0, 0.05), 25px 30px 30px rgba(0, 0, 0, 0.05), inset -20px -20px 25px rgba(255, 255, 255, 0.9);
+    transition: 0.5s;
+    border-radius: 41% 59% 44% 56% / 28% 23% 77% 72%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box .drop:hover,
+.sign_up_box:hover {
+    border-radius: 50%;
+}
+
+
+
+.drop .content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 40px;
+    gap: 20px;
+}
+
+.drop .content .input-field {
+    position: relative;
+    width: 250px;
+    box-shadow: inset 20px 20px 20px rgba(0, 0, 0, 0.05), 25px 35px 20px rgba(0, 0, 0, 0.05), 25px 30px 30px rgba(0, 0, 0, 0.05), inset -20px -20px 25px rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+
+}
+
+.input-field input {
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    font-size: 20px;
+    border-radius: 15px;
+    width: 100%;
+
+}
+
+.input-field input[type="submit"] {
+    width: 100%;
+    text-transform: uppercase;
+    color: white;
+    cursor: pointer;
+    font-weight: 500px;
+    letter-spacing: 3px;
+}
+
+.content .input-field:last-child {
+    width: 120px;
+    background: #ff0f5b;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+
+.login-input {
+    transition: opacity 0.5s;
+}
+
+.login-input:hover {
+    opacity: 0.5;
+
+}
+
+.sign_up_box {
+    position: absolute;
+    bottom: -20%;
+    right: -30%;
+    width: 100px;
+    height: 100px;
+    box-shadow: inset 20px 20px 20px rgba(12, 16, 255, 0.05), 25px 35px 20px rgba(12, 174, 185, 0.05), 25px 30px 30px rgba(0, 0, 0, 0.05), inset -20px -20px 25px rgba(93, 42, 212, 0.9);
+    transition: 0.5s;
+    border-radius: 41% 59% 44% 56% / 28% 23% 77% 72%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #975df3;
+    color: #fff;
+    font-weight: 400;
+    cursor: pointer;
+    user-select: none;
+}
+
+.title {
+    text-transform: uppercase;
+}
+
+.warning_mail,
+.warning_password {
+    color: red;
+    font-size: 13px;
+}
+
+.warning_sign {
+    color: red;
+    font-size: 13px;
+    position: absolute;
+    bottom: -50%;
+    z-index: 9999;
+}
+
+.mail_regex {
+    font-style: italic;
+    font-weight: 600;
+
+}
+
+.rotate {
+    transition: transform 0.5s;
+}
