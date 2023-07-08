@@ -1,0 +1,527 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.User.DashboardModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- font awesome -->
+    <script defer src="https://kit.fontawesome.com/330a21053c.js" crossorigin="anonymous"></script>
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <!-- data table -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/dashboardMain.css">
+</head>
+
+<body>
+    <!--  -->
+    <!-- left side -->
+    <div class="left_side">
+        <div class="nav_bar">
+
+            <div class="logo">
+                <i style="font-size:30px;" class="fa fa-car me-3"></i>
+            </div>
+            <div class="nav_container">
+                <!-- item navigation-->
+                <div class="nav_item active">
+                    <a href="#">
+                        <i class="fa-solid fa-house" style="color: #d1d3d7;"></i>
+                    </a>
+                </div>
+
+                <!-- item navigation -->
+                <div class="nav_item">
+                    <a href="#">
+                        <i class="fa-solid fa-list-check" style="color: #d1d3d7;"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div>
+                <div class="nav_item">
+                    <a href="#">
+                        <i class="fa-solid fa-arrow-right-from-bracket" style="color: #d1d3d7;"></i>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- right side -->
+    <div class="right_side">
+        <div class="content">
+            <div class="left_content">
+                <h2>Overview</h2>
+                <div class="overview_container">
+                    <div class="overview_item">
+                        <div class="overview_item_header">
+                            <span>Đã bán</span>
+                            <i class="fa fa-car me-3 overview_icon"></i>
+                        </div>
+                        <div class="overview_item_body">
+                            <div id="sold_count" class="item_data"></div>
+                        </div>
+                    </div>
+                    <div class="overview_item">
+                        <div class="overview_item_header">
+                            <span>Doanh thu</span>
+                            <i class="fa-solid fa-money-bill overview_icon"></i>
+                        </div>
+                        <div class="overview_item_body">
+                            <div id="revenue_count" class="item_data"></div>
+                        </div>
+                    </div>
+                    <div class="overview_item">
+                        <div class="overview_item_header">
+                            <span>Tổng tiền hoa hồng khi bán xe</span>
+                            <i class="fa-brands fa-product-hunt overview_icon"></i>
+                        </div>
+                        <div class=" overview_item_body">
+                            <div id="showroom_count" class="item_data"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- chart -->
+                <div class="chart_container">
+                    <div class="line_chart_box">
+                        <i class="fa-solid fa-chart-line chart_icon"></i>
+                        <h3 style="margin-bottom: 20px;">Tiền kí gửi theo tháng </h3>
+                        <canvas id="line_chart"></canvas>
+                    </div>
+                    <div class="chart_box">
+                        <div class="bar_chart_box">
+                            <i class="fa-solid fa-chart-line chart_icon"></i>
+                            <h3 style="margin-bottom: 20px;">Top 5 best selling bikes</h3>
+                            <canvas id="bar_chart"></canvas>
+                        </div>
+                        <div class="bar_chart_box">
+                            <i class="fa-solid fa-chart-line chart_icon"></i>
+                            <h3 style="margin-bottom: 20px;">
+                                Top 3 most attractive brands
+                            </h3>
+                            <canvas id="bar_brands_chart"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="wrapper">
+                    <button id="create_btn">Create</button>
+                    <table id="table_bikes">
+
+
+                        <!-- table head -->
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Brand</th>
+                                <th>Category</th>
+                                <th>Model Year</th>
+                                <th>Price</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <!-- table body -->
+                        <tbody>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- row -->
+                            <tr>
+                                <td>Xe đạp bằng chân</td>
+                                <td>Architect</td>
+                                <td>Edinburgh</td>
+                                <td>2001</td>
+                                <td>$320,800</td>
+                                <td class="btn_box">
+                                    <button id="update_btn" onclick="showPopUp()">Update</button>
+                                    <button id="delete_btn" onclick="handle_delete()">Delete</button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- right content -->
+            <div class="right_content">
+                <i class="fa-solid fa-user-shield" style="color: #1C4E80;"></i>
+                <div class="popular_product_container">
+                    <!-- list popular products -->
+                    <div class="popular_products">
+                        <span style="margin: 10px;
+                                    font-size: 25px;
+                                    font-weight: 500;
+                                    text-align: left;
+                                    padding: 0 10px;
+                                    color: #1C4E80;">
+                            Popular Bikes
+                        </span>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Xe đạp bằng chân</div>
+                                <div class="item_price">100.000</div>
+                            </div>
+                        </div>
+
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Xe đạp bằng chân</div>
+                                <div class="item_price">100.000</div>
+                            </div>
+                        </div>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Xe đạp bằng chân</div>
+                                <div class="item_price">100.000</div>
+                            </div>
+                        </div>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Xe đạp bằng chân</div>
+                                <div class="item_price">100.000</div>
+                            </div>
+                        </div>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Xe đạp bằng chân</div>
+                                <div class="item_price">100.000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popular customer -->
+                <div class="popular_product_container">
+                    <!-- list popular products -->
+                    <div class="popular_products">
+                        <span style="margin: 10px;
+                                    font-size: 25px;
+                                    font-weight: 500;
+                                    text-align: left;
+                                    padding: 0 10px;
+                                    color: #1C4E80;">
+                            Popular Customer
+                        </span>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Michi</div>
+                                <div class="item_price">Spent: 100.000$</div>
+                            </div>
+                        </div>
+
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Michi</div>
+                                <div class="item_price">Spent: 100.000$</div>
+                            </div>
+                        </div>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Michi</div>
+                                <div class="item_price">Spent: 100.000$</div>
+                            </div>
+                        </div>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Michi</div>
+                                <div class="item_price">Spent: 100.000$</div>
+                            </div>
+                        </div>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Michi</div>
+                                <div class="item_price">Spent: 100.000$</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- recently release -->
+                <div class="popular_product_container">
+                    <!-- list release products -->
+                    <div class="popular_products">
+                        <span style="margin: 10px;
+                                    font-size: 25px;
+                                    font-weight: 500;
+                                    text-align: left;
+                                    padding: 0 10px;
+                                    color: #1C4E80;
+                        ">
+                            Recently Release
+                        </span>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Xe đạp bằng đầu</div>
+                                <div class="item_price">100.000$</div>
+                            </div>
+                        </div>
+
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Xe đạp bằng đầu</div>
+                                <div class="item_price">100.000$</div>
+                            </div>
+                        </div>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Xe đạp bằng đầu</div>
+                                <div class="item_price">100.000$</div>
+                            </div>
+                        </div>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Xe đạp bằng đầu</div>
+                                <div class="item_price">100.000$</div>
+                            </div>
+                        </div>
+                        <!-- item -->
+                        <div class="item">
+                            <img class="item_image" src="/image/unnamed.png" alt="">
+                            <div class="item_detail">
+                                <div class="item_name">Xe đạp bằng đầu</div>
+                                <div class="item_price">100.000$</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_popup">
+        <div class="input_group">
+            <label for="">Name</label>
+            <input id="name_input" type="text">
+        </div>
+        <div class="input_group">
+            <label for="">Brand</label>
+            <select name="list_brand" id="brand">
+                <option value="1">Brand 1</option>
+                <option value="2">Brand 2</option>
+                <option value="3">Brand 3</option>
+                <option value="4">Brand 4</option>
+
+            </select>
+        </div>
+        <div class="input_group">
+            <label for="">Category</label>
+            <select name="list_category" id="category">
+                <option value="1">Category 1</option>
+                <option value="2">Category 2</option>
+                <option value="3">Category 3</option>
+                <option value="4">Category 4</option>
+
+            </select>
+        </div>
+        <div class="input_group">
+            <label for="">Model Year</label>
+            <input id="year_input" type="text">
+        </div>
+        <div class="input_group">
+            <label for="price_input">Price</label>
+            <input id="price_input" type="text">
+        </div>
+        <div style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
+            <button id="update">Update</button>
+        </div>
+
+
+        <div id="close"><i class="fa-solid fa-xmark"></i></div>
+    </div>
+
+    <!-- <div id="overlay"></div> -->
+</body>
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+        crossorigin="anonymous"></script>
+<!-- data table -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<!-- chart js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- line chart -->
+<script src="/js/dashboardMainLineChart1.js"></script>
+<!-- bar chart -->
+<script src="/js/dashboardMainBarChart1.js"></script>
+<script src="/js/dashboardBrandBarChart1.js"></script>
+<!-- data table js -->
+<script src="/js/dashboardMainDataTable1.js"></script>
+<!-- js event -->
+<script src="/js/dashboardMainHandleEvent1.js"></script>
+<!-- sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/dashboardMainSweetAlert1.js"></script>
+
+</html>
