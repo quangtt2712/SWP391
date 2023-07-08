@@ -12,6 +12,7 @@ using System.Data;
 using REPOs;
 using Microsoft.AspNetCore.Http;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using System.Text.RegularExpressions;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.User
 {
@@ -46,12 +47,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                _toastNotification.Error("Chỉnh sửa thông tin thất bại");
-                Msg1 = "Cần nhập thông tin để chỉnh sửa";
-                return Page();
-            }
+
             if (user.FullName == null) {
                 _toastNotification.Error("Chỉnh sửa thông tin thất bại");
                 Msg2 = "Cần nhập Tên để chỉnh sửa";
@@ -61,6 +57,17 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
             {
                 _toastNotification.Error("Chỉnh sửa thông tin thất bại");
                 Msg3 = "Cần nhập địa chỉ để chỉnh sửa";
+                return Page();
+            }
+            if (!string.IsNullOrEmpty(user.Phone) && user.Phone.Length > 10)
+            {
+                ModelState.AddModelError("user.Phone", "Số điện thoại không được vượt quá 10 kí tự.");
+                return Page();
+            }
+
+            if (!string.IsNullOrEmpty(user.Phone) && !Regex.IsMatch(user.Phone, @"(84|0[3|5|7|8|9])+([0-9]{8})\b"))
+            {
+                ModelState.AddModelError("user.Phone", "Số điện thoại không hợp lệ.");
                 return Page();
             }
             if (user.Phone == null)

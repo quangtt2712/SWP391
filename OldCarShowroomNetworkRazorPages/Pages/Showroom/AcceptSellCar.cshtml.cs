@@ -39,7 +39,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         public BOs.Models.Car Car { get; set; }
         public BOs.Models.Booking Booking { get; set; }
         public string Msg { get; set; }
-        [BindProperty]
+		public string Msg1 { get; set; }
+		[BindProperty]
         public int Money { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? carId, string Username)
@@ -64,7 +65,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             Booking = await _bookingRepo.GetAll()
                 .Include(s => s.UsernameNavigation)
                 .Include(s => s.SlotNavigation).FirstOrDefaultAsync(b => b.Username == Username && b.Notification.Equals(1) && b.CarId == carId);
-
+            if (Car.Notification == 3)
+            {
+                Msg1 = "Xe đã được bán rồi";
+                return Page();
+            }
             return Page();
         }
         public async Task<IActionResult> OnPostAsync(int? CarId, string Username)

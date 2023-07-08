@@ -37,15 +37,7 @@ namespace OldCarShowroomNetworkRazorPage.Pages
         public string Password { get; set; }
         public void OnGet()
         {
-            //if(HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals(1))
-            //{
-            //    return RedirectToPage("/Index");
-            //}
-            //if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role").Equals(2))
-            //{
-            //    return RedirectToPage("/Showroom/Index");
-            //}
-            //return null;
+
         }
 
         public IActionResult OnPost()

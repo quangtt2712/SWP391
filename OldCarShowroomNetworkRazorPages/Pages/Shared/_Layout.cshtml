@@ -73,7 +73,7 @@
 							<a href="/Car/Index2" class="dropdown-item">Lịch sử xe đã bị từ chối</a>
 							<a href="/Car/Index" class="dropdown-item">Lịch sử đang chờ kí gửi</a>
 							<a href="/Car/Index3" class="dropdown-item">Lịch sử các xe đã kí gửi thành công</a>
-
+							<a href="/User/Dashboard" class="dropdown-item">Trang thống kê</a>
 						</div>
 					</div>
 				}
@@ -81,6 +81,7 @@
 				@if (Accessor.HttpContext.Session.GetString("Key") != null && Accessor.HttpContext.Session.GetString("Role").Equals("0"))
 				{
 					<a href="/Admin/Index" class="nav-item nav-link">Quản lí Staff</a>
+					<a href="/Admin/Dashboard" class="nav-item nav-link">Trang thống kê</a>
 				}
 			</div>
 			@if (Accessor.HttpContext.Session.GetString("Key") != null)
@@ -94,7 +95,6 @@
 					</div>
 				</form>
 			} 
-			
 			else
 			{
 				<a asp-page="/Login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">

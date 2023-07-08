@@ -27,7 +27,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
         public BOs.Models.User user { get; set; }
         public string email { get; set; }
         public string Msg { get; set; }
-
+        public string Msg1 { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (HttpContext.Session.GetString("Key") == null)
@@ -50,6 +50,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                         .Include(c => c.Showroom.City)
                         .Include(c => c.Showroom.District)
                         .Include(c => c.Showroom.WardsNavigation).FirstOrDefaultAsync(m => m.CarId == id);
+                    if (car.Notification == 3)
+                    {
+                        Msg1 = "Xe đã được bán rồi";
+                        return Page();
+                    }
                 }
 
             }
@@ -74,6 +79,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                         .Include(c => c.Showroom.City)
                         .Include(c => c.Showroom.District)
                         .Include(c => c.Showroom.WardsNavigation).FirstOrDefaultAsync(m => m.CarId == id);
+                    if (car.Notification == 3)
+                    {
+                        Msg1 = "Xe đã được bán rồi";
+                        return Page();
+                    }
                     var checkBooking = await _bookRepo.GetAll().FirstOrDefaultAsync(b => b.CarId == id && b.Username == user.Username && b.Notification == 1);
                     if (checkBooking != null)
                     {

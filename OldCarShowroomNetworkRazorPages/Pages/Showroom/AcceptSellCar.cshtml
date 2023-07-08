@@ -4,8 +4,11 @@
 @{
 }
 <h1>Xác nhận bán xe</h1>
-
-<h3>Bạn muốn xác nhận bán x</h3>
+@if (Model.Msg1 != null)
+{
+    <p style="color: red">@Model.Msg1</p>
+}else{
+<h3>Bạn muốn xác nhận bán xe</h3>
 <div>
     <form method="post">
         <input id="carId" name="carId" type="hidden" asp-for="Car.CarId" />
@@ -104,3 +107,4 @@
     </form>
     <a asp-page="./ListUserBooking"> Quay lại trang chủ</a>
 </div>
+}
