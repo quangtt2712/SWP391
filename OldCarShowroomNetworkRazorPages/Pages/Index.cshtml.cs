@@ -90,7 +90,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                     .Include(c => c.ImageCars)
                     .Include(c => c.Showroom.District)
                     .Include(c => c.Showroom.WardsNavigation)
-                    .Where(c => c.Notification.Equals(1) && c.Username != user.Username)
+                    .Include(c => c.Bookings.Where(b => b.Notification == 1))
+                    .Where(c => c.Notification.Equals(1) && c.Username != user.Username && c.Bookings.Count() == 0)
                     .OrderByDescending(c => c.AcceptedAt)
                     select p;
 

@@ -38,11 +38,13 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
         public BOs.Models.Car Car { get; set; }
         public BOs.Models.Booking Booking { get; set; }
+        public IList<BOs.Models.Booking> listBooking { get; set; }
         public string Msg { get; set; }
 		public string Msg1 { get; set; }
+		public string Msg2 { get; set; }
 		[BindProperty]
         public int Money { get; set; }
-
+        public DateTime dateTime { get; set; }  
         public async Task<IActionResult> OnGetAsync(int? carId, string Username)
         {
             Car = await _context.Cars
@@ -74,6 +76,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         }
         public async Task<IActionResult> OnPostAsync(int? CarId, string Username)
         {
+            dateTime = DateTime.Now;
+
             Car = await _carRepo.GetAll()
                 .Include(c => c.ImageCars)
                 .Include(c => c.CarModelYearNavigation)
@@ -93,7 +97,14 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
             Booking = await _bookingRepo.GetAll()
                 .Include(s => s.UsernameNavigation)
-                .Include(s => s.SlotNavigation).FirstOrDefaultAsync(b => b.Username == Username && b.Notification.Equals(1) && b.CarId == CarId);
+                .Include(s => s.SlotNavigation)
+                .FirstOrDefaultAsync(b => b.Username == Username && b.Notification.Equals(1) && b.CarId == CarId);
+
+            listBooking = await _bookingRepo.GetAll()
+                .Include(s => s.UsernameNavigation)
+                .Include(s => s.SlotNavigation)
+                .Where(b => b.Notification.Equals(1) && b.CarId == CarId)
+                .ToListAsync();
 
             if (Money == 0)
             {
@@ -101,18 +112,45 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 _toastNotification.Error("Xác nhận bán xe thất bại");
                 return Page();
             }
+
             if (Money <= 0)
             {
                 Msg = "Cần nhập số nhập số dương";
                 _toastNotification.Error("Xác nhận bán xe thất bại");
                 return Page();
             }
+
             if (Money < Car.MinPrice)
             {
                 Msg = "Cần nhập số cao hơn giá tối thiểu";
                 _toastNotification.Error("Xác nhận bán xe thất bại");
                 return Page();
             }
+
+            if (dateTime.Date < Booking.DayBooking)
+            {
+                Msg2 = "Không được xác nhận bán xe trước ngày khách đã đặt lịch";
+                _toastNotification.Error("Xác nhận bán xe thất bại");
+                return Page();
+            }
+
+            if (dateTime.Date == Booking.DayBooking && dateTime.TimeOfDay < Booking.SlotNavigation.PickupDate)
+            {
+                Msg2 = "Không được xác nhận bán xe trước giờ khách đã đặt lịch";
+                _toastNotification.Error("Xác nhận bán xe thất bại");
+                return Page();
+            }
+
+            foreach(var item in listBooking)
+            {
+                if(Booking.SlotNavigation.PickupDate > item.SlotNavigation.PickupDate)
+                {
+                    Msg2 = "Không được xác nhận bán xe do còn lịch đặt của khách trước";
+                    _toastNotification.Error("Xác nhận bán xe thất bại");
+                    return Page();
+                }
+            }
+
             var checkAcceptSell = _carRepo.GetAll().FirstOrDefault(c => c.CarId == CarId);
             if (checkAcceptSell != null)
             {

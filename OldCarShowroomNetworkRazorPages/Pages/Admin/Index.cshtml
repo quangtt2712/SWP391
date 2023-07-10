@@ -67,8 +67,6 @@ else
 			}
 		</tbody>
 	</table>
-	
-
 }
 @{
 	var prevDisabled = !Model.User.HasPreviousPage ? "disabled" : "";
@@ -76,8 +74,8 @@ else
 }
 <div style="text-align: center;">
 	<a asp-page="./Index" asp-route-pageIndex="@(Model.User.PageIndex - 1)"
-	   class="btn btn-primary @prevDisabled">Previous</a>
+	   class="btn btn-primary @prevDisabled">Trước</a>
 
 	<a asp-page="./Index" asp-route-pageIndex="@(Model.User.PageIndex + 1)"
-	   class="btn btn-primary @nextDisabled">Next</a>
+	   class="btn btn-primary @nextDisabled">Tiếp</a>
 </div>

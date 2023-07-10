@@ -28,7 +28,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         [BindProperty]
         public string Note { get; set; }
         public string Msg { get; set; }
-        public async Task<IActionResult> OnGetAsync(string UserName, DateTime datetime, int carId)
+        public string Msg1 { get; set; }
+        public async Task<IActionResult> OnGetAsync(string UserName, int? carId)
         {
             booking = await _bookingRepo.GetAll()
                 .Include(b => b.UsernameNavigation)
@@ -39,6 +40,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(b => b.Car.Showroom)
                 .Include(b => b.SlotNavigation)
                 .FirstOrDefaultAsync(b => b.Username.Equals(UserName) && b.CarId == carId && b.Notification.Equals(1));
+            if (booking.Notification == 3)
+            {
+                Msg1 = "Đã xóa lịch đặt rồi";
+                return Page();
+            }
             return Page();
         }
         public async Task<IActionResult> OnPostAsync(string UserName, int? carId)

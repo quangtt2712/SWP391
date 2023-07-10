@@ -1,9 +1,8 @@
 ﻿@page
-@model ListBookingModel
+@model OldCarShowroomNetworkRazorPages.Pages.User.ListRefusedBookingModel
 @{
 }
-
-<h1>Danh sách lịch đặt xem xe</h1>
+<h1>Danh sách lịch đặt xem xe showroom từ chối</h1>
 <table class="table">
     <thead>
         <tr>
@@ -25,6 +24,9 @@
             <th>
                 SĐT Showroom
             </th>
+            <th>
+                Lý do bị hủy lịch đặt
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -33,7 +35,7 @@
         {
             <tr>
                 <td>
-                    @item.Car.ManufactoryNavigation.ManufactoryName @item.Car.CarNameNavigation.CarName1 @item.Car.CarModelYearNavigation.CarModelYear1 
+                    @item.Car.ManufactoryNavigation.ManufactoryName @item.Car.CarNameNavigation.CarName1 @item.Car.CarModelYearNavigation.CarModelYear1
                 </td>
                 <td>
                     @item.DayBooking.Value.ToString("dd/MM/yyyy")
@@ -50,6 +52,20 @@
                 <td>
                     @item.Car.Showroom.Phone
                 </td>
+                <td>
+                    @item.Note
+                </td>
+                @if (item.Notification == 1 || item.Notification == 2)
+                {
+                    <form method="get" asp-page="DeleteBooking">
+                    <td class="form-group">
+                        <input type="hidden" id="datetime" name="datetime" asp-for="@item.DayBooking">
+                        <input type="hidden" id="UserName" name="UserName" asp-for="@item.Username">
+                        <input type="hidden" id="carId" name="carId" asp-for="@item.CarId">
+                        <input type="submit" value="Xóa lịch" class="btn btn-primary" />
+                    </td>
+                    </form>
+                }
             </tr>
         }
     </tbody>
@@ -59,9 +75,9 @@
     var nextDisabled = !Model.booking.HasNextPage ? "disabled" : "";
 }
 <div style="text-align: center;">
-    <a asp-page="./ListBooking" asp-route-pageIndex="@(Model.booking.PageIndex - 1)"
+    <a asp-page="./ListRefusedBooking" asp-route-pageIndex="@(Model.booking.PageIndex - 1)"
        class="btn btn-primary @prevDisabled">Trước</a>
 
-    <a asp-page="./ListBooking" asp-route-pageIndex="@(Model.booking.PageIndex + 1)"
+    <a asp-page="./ListRefusedBooking" asp-route-pageIndex="@(Model.booking.PageIndex + 1)"
        class="btn btn-primary @nextDisabled">Tiếp</a>
 </div>

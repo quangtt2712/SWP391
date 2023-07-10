@@ -70,7 +70,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
             {
                 _bookingRepo.Delete(deleteBooking);
                 _toastNotification.Success("Xoá lịch xem xe thành công");
-                return RedirectToPage("./ListBooking");
+                return RedirectToPage("./ListRefusedBooking");
             }
             return Page();
         }

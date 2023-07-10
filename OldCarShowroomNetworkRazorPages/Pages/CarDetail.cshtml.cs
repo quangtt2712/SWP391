@@ -55,9 +55,14 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                         Msg1 = "Xe đã được bán rồi";
                         return Page();
                     }
-                }
-
-            }
+					if (car.Notification == 2)
+					{
+						Msg1 = "Xe đã bị showroom từ chối kí gửi";
+						return Page();
+					}
+				}
+				return Page();
+			}
             if (HttpContext.Session.GetString("Key") != null && HttpContext.Session.GetString("Role") != null)
             {
                 email = HttpContext.Session.GetString("Key");
@@ -84,7 +89,17 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                         Msg1 = "Xe đã được bán rồi";
                         return Page();
                     }
-                    var checkBooking = await _bookRepo.GetAll().FirstOrDefaultAsync(b => b.CarId == id && b.Username == user.Username && b.Notification == 1);
+					if (car.Notification == 2)
+					{
+						Msg1 = "Xe đã bị showroom từ chối kí gửi";
+						return Page();
+					}
+					if (car.Username == user.Username)
+					{
+						Msg1 = "Xe này của bạn không được đặt lịch";
+						return Page();
+					}
+					var checkBooking = await _bookRepo.GetAll().FirstOrDefaultAsync(b => b.CarId == id && b.Username == user.Username && b.Notification == 1);
                     if (checkBooking != null)
                     {
                         Msg = "Bạn đã đặt lịch xem xe này rồi mời bạn xem xe khác";

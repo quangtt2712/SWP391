@@ -101,6 +101,10 @@
                 }
             </div>
         </dl>
+        @if (Model.Msg2 != null)
+        {
+            <p style="color: red">@Model.Msg2</p>
+        }
         <div class="form-group">
             <input type="submit" value="Xác nhận xe đã bán" class="btn btn-primary" />
         </div>

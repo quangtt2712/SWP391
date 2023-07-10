@@ -10,13 +10,19 @@
                 Tên Xe
             </th>
             <th>
+                Chủ xe
+            </th>
+            <th>
+                SĐT chủ xe
+            </th>
+            <th>
                 Khách xem xe
             </th>
             <th>
                 Địa chỉ
             </th>
             <th>
-                SĐT
+                SĐT Khách
             </th>
             <th>
                 Ngày xem xe
@@ -36,6 +42,12 @@
             <tr>
                 <td>
                     @item.Car.ManufactoryNavigation.ManufactoryName @item.Car.CarNameNavigation.CarName1 @item.Car.CarModelYearNavigation.CarModelYear1
+                </td>
+                <td>
+                    @item.Car.UsernameNavigation.FullName
+                </td>
+                <td>
+                    @item.Car.UsernameNavigation.Phone
                 </td>
                 <td>
                     @item.UsernameNavigation.FullName
@@ -69,6 +81,13 @@
                     <input type="submit" value="Xóa lịch đặt xe" class="btn btn-primary" />
                 </td>
                 </form>
+                <form method="get" asp-page="BookingDetail">
+                <td class="form-group">
+                    <input type="hidden" id="UserName" name="UserName" asp-for="@item.Username">
+                    <input type="hidden" id="carId" name="carId" asp-for="@item.CarId">
+                    <input type="submit" value="Chi tiết" class="btn btn-link" />
+                </td>
+                </form>
             </tr>
         }
     </tbody>
@@ -79,8 +98,8 @@
 }
 <div style="text-align: center;">
 <a asp-page="./ListUserBooking" asp-route-pageIndex="@(Model.booking.PageIndex - 1)"
-   class="btn btn-primary @prevDisabled">Previous</a>
+   class="btn btn-primary @prevDisabled">Trước</a>
 
 <a asp-page="./ListUserBooking" asp-route-pageIndex="@(Model.booking.PageIndex + 1)"
-   class="btn btn-primary @nextDisabled">Next</a>
+   class="btn btn-primary @nextDisabled">Tiếp</a>
 </div>

@@ -1,0 +1,252 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.Showroom.BookingDetailModel
+@{
+}
+<div>
+    <h4>Xe @Model.booking.Car.ManufactoryNavigation.ManufactoryName @Model.booking.Car.CarNameNavigation.CarName1 @Model.booking.Car.CarModelYearNavigation.CarModelYear1</h4>
+    <hr />
+    <dl class="row">
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Phiên bản
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.Version)
+			</dd>
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Xuất xứ
+			</dt>
+		</div>
+		<div class="form-group">
+			@if (Model.booking.Car.Origin == true)
+			{
+				<dd class="col-sm-10">
+					CKD
+				</dd>
+			}
+			else
+			{
+				<dd class="col-sm-10">
+					CBU
+				</dd>
+			}
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Dòng xe
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.VehiclesNavigation.VehiclesName)
+			</dd>
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Số Km đã đi
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.NumberOfKilometersTraveled) Km
+			</dd>
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Màu nội thất
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.ColorInsideNavigation.ColorName)
+			</dd>
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Màu ngoại thất
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.ColorNavigation.ColorName)
+			</dd>
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Số cửa
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.NumberOfDoors)
+			</dd>
+		</div>
+		<dt class="col-sm-2">
+			Số chỗ ngồi
+		</dt>
+		<div class="form-group">
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.NumberOfSeats)
+			</dd>
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Hộp số
+			</dt>
+			@if (Model.booking.Car.Gear == true)
+			{
+				<dd class="col-sm-10">
+					Số Tự động
+				</dd>
+			}
+			else
+			{
+				<dd class="col-sm-10">
+					Số tay
+				</dd>
+			}
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Dẫn động
+			</dt>
+			@if (Model.booking.Car.Drive == 1)
+			{
+				<dd class="col-sm-10">
+					FWD - Dẫn động cầu trước
+				</dd>
+			}
+			else if (Model.booking.Car.Drive == 2)
+			{
+				<dd class="col-sm-10">
+					RWD - Dẫn động cầu sau
+				</dd>
+			}
+			else if (Model.booking.Car.Drive == 3)
+			{
+				<dd class="col-sm-10">
+					4WD - Dẫn động 4 bánh
+				</dd>
+
+			}
+			else if (Model.booking.Car.Drive == 4)
+			{
+				<dd class="col-sm-10">
+					AWD - 4 bánh toàn thời gian
+				</dd>
+
+			}
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Nguyên liệu
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.FuelNavigation.FuelName)
+			</dd>
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Hệ thống nạp nhiên liệu:
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.FuelIntakeSystem)
+			</dd>
+		</div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				Mức tiêu thụ nhiên liệu
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.FuelConsumption) L/100Km
+			</dd>
+		</div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Chủ xe
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.booking.UsernameNavigation.FullName)
+            </dd>
+        </div>
+		<div class="form-group">
+			<dt class="col-sm-2">
+				SĐT
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.booking.Car.UsernameNavigation.Phone)
+			</dd>
+		</div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Khách
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.booking.UsernameNavigation.FullName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Email
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.booking.UsernameNavigation.Email)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                SĐT
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.booking.UsernameNavigation.Phone)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Showroom
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.booking.Car.Showroom.ShowroomName)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Ngày
+            </dt>
+            <dd class="col-sm-10">
+                @Html.Raw(Model.booking.DayBooking.Value.ToString("dd/MM/yyyy"))
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Thời gian xem xe
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.booking.SlotNavigation.PickupDate) - @Html.DisplayFor(model => model.booking.SlotNavigation.ReturnDate)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Giá mong muốn
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.booking.Car.MaxPrice)
+            </dd>
+        </div>
+        <div class="form-group">
+            <dt class="col-sm-2">
+                Giá tối thiểu
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.booking.Car.MinPrice)
+            </dd>
+        </div>
+    </dl>
+	<form method="get" asp-page="AcceptSellCar">
+		<td class="form-group">
+			<input type="hidden" id="UserName" name="UserName" asp-for="@Model.booking.Username">
+			<input type="hidden" id="carId" name="carId" asp-for="@Model.booking.CarId">
+			<input type="submit" value="Xác nhận bán xe" class="btn btn-primary" />
+		</td>
+	</form>
+	<form method="get" asp-page="DeleteUserBooking">
+		<td class="form-group">
+			<input type="hidden" id="UserName" name="UserName" asp-for="@Model.booking.Username">
+			<input type="hidden" id="carId" name="carId" asp-for="@Model.booking.CarId">
+			<input type="submit" value="Xóa lịch đặt xe" class="btn btn-primary" />
+		</td>
+	</form>
+	<a asp-page="./ListUserBooking">Quay lại</a>
+</div>

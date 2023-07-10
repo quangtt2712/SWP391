@@ -95,8 +95,16 @@ namespace OldCarShowroomNetworkRazorPages.Api
                 Phone = "",
                 FullName= "",
 			};
-            
 			_userRepo.Add(user);
+			ClaimsIdentity identity = null;
+			identity = new ClaimsIdentity(new[]
+			{
+					new Claim(ClaimTypes.Name,email),
+					new Claim(ClaimTypes.Role, "User")
+				}, CookieAuthenticationDefaults.AuthenticationScheme);
+
+			var principal = new ClaimsPrincipal(identity);
+			HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 			HttpContext.Session.SetString("Key", email);
 			HttpContext.Session.SetString("Role", user.RoleId.ToString());
         

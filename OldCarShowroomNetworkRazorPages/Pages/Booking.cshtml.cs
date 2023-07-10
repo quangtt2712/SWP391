@@ -14,6 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace OldCarShowroomNetworkRazorPages.Pages
 {
@@ -46,14 +47,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages
         [BindProperty]
         public BOs.Models.Booking isBooked { get; set; }
         public string Email { get; set; }
-        [BindProperty]
         public string Msg { get; set; }
-        [BindProperty]
         public string Msg1 { get; set; }
-        [BindProperty]
         public string Msg2 { get; set; }
-        [BindProperty]
         public string Msg3 { get; set; }
+        public string Msg4 { get; set; }
         public DateTime dateTime { get; set; }
         public DateTime DateTimeNow { get; set; }
         public DateTime checkTimeNow { get; set; }
@@ -64,10 +62,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             dateTime = DateTime.Now;
             Email = HttpContext.Session.GetString("Key");
             user = await _userRepo.GetAll().FirstOrDefaultAsync(u => u.Email.Equals(Email));
-            if(id == null) 
-            { 
-                return NotFound();
-            }
+
             Car =  await _context.Cars
                 .Include(c => c.ImageCars)
                 .Include(c => c.CarModelYearNavigation)
@@ -84,8 +79,22 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 .Include(c => c.UsernameNavigation)
                 .Include(c => c.VehiclesNavigation)
                 .FirstOrDefaultAsync(c => c.CarId == id);
-
-            booking = await _bookingRepo.GetAll()
+            if (Car.Notification == 3)
+            {
+                Msg4 = "Xe này đã được bán không thể đặt lịch xem xe";
+                return Page();
+            }
+			if (Car.Notification == 2)
+			{
+				Msg4 = "Không thể đặt lịch xem xe showroom từ chối kí gửi";
+				return Page();
+			}
+            if(Car.Username == user.Username)
+            {
+				Msg4 = "Không thể đặt lịch xem xe của chính mình";
+				return Page();
+			}
+			booking = await _bookingRepo.GetAll()
                 .Include(s => s.SlotNavigation)
                 .Where(b => b.Username != user.Username && b.Notification.Equals(1)).ToListAsync();
 
@@ -135,14 +144,23 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                 return Page();
             }
 
-            var checkBooking = await _bookingRepo.GetAll().FirstOrDefaultAsync(b => b.DayBooking == isBooked.DayBooking && b.Slot == isBooked.Slot && b.Notification.Equals(1));
+            var checkBooking = await _bookingRepo.GetAll().FirstOrDefaultAsync(b => b.DayBooking == isBooked.DayBooking && b.Slot == isBooked.Slot && b.Notification.Equals(1) && b.CarId == carId);
             if (checkBooking != null)
             {
                 Msg3 = "Lịch đã có người đặt. Mời đặt lại";
                 _toastNotification.Error("Đặt lịch xem xe thất bại");
                 return Page();
             }
-            _bookingRepo.Add(isBooked);
+
+			var checkDateTime = await _bookingRepo.GetAll().FirstOrDefaultAsync(b => b.DayBooking == isBooked.DayBooking && b.Slot == isBooked.Slot && b.Notification.Equals(1) && b.Username == userName);
+			if (checkDateTime != null)
+			{
+				Msg3 = "Bạn đã đặt lịch xem xe vào ngày và giờ này ở xe khác";
+				_toastNotification.Error("Đặt lịch xem xe thất bại");
+				return Page();
+			}
+
+			_bookingRepo.Add(isBooked);
 
             var checkTime = await _bookingRepo.GetAll().Include(b => b.SlotNavigation).FirstOrDefaultAsync(b => b.DayBooking == isBooked.DayBooking && b.Slot == isBooked.Slot && b.Notification.Equals(1));
             if (isBooked.Slot == 4 && DateTimeNow == isBooked.DayBooking && checkTimeNow.TimeOfDay > isBooked.SlotNavigation.PickupDate)

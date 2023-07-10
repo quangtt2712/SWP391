@@ -185,7 +185,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Hình ảnh sản phẩm-->
-                             @if (car.ImageCars != null && car.ImageCars.Count > 0)
+                    @if (car.ImageCars != null && car.ImageCars.Count > 0)
                     {
                         var mainImage = car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
                         if (mainImage != null)

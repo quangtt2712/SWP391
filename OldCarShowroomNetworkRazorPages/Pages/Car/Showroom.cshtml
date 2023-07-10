@@ -99,14 +99,14 @@
 	</div>
 @{
 	var prevDisabled = !Model.Showroom.HasPreviousPage ? "disabled" : "";
-		var nextDisabled = !Model.Showroom.HasNextPage ? "disabled" : "";
+	var nextDisabled = !Model.Showroom.HasNextPage ? "disabled" : "";
 }
 	<div style="text-align: center;">
 	<a asp-page="./Showroom" asp-route-pageIndex="@(Model.Showroom.PageIndex - 1)"
-	class="btn btn-primary @prevDisabled">Previous</a>
+	class="btn btn-primary @prevDisabled">Trước</a>
 
 	<a asp-page="./Showroom" asp-route-pageIndex="@(Model.Showroom.PageIndex + 1)"
-	class="btn btn-primary @nextDisabled">Next</a>
+	class="btn btn-primary @nextDisabled">Tiếp</a>
 	</div>
 </section>
 <script src="~/js/Adress.js"></script>

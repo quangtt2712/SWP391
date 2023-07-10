@@ -2,6 +2,11 @@
 @model OldCarShowroomNetworkRazorPages.Pages.BookingModel
 @{
 }
+@if (Model.Msg4 != null)
+{
+    <p style="color: red">@Model.Msg4</p>
+    <a asp-page="/Index"> Quay lại trang chủ</a>
+}else{
 <div>
     <form method ="post">
     <input id="carId" name="carId" type="hidden" asp-for="Car.CarId" />
@@ -122,4 +127,4 @@
         </div>
     </form>
 </div>
-
+}

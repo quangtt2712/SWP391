@@ -45,7 +45,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
                  .Include(c => c.UsernameNavigation)
                  .Include(c => c.VehiclesNavigation)
                  .Where(s => s.Username.Equals(user.Username) && s.Notification == 3)
-                 .OrderByDescending(c => c.CreatedAt)
+                 .OrderByDescending(c => c.AcceptedAt)
                 select c;
             Car = await PaginatedList<BOs.Models.Car>.CreateAsync(list, pageIndex ?? 1, pageSize);
 
