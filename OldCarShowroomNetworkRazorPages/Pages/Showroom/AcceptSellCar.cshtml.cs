@@ -72,7 +72,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 Msg1 = "Xe đã được bán rồi";
                 return Page();
             }
-            return Page();
+			if (Car.Notification == 2)
+			{
+				Msg1 = "Xe bị từ chối kí gửi bởi showroom. Không thể bán xe";
+				return Page();
+			}
+			return Page();
         }
         public async Task<IActionResult> OnPostAsync(int? CarId, string Username)
         {

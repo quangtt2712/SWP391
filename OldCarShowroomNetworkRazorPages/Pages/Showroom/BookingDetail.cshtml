@@ -2,6 +2,11 @@
 @model OldCarShowroomNetworkRazorPages.Pages.Showroom.BookingDetailModel
 @{
 }
+@if (Model.Msg != null)
+{
+    <p style="color: red">@Model.Msg</p>
+	<a asp-page="./ListUserBooking">Quay lại</a>
+}else{
 <div>
     <h4>Xe @Model.booking.Car.ManufactoryNavigation.ManufactoryName @Model.booking.Car.CarNameNavigation.CarName1 @Model.booking.Car.CarModelYearNavigation.CarModelYear1</h4>
     <hr />
@@ -241,6 +246,7 @@
 			<input type="submit" value="Xác nhận bán xe" class="btn btn-primary" />
 		</td>
 	</form>
+	<br/>
 	<form method="get" asp-page="DeleteUserBooking">
 		<td class="form-group">
 			<input type="hidden" id="UserName" name="UserName" asp-for="@Model.booking.Username">
@@ -250,3 +256,4 @@
 	</form>
 	<a asp-page="./ListUserBooking">Quay lại</a>
 </div>
+}

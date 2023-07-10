@@ -2,6 +2,12 @@
 @model OldCarShowroomNetworkRazorPages.Pages.Showroom.UserCarDetailModel
 @{
 }
+}
+@if (Model.Msg1 != null)
+{
+    <p style="color: red">@Model.Msg1</p>
+	<a asp-page="./ListCar">Quay lại</a>
+}else{
 <div>
 	<h4>Xe @Model.car.ManufactoryNavigation.ManufactoryName @Model.car.CarNameNavigation.CarName1 @Model.car.CarModelYearNavigation.CarModelYear1</h4>
 	<hr />
@@ -264,3 +270,4 @@
 	<br>
 	<a asp-page="./ListCar" class="btn btn-link">Quay lại</a>
 </div>
+}

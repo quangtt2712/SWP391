@@ -1,3 +1,4 @@
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 {
-    public class BookingDetailModel : PageModel
+	[Authorize(Roles = "Staff")]
+	public class BookingDetailModel : PageModel
     {
         public readonly BookingRepository _bookingRepo;
 
@@ -16,7 +18,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
         }
 
         public BOs.Models.Booking booking { get; set; }
-        public async Task<IActionResult> OnGetAsync(string UserName, int? carId)
+		public string Msg { get; set; }
+		public async Task<IActionResult> OnGetAsync(string UserName, int? carId)
         {
             booking = await _bookingRepo.GetAll()
                     .Include(b => b.UsernameNavigation)
@@ -33,7 +36,17 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                     .Include(b => b.Car.FuelNavigation)
                     .Include(b => b.SlotNavigation)
                     .FirstOrDefaultAsync(b => b.CarId == carId && b.Username.Equals(UserName) && b.Notification.Equals(1));
-            return Page();
+			if (booking.Car.Notification == 3)
+			{
+				Msg = "Xe này đã được bán không thể chấp nhận bán xe lần nữa";
+				return Page();
+			}
+			if (booking.Car.Notification == 2)
+			{
+				Msg = "Xe này bị từ chối ký chối bởi showroom. Không thể chấp nhận bán xe";
+				return Page();
+			}
+			return Page();
         }
     }
 }
