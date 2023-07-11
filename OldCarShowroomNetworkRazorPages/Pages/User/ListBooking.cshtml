@@ -50,6 +50,17 @@
                 <td>
                     @item.Car.Showroom.Phone
                 </td>
+                @if (item.Notification == 1 || item.Notification == 2)
+                {
+                    <form method="get" asp-page="DeleteBooking">
+                    <td class="form-group">
+                        <input type="hidden" id="datetime" name="datetime" asp-for="@item.DayBooking">
+                        <input type="hidden" id="UserName" name="UserName" asp-for="@item.Username">
+                        <input type="hidden" id="carId" name="carId" asp-for="@item.CarId">
+                        <input type="submit" value="Xóa lịch" class="btn btn-primary" />
+                    </td>
+                    </form>
+                }
             </tr>
         }
     </tbody>

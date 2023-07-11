@@ -68,9 +68,17 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
             || b.Username.Equals(UserName) && b.DayBooking.Equals(datetime.Date) && b.CarId == carId && b.Notification.Equals(2));
             if (deleteBooking != null)
             {
-                _bookingRepo.Delete(deleteBooking);
-                _toastNotification.Success("Xoá lịch xem xe thành công");
-                return RedirectToPage("./ListRefusedBooking");
+                if (deleteBooking.Notification == 1)
+                {
+                    _bookingRepo.Delete(deleteBooking);
+                    _toastNotification.Success("Xoá lịch xem xe thành công");
+                    return RedirectToPage("./ListBooking");
+                }
+                if (deleteBooking.Notification == 2) { 
+                    _bookingRepo.Delete(deleteBooking);
+                    _toastNotification.Success("Xoá lịch xem xe thành công");
+                    return RedirectToPage("./ListRefusedBooking");
+                }
             }
             return Page();
         }

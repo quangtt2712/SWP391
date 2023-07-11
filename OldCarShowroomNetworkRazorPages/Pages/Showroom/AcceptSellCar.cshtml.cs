@@ -108,7 +108,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             listBooking = await _bookingRepo.GetAll()
                 .Include(s => s.UsernameNavigation)
                 .Include(s => s.SlotNavigation)
-                .Where(b => b.Notification.Equals(1) && b.CarId == CarId)
+                .Where(b => b.Notification.Equals(1) && b.CarId == CarId && b.Username != Booking.Username)
                 .ToListAsync();
 
             if (Money == 0)
@@ -120,7 +120,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
             if (Money <= 0)
             {
-                Msg = "Cần nhập số nhập số dương";
+                Msg = "Cần nhập số dương";
                 _toastNotification.Error("Xác nhận bán xe thất bại");
                 return Page();
             }
@@ -148,7 +148,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
             foreach(var item in listBooking)
             {
-                if(Booking.SlotNavigation.PickupDate > item.SlotNavigation.PickupDate)
+                if(Booking.DayBooking > item.DayBooking || Booking.DayBooking == item.DayBooking && Booking.SlotNavigation.PickupDate > item.SlotNavigation.PickupDate)
                 {
                     Msg2 = "Không được xác nhận bán xe do còn lịch đặt của khách trước";
                     _toastNotification.Error("Xác nhận bán xe thất bại");
