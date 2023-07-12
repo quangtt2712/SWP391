@@ -36,7 +36,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                     .Include(b => b.Car.FuelNavigation)
                     .Include(b => b.SlotNavigation)
                     .FirstOrDefaultAsync(b => b.CarId == carId && b.Username.Equals(UserName) && b.Notification.Equals(1));
-			if (booking.Car.Notification == 3)
+            if (booking == null)
+            {
+                Msg = "Đã xảy ra lỗi";
+                return Page();
+            }
+            if (booking.Car.Notification == 3)
 			{
 				Msg = "Xe này đã được bán không thể chấp nhận bán xe lần nữa";
 				return Page();
@@ -46,6 +51,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 				Msg = "Xe này bị từ chối ký chối bởi showroom. Không thể chấp nhận bán xe";
 				return Page();
 			}
+
 			return Page();
         }
     }

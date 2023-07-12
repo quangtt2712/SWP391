@@ -40,9 +40,19 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(b => b.Car.Showroom)
                 .Include(b => b.SlotNavigation)
                 .FirstOrDefaultAsync(b => b.Username.Equals(UserName) && b.CarId == carId && b.Notification.Equals(1));
-            if (booking.Notification == 3)
+            if(booking == null)
+            {
+                Msg1 = "Lịch đã bị xóa";
+                return Page();
+            }
+            if (booking.Notification == 2)
             {
                 Msg1 = "Đã xóa lịch đặt rồi";
+                return Page();
+            }
+            if (booking.Notification == 3)
+            {
+                Msg1 = "Xe đã bán rồi. Không thể xóa lịch";
                 return Page();
             }
             return Page();
