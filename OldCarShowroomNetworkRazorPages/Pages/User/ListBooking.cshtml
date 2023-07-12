@@ -61,6 +61,12 @@
                     </td>
                     </form>
                 }
+                <form method="get" asp-page="BookingDetails">
+                <td class="form-group">
+                    <input type="hidden" id="carId" name="carId" asp-for="@item.CarId">
+                    <input type="submit" value="Chi tiết" class="btn btn-link" />
+                </td>
+                </form>
             </tr>
         }
     </tbody>

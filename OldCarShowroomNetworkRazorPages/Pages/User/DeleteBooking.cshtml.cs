@@ -29,7 +29,8 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
         }
 
         public BOs.Models.Booking booking { get; set; }
-        public async Task<IActionResult> OnGetAsync(string UserName, DateTime datetime, int carId)
+		public string Msg { get; set; }
+		public async Task<IActionResult> OnGetAsync(string UserName, DateTime datetime, int carId)
         {
             booking = await _bookingRepo.GetAll()
                 .Include(b => b.Car)
@@ -43,7 +44,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
                 .Include(b => b.SlotNavigation)
                 .FirstOrDefaultAsync(b => b.Username.Equals(UserName) && b.DayBooking.Equals(datetime.Date) && b.CarId == carId && b.Notification.Equals(1) 
                 || b.Username.Equals(UserName) && b.DayBooking.Equals(datetime.Date) && b.CarId == carId && b.Notification.Equals(2));
-            return Page();
+			if (booking == null)
+			{
+				Msg = "Lịch đã bị xóa";
+				return Page();
+			}
+			return Page();
         }
         public async Task<IActionResult> OnPostAsync(string UserName, DateTime datetime, int carId)
         {

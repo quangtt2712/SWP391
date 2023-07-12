@@ -2,8 +2,14 @@
 @model OldCarShowroomNetworkRazorPages.Pages.User.DeleteBookingModel
 @{
 }
-<h1>Xác nhận xóa lịch xem xe</h1>
 
+<h1>Xác nhận xóa lịch xem xe</h1>
+@if (Model.Msg != null)
+{
+	<p style="color: red">@Model.Msg</p>
+}
+else
+{
 <h3>Bạn vẫn muốn xóa lịch xem xe</h3>
 <div>
     <form method="post">
@@ -63,4 +69,5 @@
         <input type="submit" value="Xóa lịch đặt" class="btn btn-danger" />
     </form>
 </div>
+}
 <div><a asp-page="./ListBooking">Quay lại</a></div>

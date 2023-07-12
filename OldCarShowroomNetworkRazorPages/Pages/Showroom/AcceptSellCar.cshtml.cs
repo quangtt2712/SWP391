@@ -67,6 +67,11 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             Booking = await _bookingRepo.GetAll()
                 .Include(s => s.UsernameNavigation)
                 .Include(s => s.SlotNavigation).FirstOrDefaultAsync(b => b.Username == Username && b.Notification.Equals(1) && b.CarId == carId);
+            if(Booking == null)
+            {
+                Msg1 = "Lịch đã bị xóa. Không thể xác nhận bán xe";
+                return Page();
+            }
             if (Car.Notification == 3)
             {
                 Msg1 = "Xe đã được bán rồi";

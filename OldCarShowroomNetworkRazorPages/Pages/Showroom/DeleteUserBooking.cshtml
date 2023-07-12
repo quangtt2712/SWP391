@@ -9,6 +9,7 @@
 }else{
 <h3>Bạn vẫn muốn xóa lịch xem xe</h3>
 <div>
+    @if(Model.booking != null){
     <form method="post">
         <input type="hidden" id="Username" name="Username" asp-for="@Model.booking.Username" />
         <input type="hidden" id="carId" name="carId" asp-for="@Model.booking.CarId" />
@@ -77,6 +78,7 @@
         </dl>
         <input type="submit" value="Xóa lịch đặt" class="btn btn-danger" />
     </form>
+    }
 </div>
 }
 <div><a asp-page="./ListUserBooking">Quay lại</a></div>
