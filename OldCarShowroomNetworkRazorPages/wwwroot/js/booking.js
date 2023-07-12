@@ -39,31 +39,31 @@ const picker_date_input = document.querySelector('#dateTime')
 picker_date_input.addEventListener('change', () => {
     select_list.value = ""
 })
-// picker date
-//const compare_dates = (d1, d2, parentNode) => {
-//    let date1 = new Date(d1).getTime();
-//    let date2 = new Date(d2).getTime();
 
-//    if (date1 < date2) {
-//        console.log(`${d1} is less than ${d2}`);
-//        return false
-//    } else if (date1 >= date2) {
-//        console.log(`${d1} is greater than ${d2}`);
-//        return true
-//    }
-//};
-////
-//picker_date_input.addEventListener('change', function () {
-//    let currentDate = new Date()
-//    let chosenDate = new Date(this.value)
-//    console.log(new Date(this.value))
-//    clearMsg('invalid_date')
-//    let currentDateByFormat = (currentDate.getMonth() + 1) + '/' + currentDate.getDate() + '/' + currentDate.getFullYear()
-//    let chosenDateFormat = (chosenDate.getMonth() + 1) + '/' + chosenDate.getDate() + '/' + chosenDate.getFullYear()
+const compare_dates = (d1, d2, parentNode) => {
+    let date1 = new Date(d1).getTime();
+    let date2 = new Date(d2).getTime();
 
-//    if (compare_dates(currentDateByFormat, chosenDateFormat, this.parentNode)) {
-//        createMsg(this.parentNode, 'Không được chọn ngày hiện tại và quá khứ', 'invalid_date')
-//        this.value = ""
-//    }
+    if (date1 < date2) {
+        console.log(`${d1} is less than ${d2}`);
+        return false
+    } else if (date1 > date2) {
+        console.log(`${d1} is greater than ${d2}`);
+        return true
+    }
+};
 
-//})
+picker_date_input.addEventListener('change', function () {
+    let currentDate = new Date()
+    let chosenDate = new Date(this.value)
+    console.log(new Date(this.value))
+    clearMsg('invalid_date')
+    let currentDateByFormat = (currentDate.getMonth() + 1) + '/' + currentDate.getDate() + '/' + currentDate.getFullYear()
+    let chosenDateFormat = (chosenDate.getMonth() + 1) + '/' + chosenDate.getDate() + '/' + chosenDate.getFullYear()
+
+    if (compare_dates(currentDateByFormat, chosenDateFormat, this.parentNode)) {
+        createMsg(this.parentNode, 'Không được chọn ngày quá khứ', 'invalid_date')
+        this.value = ""
+    }
+
+})
