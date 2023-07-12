@@ -20,6 +20,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car2
 
         public BOs.Models.Car car { get; set; }
 		public IList<BOs.Models.ImageCar> ImageCar { get; set; }
+        public string mgs { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,17 +39,21 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car2
                 .Include(c => c.FuelNavigation)
                 .Include(c => c.ManufactoryNavigation)
                 .Include(c => c.Showroom)
+                
 				.Include(c => c.Showroom.City)
 						.Include(c => c.Showroom.District)
 						.Include(c => c.Showroom.WardsNavigation)
 				.Include(c => c.UsernameNavigation)
                 .Include(c => c.VehiclesNavigation).FirstOrDefaultAsync(m => m.CarId == id);
+		
 			ImageCar = await _context.ImageCars.ToListAsync();
 			if (car == null)
             {
                 return NotFound();
             }
-            return Page();
+			
+
+			return Page();
         }
     }
 }

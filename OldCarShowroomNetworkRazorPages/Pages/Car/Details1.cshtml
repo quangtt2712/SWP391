@@ -4,120 +4,124 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<div>
-	<h4>Xe @Model.car.ManufactoryNavigation.ManufactoryName @Model.car.CarNameNavigation.CarName1 @Model.car.CarModelYearNavigation.CarModelYear1</h4>
-	<hr />
-	<dl class="row">
-		<div class="form-group">
-			<dt class="col-sm-2">
-				Hình xe
-			</dt>
-			<dd class="col-sm-10">
-				@if (@Model.car.ImageCars != null && @Model.car.ImageCars.Count > 0)
-				{
-					var mainImage = @Model.car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
-					if (mainImage != null)
+<h4>Xe @Model.car.ManufactoryNavigation.ManufactoryName @Model.car.CarNameNavigation.CarName1 @Model.car.CarModelYearNavigation.CarModelYear1</h4>
+<hr />
+<div class="row">
+	<div class="col-md-6">
+		<dl class="row">
+			<div class="form-group">
+				<dt class="col-sm-2">
+					Hình xe
+				</dt>
+				<dd class="col-sm-10">
+					@if (@Model.car.ImageCars != null && @Model.car.ImageCars.Count > 0)
 					{
-						<img src="@Url.Content(mainImage.Url)" alt="Ảnh chính" style="
+						var mainImage = @Model.car.ImageCars.FirstOrDefault(img => img.ImageMain == true);
+						if (mainImage != null)
+						{
+							<img src="@Url.Content(mainImage.Url)" alt="Ảnh chính" style="
 					 width: 50%;">
+						}
 					}
+				</dd>
+			</div>
+			<div class="form-group">
+				<dt class="col-sm-2">
+					Phiên bản
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.car.Version)
+				</dd>
+			</div>
+			<div class="form-group">
+				<dt class="col-sm-2">
+					Xuất xứ
+				</dt>
+			</div>
+			<div class="form-group">
+				@if (Model.car.Origin == true)
+				{
+					<dd class="col-sm-10">
+						CKD
+					</dd>
 				}
-			</dd>
-		</div>
-		<div class="form-group">
-			<dt class="col-sm-2">
-				Phiên bản
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.car.Version)
-			</dd>
-		</div>
-		<div class="form-group">
-			<dt class="col-sm-2">
-				Xuất xứ
-			</dt>
-		</div>
-		<div class="form-group">
-			@if (Model.car.Origin == true)
-			{
+				else
+				{
+					<dd class="col-sm-10">
+						CBU
+					</dd>
+				}
+			</div>
+			<div class="form-group">
+				<dt class="col-sm-2">
+					Dòng xe
+				</dt>
 				<dd class="col-sm-10">
-					CKD
+					@Html.DisplayFor(model => model.car.VehiclesNavigation.VehiclesName)
 				</dd>
-			}
-			else
-			{
+			</div>
+			<div class="form-group">
+				<dt class="col-sm-2">
+					Số Km đã đi
+				</dt>
 				<dd class="col-sm-10">
-					CBU
+					@Html.DisplayFor(model => model.car.NumberOfKilometersTraveled) Km
 				</dd>
-			}
-		</div>
-		<div class="form-group">
-			<dt class="col-sm-2">
-				Dòng xe
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.car.VehiclesNavigation.VehiclesName)
-			</dd>
-		</div>
-		<div class="form-group">
-			<dt class="col-sm-2">
-				Số Km đã đi
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.car.NumberOfKilometersTraveled) Km
-			</dd>
-		</div>
-		<div class="form-group">
-			<dt class="col-sm-2">
-				Màu nội thất
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.car.ColorInsideNavigation.ColorName)
-			</dd>
-		</div>
-		<div class="form-group">
-			<dt class="col-sm-2">
-				Màu ngoại thất
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.car.ColorNavigation.ColorName)
-			</dd>
-		</div>
-		<div class="form-group">
-			<dt class="col-sm-2">
-				Số cửa
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.car.NumberOfDoors)
-			</dd>
-		</div>
-		<dt class="col-sm-2">
-			Số chỗ ngồi
-		</dt>
-		<div class="form-group">
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.car.NumberOfSeats)
-			</dd>
-		</div>
-		<div class="form-group">
-			<dt class="col-sm-2">
-				Hộp số
-			</dt>
-			@if (Model.car.Gear == true)
-			{
+			</div>
+			<div class="form-group">
+				<dt class="col-sm-2">
+					Màu nội thất
+				</dt>
 				<dd class="col-sm-10">
-					Số Tự động
+					@Html.DisplayFor(model => model.car.ColorInsideNavigation.ColorName)
 				</dd>
-			}
-			else
-			{
+			</div>
+			<div class="form-group">
+				<dt class="col-sm-2">
+					Màu ngoại thất
+				</dt>
 				<dd class="col-sm-10">
-					Số tay
+					@Html.DisplayFor(model => model.car.ColorNavigation.ColorName)
 				</dd>
+			</div>
+			<div class="form-group">
+				<dt class="col-sm-2">
+					Số cửa
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.car.NumberOfDoors)
+				</dd>
+			</div>
+			<dt class="col-sm-2">
+				Số chỗ ngồi
+			</dt>
+			<div class="form-group">
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.car.NumberOfSeats)
+				</dd>
+			</div>
+			<div class="form-group">
+				<dt class="col-sm-2">
+					Hộp số
+				</dt>
+				@if (Model.car.Gear == true)
+				{
+					<dd class="col-sm-10">
+						Số Tự động
+					</dd>
+				}
+				else
+				{
+					<dd class="col-sm-10">
+						Số tay
+					</dd>
 
-			}
-		</div>
+				}
+			</div>
+			</dl>
+	</div>
+	<div class="col-md-6">
+		<dl class="row">
 		<div class="form-group">
 			<dt class="col-sm-2">
 				Dẫn động
@@ -253,7 +257,9 @@
 				@Html.DisplayFor(model => model.car.Note)
 			</dd>
 		</div>
-	</dl>
+		</dl>
+	</div>
+		
 </div>
 
 <div>

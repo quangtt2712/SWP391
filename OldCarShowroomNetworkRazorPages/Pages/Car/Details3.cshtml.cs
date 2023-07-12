@@ -22,7 +22,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 		}
 
 		public BOs.Models.Car car { get; set; }
-
+		public string mgs { get; set; }
 		public async Task<IActionResult> OnGetAsync(int? id)
 		{
 			if (id == null)
@@ -41,15 +41,18 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 				.Include(c => c.ManufactoryNavigation)
 				.Include(c => c.Showroom)
 				.Include(c => c.Showroom.City)
+
 						.Include(c => c.Showroom.District)
 						.Include(c => c.Showroom.WardsNavigation)
 				.Include(c => c.UsernameNavigation)
 				.Include(c => c.VehiclesNavigation).FirstOrDefaultAsync(m => m.CarId == id);
 
-			if (car == null)
+			if (car == null || car.Notification == 0 || car.Notification == 2 || car.Notification == 3)
 			{
 				return NotFound();
 			}
+			TimeSpan mgsTimeSpan = (TimeSpan)(DateTime.Now - car.CreatedAt);
+			mgs = mgsTimeSpan.Days.ToString();
 			return Page();
 		}
 	}
