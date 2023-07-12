@@ -66,7 +66,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Car
 			ImageCars = await _context.ImageCars
 				.Where(img => img.CarId == id && img.ImageMain == false)
 				.ToListAsync();
-			if (Car == null)
+			if (Car == null || Car.Notification == 1 || Car.Notification == 3)
 			{
 				return NotFound();
 			}

@@ -1,0 +1,17 @@
+﻿@page
+@model OldCarShowroomNetworkRazorPages.Pages.Car.DeleteModel2
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<h3>Bạn chắc chắn muốn kết thúc hợp đồng kí gửi</h3>
+<div>
+    <form method="post">
+        <input type="hidden" asp-for="Car.CarId" />
+        <input type="submit" value="Chấp nhận" class="btn btn-danger" /> |
+        <a asp-page="./Index1">Quay lại</a>
+    </form>
+</div>
