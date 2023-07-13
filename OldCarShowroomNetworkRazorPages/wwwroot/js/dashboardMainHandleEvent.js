@@ -100,13 +100,6 @@ const check_valid_all = (ele) => {
 
 
 
-price_input.addEventListener('input', (e) => { check_valid_price(e.target.value, e.target) })
-submit_btn.addEventListener('click', (e) => { check_valid_all(e.target) })
-year_input.addEventListener('input', (e) => { check_valid_year(e.target.value, e.target) })
-
-const create_btn = document.querySelector('#create_btn')
-const modal_popup = document.querySelector('#modal_popup')
-
 
 
 // create_btn.addEventListener('click', function () {

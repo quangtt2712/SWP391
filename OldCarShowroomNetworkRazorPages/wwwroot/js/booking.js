@@ -62,7 +62,7 @@ picker_date_input.addEventListener('change', function () {
     let chosenDateFormat = (chosenDate.getMonth() + 1) + '/' + chosenDate.getDate() + '/' + chosenDate.getFullYear()
 
     if (compare_dates(currentDateByFormat, chosenDateFormat, this.parentNode)) {
-        createMsg(this.parentNode, 'Không được chọn ngày quá khứ', 'invalid_date')
+        createMsg(this.parentNode, 'Chỉ được chọn ngày hiện tại trở đi', 'invalid_date')
         this.value = ""
     }
 

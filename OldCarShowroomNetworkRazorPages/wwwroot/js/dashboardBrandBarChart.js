@@ -37,11 +37,7 @@ const options_brands = {
         }
     }
 }
-new Chart(brands_chart, {
-    type: 'bar',
-    data: data_brands,
-    options: options_brands
-})
+
 
 const sold_count = document.querySelector('#sold_count')
 const revenue_count = document.querySelector('#revenue_count')
