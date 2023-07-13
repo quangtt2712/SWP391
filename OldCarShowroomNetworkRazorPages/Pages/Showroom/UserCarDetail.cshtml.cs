@@ -35,33 +35,37 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
 
 		public async Task<IActionResult> OnGetAsync(int? id)
 		{
-				if (_carRepo.GetAll() != null)
-				{
-					car = await _carRepo.GetAll()
-						.Include(c => c.ImageCars)
-						.Include(c => c.CarModelYearNavigation)
-						.Include(c => c.CarNameNavigation)
-						.Include(c => c.ColorInsideNavigation)
-						.Include(c => c.ColorNavigation)
-						.Include(c => c.DriveNavigation)
-						.Include(c => c.FuelNavigation)
-						.Include(c => c.ManufactoryNavigation)
-						.Include(c => c.Showroom)
-						.Include(c => c.UsernameNavigation)
-						.Include(c => c.VehiclesNavigation)
-						.Include(c => c.Showroom.City)
-						.Include(c => c.Showroom.District)
-						.Include(c => c.Showroom.WardsNavigation).FirstOrDefaultAsync(m => m.CarId == id);
-					if (car.Notification == 3)
-					{
-						Msg1 = "Xe đã được bán rồi";
-						return Page();
-					}
-					if (car.Notification == 2)
-					{
-						Msg1 = "Xe đã bị showroom từ chối kí gửi";
-						return Page();
-					}
+			car = await _carRepo.GetAll()
+				.Include(c => c.ImageCars)
+				.Include(c => c.CarModelYearNavigation)
+				.Include(c => c.CarNameNavigation)
+				.Include(c => c.ColorInsideNavigation)
+				.Include(c => c.ColorNavigation)
+				.Include(c => c.DriveNavigation)
+				.Include(c => c.FuelNavigation)
+				.Include(c => c.ManufactoryNavigation)
+				.Include(c => c.Showroom)
+				.Include(c => c.UsernameNavigation)
+				.Include(c => c.VehiclesNavigation)
+				.Include(c => c.Showroom.City)
+				.Include(c => c.Showroom.District)
+				.Include(c => c.Showroom.WardsNavigation).FirstOrDefaultAsync(m => m.CarId == id);
+
+			if(car == null)
+			{
+                Msg1 = "Xe không tồn tại hoặc bị xóa";
+                return Page();
+            }
+
+			if (car.Notification == 3)
+			{
+				Msg1 = "Xe đã được bán rồi";
+				return Page();
+			}
+			if (car.Notification == 2)
+			{
+				Msg1 = "Xe đã bị showroom từ chối kí gửi";
+				return Page();
 			}
 			return Page();
 		}

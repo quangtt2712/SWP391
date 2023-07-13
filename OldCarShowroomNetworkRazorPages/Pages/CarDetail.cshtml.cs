@@ -50,6 +50,12 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                         .Include(c => c.Showroom.City)
                         .Include(c => c.Showroom.District)
                         .Include(c => c.Showroom.WardsNavigation).FirstOrDefaultAsync(m => m.CarId == id);
+                    if(car == null)
+                    {
+                        Msg1 = "Xe đã bị xóa hoặc không tồn tại";
+                        return Page();
+                    }
+
                     if (car.Notification == 3)
                     {
                         Msg1 = "Xe đã được bán rồi";
@@ -84,6 +90,13 @@ namespace OldCarShowroomNetworkRazorPages.Pages
                         .Include(c => c.Showroom.City)
                         .Include(c => c.Showroom.District)
                         .Include(c => c.Showroom.WardsNavigation).FirstOrDefaultAsync(m => m.CarId == id);
+
+                    if (car == null)
+                    {
+                        Msg1 = "Xe đã bị xóa hoặc không tồn tại";
+                        return Page();
+                    }
+
                     if (car.Notification == 3)
                     {
                         Msg1 = "Xe đã được bán rồi";

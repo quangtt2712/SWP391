@@ -126,7 +126,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages
             DateTimeNow = DateTime.Now.Date;
             checkTimeNow = DateTime.Now;
             if (DateTimeNow > dateTime) {
-                Msg = "Chỉ được đặt lịch từ ngày " + DateTimeNow.ToString("dd/mm/yyyy") + "trở đi";
+                Msg = "Chỉ được đặt lịch từ ngày " + DateTimeNow.ToString("dd/MM/yyyy") + " trở đi";
                 _toastNotification.Error("Đặt lịch xem xe thất bại");
                 return Page();
             }

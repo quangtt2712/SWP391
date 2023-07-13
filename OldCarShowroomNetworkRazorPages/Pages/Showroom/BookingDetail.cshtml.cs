@@ -38,7 +38,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                     .FirstOrDefaultAsync(b => b.CarId == carId && b.Username.Equals(UserName) && b.Notification.Equals(1));
             if (booking == null)
             {
-                Msg = "Đã xảy ra lỗi";
+                Msg = "Lịch không có hoặc đã bị xóa";
                 return Page();
             }
             if (booking.Car.Notification == 3)
