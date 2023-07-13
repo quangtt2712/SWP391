@@ -46,7 +46,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.User
                 || b.Username.Equals(UserName) && b.DayBooking.Equals(datetime.Date) && b.CarId == carId && b.Notification.Equals(2));
 			if (booking == null)
 			{
-				Msg = "Lịch đã bị xóa hoặc không tồn tại";
+				Msg = "Lịch đã bị xóa";
 				return Page();
 			}
 			return Page();

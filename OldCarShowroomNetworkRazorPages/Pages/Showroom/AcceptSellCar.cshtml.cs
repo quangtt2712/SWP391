@@ -69,7 +69,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
                 .Include(s => s.SlotNavigation).FirstOrDefaultAsync(b => b.Username == Username && b.Notification.Equals(1) && b.CarId == carId);
             if(Booking == null)
             {
-                Msg1 = "Lịch đã bị xóa hoặc không có";
+                Msg1 = "Lịch đã bị xóa. Không thể xác nhận bán xe";
                 return Page();
             }
             if (Car.Notification == 3)
@@ -155,7 +155,7 @@ namespace OldCarShowroomNetworkRazorPages.Pages.Showroom
             {
                 if(Booking.DayBooking > item.DayBooking || Booking.DayBooking == item.DayBooking && Booking.SlotNavigation.PickupDate > item.SlotNavigation.PickupDate)
                 {
-                    Msg2 = "Không thể xác nhận bán xe do còn lịch đặt của khách trước";
+                    Msg2 = "Không được xác nhận bán xe do còn lịch đặt của khách trước";
                     _toastNotification.Error("Xác nhận bán xe thất bại");
                     return Page();
                 }
